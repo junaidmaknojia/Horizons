@@ -14,6 +14,7 @@ class Tag(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "users": list(map(lambda user: user.to_dict(), self.users))
         }
 
 
@@ -22,11 +23,13 @@ class TagCategory(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    tags = db.relationship("Tag", back_populates="tags")
 
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.name
+            "name": self.name,
+            "tags": list(map(lambda tag: tag.to_dict(), self.tags))
         }
 
 user_tags = db.Table("user_tags",

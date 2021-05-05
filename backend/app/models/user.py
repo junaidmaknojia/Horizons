@@ -18,10 +18,12 @@ class User(db.Model, UserMixin):
     state = db.Column(db.String(15), nullable=True)
     profile_photo = db.Column(db.String(255), nullable=False, default="https://i.imgur.com/tdi3NGa.jpg")
     title_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=True)
-    industry_id = db.Column(db.Integer, db.ForeignKey("industries.id"), nulllable=True)
+    industry_id = db.Column(db.Integer, db.ForeignKey("industries.id"), nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
     tags = db.relationship("Tag", secondary="user_tags", back_populates="users")
+    title = db.relationship("Role", back_populates="users")
+    industry = db.relationship("Industry", back_populates="users")
 
     @property
     def password(self):
@@ -44,5 +46,7 @@ class User(db.Model, UserMixin):
             "bio": self.bio,
             "city": self.city,
             "state": self.state,
-            "profilePhoto": self.profile_photo
+            "profilePhoto": self.profile_photo,
+            "industry": self.industry.to_dict(),
+            "title": self.title.to_dict()
         }
