@@ -7,7 +7,8 @@ class Tag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    categoryId = db.Column(db.Integer, nullable=False)
+    categoryId = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
+    users = db.relationship("User", secondary="user_tags", back_populates="tags")
 
     def to_dict(self):
         return {
@@ -28,10 +29,6 @@ class TagCategory(db.Model):
             "name": self.name
         }
 
-
-class UserTag(db.Model):
-    __tablename__ = "user_tags"
-
-    id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, nullable=False)
-    tagId = db.Column(db.Integer, nullable=False)
+user_tags = db.Table("user_tags",
+                         db.Column("user_id", db.Integer, db.ForeignKey("users.id"), primary_key=True),
+                         db.Column("tag_id", db.Integer, db.ForeignKey("tags.id"), primary_key=True))

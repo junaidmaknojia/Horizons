@@ -7,8 +7,8 @@ class Request(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   pitch = db.Column(db.String(80), nullable = False)
   accepted = db.Column(db.Boolean, default = False, nullable = False)
-  menteeId = db.Column(db.Integer, nullable = False)
-  mentorId = db.Column(db.Integer, nullable = False)
+  menteeId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+  mentorId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
 
   def to_dict(self):
     return {

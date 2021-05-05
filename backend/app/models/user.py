@@ -17,9 +17,10 @@ class User(db.Model, UserMixin):
     city = db.Column(db.String(20), nullable=True)
     state = db.Column(db.String(15), nullable=True)
     profile_photo = db.Column(db.String(255), nullable=False, default="https://i.imgur.com/tdi3NGa.jpg")
+    title_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=True)
+    industry_id = db.Column(db.Integer, db.ForeignKey("industries.id"), nulllable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
-    title_id = db.Column(db.Integer, ForeignKey="roles.id", nullable=False)
     tags = db.relationship("Tag", secondary="user_tags", back_populates="users")
 
     @property
