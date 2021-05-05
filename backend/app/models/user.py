@@ -46,7 +46,8 @@ class User(db.Model, UserMixin):
             "bio": self.bio,
             "city": self.city,
             "state": self.state,
+            "tags": list(map(lambda tag: tag.name, self.tags)),
             "profilePhoto": self.profile_photo,
-            "industry": self.industry.to_dict(),
-            "title": self.title.to_dict()
+            "industry": self.industry.name,
+            "title": self.title.name
         }

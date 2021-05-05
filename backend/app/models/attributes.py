@@ -42,5 +42,5 @@ class RoleCategory(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "roles": list(map(lambda role: role.to_dict(), self.roles))
+            "roles": list(map(lambda role: {"id": role.id, "name": role.name}, self.roles))
         }

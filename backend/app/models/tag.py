@@ -29,7 +29,7 @@ class TagCategory(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "tags": list(map(lambda tag: tag.to_dict(), self.tags))
+            "tags": list(map(lambda tag: {"id": tag.id, "name": tag.name}, self.tags))
         }
 
 user_tags = db.Table("user_tags",
