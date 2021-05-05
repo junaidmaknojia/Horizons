@@ -1,8 +1,8 @@
 from .db import db
 # from flask_login import UserMixin
 
-class Request(db.Model):
-  __tablename__ = 'requests'
+class Tag(db.Model):
+  __tablename__ = 'tags'
 
   id = db.Column(db.Integer, primary_key = True)
   pitch = db.Column(db.String(80), nullable = False)
