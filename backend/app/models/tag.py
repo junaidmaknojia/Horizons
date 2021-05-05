@@ -7,7 +7,7 @@ class Tag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    categoryId = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
+    categoryId = db.Column(db.Integer, db.ForeignKey("tag_categories.id"), nullable=False)
     users = db.relationship("User", secondary="user_tags", back_populates="tags")
 
     def to_dict(self):
