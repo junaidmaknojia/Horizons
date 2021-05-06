@@ -24,11 +24,13 @@ def update_user():
 
 @user_routes.route("/mentors")
 def get_all_mentors():
-    pass
+    all_mentors = User.query.filter(User.role == "Mentor").all()
+    return {"mentors": [m.to_dict() for m in all_mentors]}
 
 @user_routes.route("/mentees")
 def get_all_mentees():
-    pass
+    all_mentees = User.query.filter(User.role == "Mentee").all()
+    return {"mentees": [m.to_dict() for m in all_mentees]}
 
 @user_routes.route("/", methods=["DELETE"])
 def delete_user():
