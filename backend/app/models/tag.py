@@ -22,8 +22,8 @@ class TagCategory(db.Model):
     __tablename__ = "tag_categories"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    tags = db.relationship("Tag", back_populates="tags")
+    name = db.Column(db.String(50), nullable=False)
+    tags = db.relationship("Tag")
 
     def to_dict(self):
         return {

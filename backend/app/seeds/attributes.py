@@ -83,14 +83,15 @@ def undo_roles():
 
 
 def seed_role_categories():
+
     db.session.add(RoleCategory(name="Accounting"))
     db.session.add(RoleCategory(name="Admin/HR"))
     db.session.add(RoleCategory(name="Engineering"))
-    db.session.add(RoleCategory(name="Finance / FinTech"))
+    db.session.add(RoleCategory(name="Finance/FinTech"))
     db.session.add(RoleCategory(name="Investing"))
     db.session.add(RoleCategory(name="Management"))
     db.session.add(RoleCategory(name="Marketing"))
-    db.session.add(RoleCategory(name="Media / Communications"))
+    db.session.add(RoleCategory(name="Media/Comms"))
     db.session.add(RoleCategory(name="Sales"))
     db.session.add(RoleCategory(name="Technology"))
     db.session.commit()

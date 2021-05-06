@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, Request, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -12,7 +12,12 @@ def get_requests():
 
 @request_routes.route("/", methods=["POST"])
 def make_request():
-    pass
+    data = request.json()
+    currUser = current_user.to_dict()
+    package = {"menteeId": currUser.id, "mentorId": data["mentorId"], "pitch": data["pitch"], "accepted": False}
+    newRequest = Request(**package)
+    db.session.add(newRequest)
+    db.session.commit()
 
 @request_routes.route("/update", methods=["PATCH"])
 def update_request():
