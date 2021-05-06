@@ -13,7 +13,7 @@ def get_requests():
         found_requests = Request.query.filter(Request.mentorId == currUser.id).all()
     else:
         found_requests = Request.query.filter(Request.menteeId == currUser.id).all()
-    return found_requests
+    return {"requests": [rq.to_dict() for rq in found_requests]}
 
 @request_routes.route("/", methods=["POST"])
 def make_request():
@@ -27,8 +27,13 @@ def make_request():
 @request_routes.route("/update", methods=["PATCH"])
 def update_request():
     data = request.json()
-    # found_request = Request.find
+    found_request = Request.query.get(data["requestId"])
+    found_request.accepted = True
+    db.session.commit()
 
 @request_routes.route("/delete", methods=["DELETE"])
 def delete_request():
-    pass
+    data = request.json()
+    found_request = Request.query.get(data["requestId"])
+    db.session.delete(found_request)
+    db.session.commit()
