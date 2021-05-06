@@ -8,7 +8,12 @@ request_routes = Blueprint('requests', __name__)
 
 @request_routes.route("/")
 def get_requests():
-    pass
+    currUser = current_user.to_dict()
+    if currUser.role == "Mentor":
+        found_requests = Request.query.filter(Request.mentorId == currUser.id).all()
+    else:
+        found_requests = Request.query.filter(Request.menteeId == currUser.id).all()
+    return found_requests
 
 @request_routes.route("/", methods=["POST"])
 def make_request():
@@ -21,7 +26,8 @@ def make_request():
 
 @request_routes.route("/update", methods=["PATCH"])
 def update_request():
-    pass
+    data = request.json()
+    # found_request = Request.find
 
 @request_routes.route("/delete", methods=["DELETE"])
 def delete_request():
