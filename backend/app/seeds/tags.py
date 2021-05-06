@@ -54,11 +54,22 @@ def seed_tags():
     db.session.add(Tag(name: "Managing teams", categoryId: 4))
     db.session.add(Tag(name: "Building a personal brand", categoryId: 4))
     db.session.add(Tag(name: "Work/Life Balance", categoryId: 5))
-
+    db.session.commit()
 # Uses a raw SQL query to TRUNCATE the tags table.
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and resets
 # the auto incrementing primary key
 def undo_tags():
-    db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
+    db.session.execute('TRUNCATE tag_categories RESTART IDENTITY CASCADE;')
+    db.session.commit()
+
+
+def seed_tag_categories():
+    db.session.add(TagCategory(name: "Startups/Entrepreneurship"))
+    db.session.add(TagCategory(name: "Further Education"))
+    db.session.add(TagCategory(name: "Career Guidance"))
+    db.session.add(TagCategory(name: "Professional Development/Soft Skills"))
+    db.session.add(TagCategory(name: "Health/Wellness"))
+def undo_tag_categories():
+    db.session.execute('TRUNCATE tag_categories RESTART IDENTITY CASCADE;')
     db.session.commit()
