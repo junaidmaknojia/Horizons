@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
+import { csrfFetch } from "../../store/csrf";
 import { updateUser } from "../../store/user";
 import UserProfile from "../UserProfile";
 import "./EditProfile.css";
 
-
-export default function EditProfile({tagOptions, industryOptions, titleOptions}){
+export default function EditProfile(){
 
     // ----------- Add later for more organization in selection ------
     // <select onChange={e => setIndustryTag(e.target.value)}>
@@ -23,6 +23,11 @@ export default function EditProfile({tagOptions, industryOptions, titleOptions})
     const history = useHistory();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+
+    const [tagCategory, setTagCategory] = useState([]);
+    const [roleCategory, setRoleCategory] = useState([]);
+
+
     const [firstName, setFirstName] = useState(sessionUser.firstName);
     const [lastName, setLastName] = useState(sessionUser.lastName);
     const [title, setTitle] = useState(sessionUser.title);
@@ -31,6 +36,23 @@ export default function EditProfile({tagOptions, industryOptions, titleOptions})
     const [tags, setTags] = useState(sessionUser.tags);
     const [city, setCity] = useState(sessionUser.city);
     const [state, setState] = useState(sessionUser.state);
+    let industryOptions;
+    let tagCategories;
+    let roleCategories;
+
+    useEffect(getOptions, []);
+
+    async function getOptions(){
+        const iResponse = await csrfFetch("api/searches/industries");
+        industryOptions = await iResponse.json();
+        industryOptions = industryOptions.industries;
+        const tResponse= await csrfFetch("api/searches/tagCategories");
+        tagCategories = await tResponse.json();
+        tagCategories = tagCategories.tagCats;
+        const rResponse = await csrfFetch("api/searches/roleCategories");
+        roleCategories = await rResponse.json();
+        roleCategories = roleCategories.roleCats;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,8 +66,8 @@ export default function EditProfile({tagOptions, industryOptions, titleOptions})
         // }
         const formatTags = tags ? Object.values(tags).map(v => v.value) : [];
         const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
-        await dispatch(updateUser(update));
-        return <Redirect to="user"/>
+        dispatch(updateUser(update));
+        return <Redirect to="/user"/>
     };
 
     return (
@@ -93,8 +115,13 @@ export default function EditProfile({tagOptions, industryOptions, titleOptions})
                     <>
                         <div>
                             <p>{`Current Title: ${sessionUser.title}`}</p>
+                            <select onChange={e => setRoleCategory(e.target.value)}>
+                                {roleCategories.map(opt => (
+                                    <option value={opt}>{opt}</option>
+                                ))}
+                            </select>
                             <select onChange={e => setTitle(e.target.value)}>
-                                {titleOptions.map(tO => (
+                                {roleCategory.tags?.map(tO => (
                                     <option value={tO}>{tO}</option>
                                 ))}
                             </select>
@@ -109,8 +136,13 @@ export default function EditProfile({tagOptions, industryOptions, titleOptions})
                         </div>
                         <div>
                             <p>{`Current Tags: ${sessionUser.tags}`}</p>
+                            <select onChange={e => setTagCategory(e.target.value)} multiple>
+                                {tagCategories.map(tag => (
+                                    <option value={tag}>{tag}</option>
+                                ))}
+                            </select>
                             <select onChange={e => setTags(e.target.selectedOptions)} multiple>
-                                {tagOptions.map(tag => (
+                                {tagCategory.tags?.map(tag => (
                                     <option value={tag}>{tag}</option>
                                 ))}
                             </select>
