@@ -11,7 +11,7 @@ export default function BrowseMentors({tagOptions}) {
     const [listMentors, setListMentors] = useState([]);
 
     useEffect(async () => {
-        const mentors = await dispatch(getMentors());
+        const mentors = dispatch(getMentors());
         setListMentors(mentors);
     }, [dispatch]);
 
@@ -32,9 +32,10 @@ export default function BrowseMentors({tagOptions}) {
     }
 
     async function handleRequest(mentor){
-        const package = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false}
-        await dispatch(makeRequest(package));
+        const package = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""}
+        dispatch(makeRequest(package));
     }
+
     return (
         <div>
             <h1>Find Mentors</h1>

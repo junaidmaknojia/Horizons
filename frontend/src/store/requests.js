@@ -1,20 +1,21 @@
 import { csrfFetch } from "./csrf";
 
-// const SESSION_REMOVE = "session/removeUser"
+const STOREREQUESTS = "request/storeRequests"
 
-const initialState = {user: null};
+const initialState = {requests: null};
 
-// const sessionAdd = (user) => {{
-//     return {
-//         type: SESSION_ADD,
-//         payload: user
-//     }
-// }}
+const storeRequests = (requests) => {{
+    return {
+        type: STOREREQUESTS,
+        requests
+    }
+}}
 
-// export const allUsers = async () => {
-//     const response = await csrfFetch("api/users/all");
-//     const data = await response.json();
-// }
+export const getRequests = async () => {
+    const response = await csrfFetch("api/requests/");
+    const data = await response.json();
+    dispatch(storeRequests(data));
+}
 
 export const makeRequest = (payload) => async (dispatch) => {
     const response = await csrfFetch("api/requests/", {
@@ -23,13 +24,27 @@ export const makeRequest = (payload) => async (dispatch) => {
     });
 }
 
+export const updateRequest = async (requestId) => {
+    const response = await csrfFetch("api/requests/update", {
+        method: "PATCH",
+        body: JSON.stringify({requestId})
+    });
+}
+
+export const deleteRequest = async (requestId) => {
+    const response = await csrfFetch("api/requests/delete", {
+        method: "DELETE",
+        body: JSON.stringify({requestId})
+    });
+}
+
 export default function requestReducer(state=initialState, action){
     let newState = {};
     switch(action.type){
-        // case SESSION_ADD:
-        //     newState = Object.assign({}, state);
-        //     newState.user = action.payload;
-        //     return newState
+        case STOREREQUESTS:
+            newState = Object.assign({}, state);
+            newState.requests = action.requests;
+            return newState;
         // case SESSION_REMOVE:
         //     newState = Object.assign({}, state);
         //     newState.user = null;
