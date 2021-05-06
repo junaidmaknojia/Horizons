@@ -11,7 +11,7 @@ const storeRequests = (requests) => {{
     }
 }}
 
-export const getRequests = async () => {
+export const getRequests = () => async (dispatch) => {
     const response = await csrfFetch("api/requests/");
     const data = await response.json();
     dispatch(storeRequests(data));

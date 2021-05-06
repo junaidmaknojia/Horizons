@@ -23,6 +23,12 @@ export const updateUser = (user) => async (dispatch) => {
     });
 }
 
+export const getMentors = async () => {
+    const response = await csrfFetch("api/users/mentors")
+    const data = await response.json()
+    return data.mentors;
+}
+
 export default function userReducer(state=initialState, action){
     let newState = {};
     switch(action.type){

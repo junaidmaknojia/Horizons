@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeRequest } from "../../store/requests";
+import { getMentors } from "../../store/user";
+
 
 
 export default function BrowseMentors({tagOptions}) {
@@ -10,7 +12,7 @@ export default function BrowseMentors({tagOptions}) {
     const [addedTags, setAddedTags] = useState([]);
     const [listMentors, setListMentors] = useState([]);
 
-    useEffect(async () => {
+    useEffect(() => {
         const mentors = dispatch(getMentors());
         setListMentors(mentors);
     }, [dispatch]);
@@ -32,8 +34,8 @@ export default function BrowseMentors({tagOptions}) {
     }
 
     async function handleRequest(mentor){
-        const package = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""}
-        dispatch(makeRequest(package));
+        const pckg = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""}
+        dispatch(makeRequest(pckg));
     }
 
     return (
