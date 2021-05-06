@@ -17,3 +17,19 @@ def users():
 def user(id):
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route("/update", methods=["PUT"])
+def update_user():
+    pass
+
+@user_routes.route("/mentors")
+def get_all_mentors():
+    pass
+
+@user_routes.route("/mentees")
+def get_all_mentees():
+    pass
+
+@user_routes.route("/", methods=["DELETE"])
+def delete_user():
+    pass

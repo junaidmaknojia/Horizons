@@ -9,3 +9,15 @@ request_routes = Blueprint('request', __name__)
 @request_routes.route("/")
 def get_requests():
     pass
+
+@request_routes.route("/", methods=["POST"])
+def make_request():
+    pass
+
+@request_routes.route("/update", methods=["PATCH"])
+def update_request():
+    pass
+
+@request_routes.route("/delete", methods=["DELETE"])
+def delete_request():
+    pass
