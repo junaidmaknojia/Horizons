@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { fetch } from "./csrf";
 
 // const SESSION_REMOVE = "session/removeUser"
 
@@ -12,19 +12,19 @@ const initialState = {user: null};
 // }}
 
 export const allUsers = async () => {
-    const response = await csrfFetch("api/users/all");
+    const response = await fetch("api/users/all");
     const data = await response.json();
 }
 
 export const updateUser = (user) => async (dispatch) => {
-    const response = await csrfFetch("api/users/update", {
+    const response = await fetch("api/users/update", {
         method: "POST",
         body: JSON.stringify(user)
     });
 }
 
 export const getMentors = async () => {
-    const response = await csrfFetch("api/users/mentors")
+    const response = await fetch("api/users/mentors")
     const data = await response.json()
     return data.mentors;
 }

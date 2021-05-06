@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+// import { fetch } from "./csrf";
 
 const SESSION_ADD = "session/setUser"
 const SESSION_REMOVE = "session/removeUser"
@@ -19,7 +19,7 @@ const sessionRemove = () => {{
 export function login(user) {
     return async (dispatch) => {
         const {credential, password} = user;
-        const response = await csrfFetch("/api/session", {
+        const response = await fetch("/api/auth/", {
             method: "POST",
             body: JSON.stringify({ credential, password })
         });
@@ -31,7 +31,7 @@ export function login(user) {
 
 export function restoreUser(user) {
     return async (dispatch) => {
-        const response = await csrfFetch("/api/session");
+        const response = await fetch("/api/auth/");
         const parsed = await response.json();
         dispatch(sessionAdd(parsed.user));
         return response;
@@ -42,7 +42,7 @@ export function signupUser(user) {
     return async (dispatch) => {
         const {firstName, lastName, role, email, password} = user;
         const title = role;
-        const response = await csrfFetch("api/users", {
+        const response = await fetch("api/users", {
             method: "POST",
             body: JSON.stringify({firstName, lastName, role, title, email, password})
         });
@@ -53,7 +53,7 @@ export function signupUser(user) {
 }
 
 export const logout = (user) => async (dispatch) => {
-    const response = csrfFetch("/api/session", {
+    const response = fetch("/api/session", {
         method: "DELETE"
     });
     dispatch(sessionRemove());

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { csrfFetch } from "../../store/csrf";
+import { fetch } from "../../store/csrf";
 import { updateUser } from "../../store/user";
 import UserProfile from "../UserProfile";
 import "./EditProfile.css";
@@ -43,13 +43,13 @@ export default function EditProfile(){
     useEffect(getOptions, []);
 
     async function getOptions(){
-        const iResponse = await csrfFetch("api/searches/industries");
+        const iResponse = await fetch("api/searches/industries");
         industryOptions = await iResponse.json();
         industryOptions = industryOptions.industries;
-        const tResponse= await csrfFetch("api/searches/tagCategories");
+        const tResponse= await fetch("api/searches/tagCategories");
         tagCategories = await tResponse.json();
         tagCategories = tagCategories.tagCats;
-        const rResponse = await csrfFetch("api/searches/roleCategories");
+        const rResponse = await fetch("api/searches/roleCategories");
         roleCategories = await rResponse.json();
         roleCategories = roleCategories.roleCats;
     }

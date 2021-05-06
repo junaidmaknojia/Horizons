@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+// import { fetch } from "./csrf";
 
 const STOREREQUESTS = "request/storeRequests"
 
@@ -12,27 +12,27 @@ const storeRequests = (requests) => {{
 }}
 
 export const getRequests = () => async (dispatch) => {
-    const response = await csrfFetch("api/requests/");
+    const response = await fetch("api/requests/");
     const data = await response.json();
     dispatch(storeRequests(data));
 }
 
 export const makeRequest = (payload) => async (dispatch) => {
-    const response = await csrfFetch("api/requests/", {
+    const response = await fetch("api/requests/", {
         method: "POST",
         body: JSON.stringify(payload)
     });
 }
 
 export const updateRequest = async (requestId) => {
-    const response = await csrfFetch("api/requests/update", {
+    const response = await fetch("api/requests/update", {
         method: "PATCH",
         body: JSON.stringify({requestId})
     });
 }
 
 export const deleteRequest = async (requestId) => {
-    const response = await csrfFetch("api/requests/delete", {
+    const response = await fetch("api/requests/delete", {
         method: "DELETE",
         body: JSON.stringify({requestId})
     });
