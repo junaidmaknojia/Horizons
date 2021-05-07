@@ -48,6 +48,7 @@ export default function EditProfile(){
         tagCategories = tagCategories.tagCats;
         const rResponse = await fetch("api/searches/roleCategories");
         roleCategories = await rResponse.json();
+        console.log(roleCategories);
         roleCategories = roleCategories.roleCats;
     }
 
