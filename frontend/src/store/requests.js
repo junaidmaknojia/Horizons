@@ -1,5 +1,3 @@
-// import { fetch } from "./csrf";
-
 const STOREREQUESTS = "request/storeRequests"
 
 const initialState = {requests: null};

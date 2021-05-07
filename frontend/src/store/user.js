@@ -1,7 +1,3 @@
-import { fetch } from "./csrf";
-
-// const SESSION_REMOVE = "session/removeUser"
-
 const initialState = {user: null};
 
 // const sessionAdd = (user) => {{

@@ -1,5 +1,3 @@
-// import { fetch } from "./csrf";
-
 const SESSION_ADD = "session/setUser"
 const SESSION_REMOVE = "session/removeUser"
 
@@ -42,7 +40,7 @@ export function signupUser(user) {
     return async (dispatch) => {
         const {firstName, lastName, role, email, password} = user;
         const title = role;
-        const response = await fetch("api/users", {
+        const response = await fetch("api/users/", {
             method: "POST",
             body: JSON.stringify({firstName, lastName, role, title, email, password})
         });
@@ -53,7 +51,7 @@ export function signupUser(user) {
 }
 
 export const logout = (user) => async (dispatch) => {
-    const response = fetch("/api/session", {
+    const response = fetch("/api/auth/", {
         method: "DELETE"
     });
     dispatch(sessionRemove());
