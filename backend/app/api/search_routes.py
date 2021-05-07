@@ -16,7 +16,7 @@ def get_tags():
 
 @search_routes.route("/industries")
 def get_industries():
-    industries = TagCategory.query.all()
+    industries = Industry.query.all()
     return {"industries": [tc.to_dict() for tc in industries]}
 
 @search_routes.route("/tagCategories")
@@ -26,5 +26,5 @@ def get_tag_categories():
 
 @search_routes.route("/roleCategories")
 def get_role_categories():
-    roleCats = TagCategory.query.all()
+    roleCats = RoleCategory.query.all()
     return {"roleCats": [tc.to_dict() for tc in roleCats]}

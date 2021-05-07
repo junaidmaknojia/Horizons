@@ -45,6 +45,7 @@ export default function EditProfile(){
             setIndustryOptions(iO.industries);
             const tResponse= await fetch("/api/searches/tagCategories");
             let tO = await tResponse.json();
+            console.log(tO.tagCats);
             setTagCategories(tO.tagCats);
             const rResponse = await fetch("/api/searches/roleCategories");
             let rO = await rResponse.json();
@@ -52,19 +53,6 @@ export default function EditProfile(){
         }
         getOptions();
     }, []);
-
-    // async function getOptions(){
-    //     const iResponse = await fetch("api/searches/industries");
-    //     industryOptions = await iResponse.json();
-    //     industryOptions = industryOptions.industries;
-    //     const tResponse= await fetch("api/searches/tagCategories");
-    //     tagCategories = await tResponse.json();
-    //     tagCategories = tagCategories.tagCats;
-    //     const rResponse = await fetch("api/searches/roleCategories");
-    //     roleCategories = await rResponse.json();
-    //     console.log(roleCategories);
-    //     roleCategories = roleCategories.roleCats;
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -121,9 +109,11 @@ export default function EditProfile(){
                     <>
                         <div>
                             <p>{`Current Title: ${sessionUser.title}`}</p>
-                            <select onChange={e => setRoleCategory(e.target.value)}>
+                            <select onChange={e => {
+                                console.log(e.target.value);
+                                setRoleCategory(e.target.value)}}>
                                 {roleCategories?.map(opt => (
-                                    <option value={opt.name}>{opt.name}</option>
+                                    <option value={opt}>{opt.name}</option>
                                 ))}
                             </select>
                             <select onChange={e => setTitle(e.target.value)}>
