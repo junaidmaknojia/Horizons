@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Homepage from "./components/Homepage";
-import UserProfile from "./components/UserProfile";
+import UserDashboard from "./components/UserDashboard";
 import EditProfile from "./components/EditProfile";
 import BrowseMentors from "./components/BrowseMentors";
 
@@ -24,8 +24,8 @@ function App() {
           <Route exact path="/">
             <Homepage isLoaded={isLoaded}/>
           </Route>
-          <Route exact path="/user">
-            <UserProfile/>
+          <Route exact path="/dashboard">
+            <UserDashboard/>
           </Route>
           <Route path="/edit">
             <EditProfile />

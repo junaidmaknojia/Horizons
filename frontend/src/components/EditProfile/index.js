@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
-import UserProfile from "../UserProfile";
+import UserProfile from "../UserDashboard";
 import "./EditProfile.css";
 
 export default function EditProfile(){
@@ -66,7 +66,7 @@ export default function EditProfile(){
         const formatTags = tags ? Object.values(tags).map(v => v.value) : [];
         const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
         dispatch(updateUser(update));
-        return <Redirect to="/user"/>
+        return <Redirect to="/dashboard"/>
     };
 
     return (

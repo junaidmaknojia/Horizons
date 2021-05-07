@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "./UserProfile.css";
+import "./UserDashboard.css";
 import EditProfile from "../EditProfile";
 
-export default function UserProfile() {
+export default function UserDashboard() {
 
     const sessionUser = useSelector(state => state.session.user);
     let warnings = [];

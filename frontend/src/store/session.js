@@ -22,7 +22,6 @@ export function login(user) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ email, password })
         });
-        console.log(response);
         const data = await response.json();
         console.log(data);
         dispatch(sessionAdd(data.user));
