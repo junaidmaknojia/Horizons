@@ -48,6 +48,6 @@ class User(db.Model, UserMixin):
             "state": self.state,
             "tags": list(map(lambda tag: tag.name, self.tags)),
             "profilePhoto": self.profile_photo,
-            "industry": self.industry.name,
-            "title": self.title.name
+            "industry": self.industry.name if self.industry else "",
+            "title": self.title.name if self.title else ""
         }
