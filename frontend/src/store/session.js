@@ -16,12 +16,14 @@ const sessionRemove = () => {{
 
 export function login(user) {
     return async (dispatch) => {
-        const {credential, password} = user;
-        const response = await fetch("/api/auth/", {
+        console.log(user);
+        const {email, password} = user;
+        const response = await fetch("/api/auth/login/", {
             method: "POST",
-            body: JSON.stringify({ credential, password })
+            body: JSON.stringify({ email, password })
         });
         const data = await response.json();
+        console.log(data);
         dispatch(sessionAdd(data.user));
         return response;
     }
