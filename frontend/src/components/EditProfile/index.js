@@ -14,6 +14,9 @@ export default function EditProfile(){
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
 
+    const [industryOptions, setIndustryOptions] = useState([]);
+    const [tagCategories, setTagCategories] = useState([]);
+    const [roleCategories, setRoleCategories] = useState([]);
 
     const [firstName, setFirstName] = useState(sessionUser.firstName);
     const [lastName, setLastName] = useState(sessionUser.lastName);
@@ -24,9 +27,6 @@ export default function EditProfile(){
     const [city, setCity] = useState(sessionUser.city);
     const [state, setState] = useState(sessionUser.state);
     const [validationErrors, setValidationErrors] = useState([]);
-    let industryOptions;
-    let tagCategories;
-    let roleCategories;
 
     useEffect(() => {
         let errors = [];
@@ -37,20 +37,34 @@ export default function EditProfile(){
         setValidationErrors(errors);
     }, [firstName, lastName, title, tags]);
 
-    useEffect(getOptions, []);
+    // useEffect(getOptions, []);
+    useEffect(() => {
+        async function getOptions(){
+            const iResponse = await fetch("/api/searches/industries");
+            let iO = await iResponse.json();
+            setIndustryOptions(iO.industries);
+            const tResponse= await fetch("/api/searches/tagCategories");
+            let tO = await tResponse.json();
+            setTagCategories(tO.tagCats);
+            const rResponse = await fetch("/api/searches/roleCategories");
+            let rO = await rResponse.json();
+            setRoleCategories(rO.roleCats);
+        }
+        getOptions();
+    }, []);
 
-    async function getOptions(){
-        const iResponse = await fetch("api/searches/industries");
-        industryOptions = await iResponse.json();
-        industryOptions = industryOptions.industries;
-        const tResponse= await fetch("api/searches/tagCategories");
-        tagCategories = await tResponse.json();
-        tagCategories = tagCategories.tagCats;
-        const rResponse = await fetch("api/searches/roleCategories");
-        roleCategories = await rResponse.json();
-        console.log(roleCategories);
-        roleCategories = roleCategories.roleCats;
-    }
+    // async function getOptions(){
+    //     const iResponse = await fetch("api/searches/industries");
+    //     industryOptions = await iResponse.json();
+    //     industryOptions = industryOptions.industries;
+    //     const tResponse= await fetch("api/searches/tagCategories");
+    //     tagCategories = await tResponse.json();
+    //     tagCategories = tagCategories.tagCats;
+    //     const rResponse = await fetch("api/searches/roleCategories");
+    //     roleCategories = await rResponse.json();
+    //     console.log(roleCategories);
+    //     roleCategories = roleCategories.roleCats;
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,34 +122,34 @@ export default function EditProfile(){
                         <div>
                             <p>{`Current Title: ${sessionUser.title}`}</p>
                             <select onChange={e => setRoleCategory(e.target.value)}>
-                                {roleCategories.map(opt => (
-                                    <option value={opt}>{opt}</option>
+                                {roleCategories?.map(opt => (
+                                    <option value={opt.name}>{opt.name}</option>
                                 ))}
                             </select>
                             <select onChange={e => setTitle(e.target.value)}>
                                 {roleCategory.tags?.map(tO => (
-                                    <option value={tO}>{tO}</option>
+                                    <option value={tO.name}>{tO.name}</option>
                                 ))}
                             </select>
                         </div>
                         <div>
                             <p>{`Current Industry: ${sessionUser.industry}`}</p>
                             <select onChange={e => setIndustry(e.target.value)}>
-                                {industryOptions.map(tag => (
-                                    <option value={tag}>{tag}</option>
+                                {industryOptions?.map(tag => (
+                                    <option value={tag.name}>{tag.name}</option>
                                     ))}
                             </select>
                         </div>
                         <div>
                             <p>{`Current Tags: ${sessionUser.tags}`}</p>
                             <select onChange={e => setTagCategory(e.target.value)} multiple>
-                                {tagCategories.map(tag => (
-                                    <option value={tag}>{tag}</option>
+                                {tagCategories?.map(tag => (
+                                    <option value={tag.name}>{tag.name}</option>
                                 ))}
                             </select>
                             <select onChange={e => setTags(e.target.selectedOptions)} multiple>
                                 {tagCategory.tags?.map(tag => (
-                                    <option value={tag}>{tag}</option>
+                                    <option value={tag.name}>{tag.name}</option>
                                 ))}
                             </select>
                         </div>
