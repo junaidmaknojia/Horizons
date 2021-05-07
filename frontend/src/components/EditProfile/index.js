@@ -7,18 +7,6 @@ import "./EditProfile.css";
 
 export default function EditProfile(){
 
-    // ----------- Add later for more organization in selection ------
-    // <select onChange={e => setIndustryTag(e.target.value)}>
-    //     {industrySeeds.map(seed => (
-    //         <option value={seed}>{seed}</option>
-    //     ))}
-    // </select>
-    // <select onChange={e => setIndustry(e.target.value)}>
-    //     {industryTags.map(tag => (
-    //         <option value={tag}>{tag}</option>
-    //     ))}
-    // </select>
-
     const history = useHistory();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
@@ -35,9 +23,19 @@ export default function EditProfile(){
     const [tags, setTags] = useState(sessionUser.tags);
     const [city, setCity] = useState(sessionUser.city);
     const [state, setState] = useState(sessionUser.state);
+    const [validationErrors, setValidationErrors] = useState([]);
     let industryOptions;
     let tagCategories;
     let roleCategories;
+
+    useEffect(() => {
+        let errors = [];
+        if(!firstName) errors.push("You must provide a first name");
+        if(!lastName) errors.push("You must provide a last name");
+        if(!title) errors.push("Please provide a relevant title");
+        if(tags.length > 5) errors.push("Please limit your tags to 5 options");
+        setValidationErrors(errors);
+    }, [firstName, lastName, title, tags]);
 
     useEffect(getOptions, []);
 
@@ -55,18 +53,12 @@ export default function EditProfile(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if (password === confirmPassword) {
-        //     setErrors([]);
-        //     return dispatch(sessionActions.signupUser({ firstName, lastName, role, email, password }))
-        //         .catch(async (res) => {
-        //             const data = await res.json();
-        //             if (data && data.errors) setErrors(data.errors);
-        //         });
-        // }
-        const formatTags = tags ? Object.values(tags).map(v => v.value) : [];
-        const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
-        dispatch(updateUser(update));
-        return <Redirect to="/dashboard"/>
+        if(!validationErrors){
+            const formatTags = tags ? Object.values(tags).map(v => v.id) : [];
+            const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
+            dispatch(updateUser(update));
+            return <Redirect to="/dashboard"/>
+        }
     };
 
     return (

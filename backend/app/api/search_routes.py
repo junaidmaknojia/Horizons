@@ -9,7 +9,10 @@ search_routes = Blueprint('searches', __name__)
 
 @search_routes.route("/tags")
 def get_tags():
-    pass
+    # tags = Tag.query.options(joinedLoad(Tag.users)).all()
+    tags = Tag.query.all()
+    return {"tags": [tag.to_dict() for tag in tags]}
+
 
 @search_routes.route("/industries")
 def get_industries():
