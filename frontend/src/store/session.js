@@ -24,7 +24,7 @@ export function login(user) {
         });
         const data = await response.json();
         console.log(data);
-        dispatch(sessionAdd(data.user));
+        dispatch(sessionAdd(data));
         return response;
     }
 }
@@ -33,7 +33,7 @@ export function restoreUser(user) {
     return async (dispatch) => {
         const response = await fetch("/api/auth/");
         const parsed = await response.json();
-        dispatch(sessionAdd(parsed.user));
+        dispatch(sessionAdd(parsed));
         return response;
     }
 }
@@ -41,19 +41,21 @@ export function restoreUser(user) {
 export function signupUser(user) {
     return async (dispatch) => {
         const {firstName, lastName, role, email, password} = user;
-        const title = role;
-        const response = await fetch("api/users/", {
+        console.log(user);
+        const response = await fetch("/api/auth/signup/", {
             method: "POST",
-            body: JSON.stringify({firstName, lastName, role, title, email, password})
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({firstName, lastName, role, email, password})
         });
-        const parsed = response.json();
-        dispatch(sessionAdd(parsed.user));
+        const parsed = await response.json();
+        console.log(parsed);
+        dispatch(sessionAdd(parsed));
         return parsed;
     }
 }
 
 export const logout = (user) => async (dispatch) => {
-    const response = fetch("/api/auth/", {
+    const response = fetch("/api/auth/logout", {
         method: "DELETE"
     });
     dispatch(sessionRemove());

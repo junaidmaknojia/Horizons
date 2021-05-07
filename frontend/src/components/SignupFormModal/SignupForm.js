@@ -30,6 +30,7 @@ export default function SignupForm() {
     // }, [name, email, phoneNumber, bio]);
 
     const handleSubmit = (e) => {
+        console.log("inside handleSubmit");
         e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);
@@ -51,8 +52,8 @@ export default function SignupForm() {
             </div>
             <div>
                 I'm signing up as a:
-                <input onClick={()=> setRole("Mentor")} type="radio" name="mentor"/> Mentor
-                <input onClick={()=> setRole("Mentee")} type="radio" name="mentee"/> Mentee
+                <input type="radio" id="mentor" name="role" onClick={()=> setRole("Mentor")}/>Mentor<br/>
+                <input type="radio" id="mentee" name="role" onClick={()=> setRole("Mentee")}/>Mentee<br/>
             </div>
             <div>
                 <input
