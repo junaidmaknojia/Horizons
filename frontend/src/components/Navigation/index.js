@@ -25,10 +25,6 @@ export default function Navigation({ isLoaded }) {
     return (
         <div className="navBar">
             <p className="siteLogo">Horizons</p>
-            <p className="navButton" id="browse" >Browse</p>
-            <div className="search">
-                <input type="text"/>
-            </div>
             <NavLink className="navButton" id="home" exact to="/">Home</NavLink>
             {isLoaded && sessionLinks}
         </div>
