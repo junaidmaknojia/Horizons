@@ -33,7 +33,7 @@ export default function EditProfile(){
         if(!firstName) errors.push("You must provide a first name");
         if(!lastName) errors.push("You must provide a last name");
         if(!title) errors.push("Please provide a relevant title");
-        if(tags?.length > 5) errors.push("Please limit your tags to 5 options");
+        if(tags.length > 5) errors.push("Please limit your tags to 5 options");
         setValidationErrors(errors);
     }, [firstName, lastName, title, tags]);
 
@@ -44,12 +44,13 @@ export default function EditProfile(){
             let iO = await iResponse.json();
             setIndustryOptions(iO.industries);
             const tResponse= await fetch("/api/searches/tagCategories");
-            let tO = await tResponse.json();
-            setTagCategories(tO.tagCats);
+            let {tagCats} = await tResponse.json();
+            const tTemp = tagCats.map(cat => cat.tags);
+            setTagCategory(tTemp.flat());
             const rResponse = await fetch("/api/searches/roleCategories");
-            let rO = await rResponse.json();
-            setRoleCategories(rO.roleCats);
-            console.log(roleCategories);
+            let {roleCats} = await rResponse.json();
+            const rTemp = roleCats.map(cat => cat.roles);
+            setRoleCategory(rTemp.flat());
         }
         getOptions();
     }, []);
@@ -109,20 +110,18 @@ export default function EditProfile(){
                     <>
                         <div>
                             <p>{`Current Title: ${sessionUser.title}`}</p>
-                            <select value={roleCategory} onChange={e => {
+                            {/* <select value={roleCategory} onChange={e => {
                                 console.log(e.target);
                                 setRoleCategory(e.target.value.roles)}}>
                                 {roleCategories?.map(opt => (
                                     <option value={opt} id={opt.id}>{opt.name}</option>
                                 ))}
+                            </select> */}
+                            <select onChange={e => setTitle(e.target.value)}>
+                                {roleCategory?.map(tO => (
+                                    <option value={tO.name}>{tO.name}</option>
+                                ))}
                             </select>
-                            {roleCategory.roles && (
-                                <select onChange={e => setTitle(e.target.value)}>
-                                    {roleCategory.roles?.map(tO => (
-                                        <option value={tO.name}>{tO.name}</option>
-                                    ))}
-                                </select>
-                            )}
                         </div>
                         <div>
                             <p>{`Current Industry: ${sessionUser.industry}`}</p>
@@ -134,13 +133,13 @@ export default function EditProfile(){
                         </div>
                         <div>
                             <p>{`Current Tags: ${sessionUser.tags}`}</p>
-                            <select onChange={e => setTagCategory(e.target.value)} multiple>
+                            {/* <select onChange={e => setTagCategory(e.target.value)} multiple>
                                 {tagCategories?.map(tag => (
                                     <option value={tag.name}>{tag.name}</option>
                                 ))}
-                            </select>
+                            </select> */}
                             <select onChange={e => setTags(e.target.selectedOptions)} multiple>
-                                {tagCategory.tags?.map(tag => (
+                                {tagCategory?.map(tag => (
                                     <option value={tag.name}>{tag.name}</option>
                                 ))}
                             </select>
