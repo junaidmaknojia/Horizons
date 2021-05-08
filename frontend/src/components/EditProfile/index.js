@@ -55,18 +55,26 @@ export default function EditProfile(){
         getOptions();
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("inside handle submit");
+        console.log(validationErrors);
+        console.log("tags", tags ? tags.map(t => Number(t.value)) : []);
         if(!validationErrors){
-            const formatTags = tags ? Object.values(tags).map(v => v.id) : [];
-            const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
-            dispatch(updateUser(update));
-            return <Redirect to="/dashboard"/>
+            console.log(tags);
+            // const formatTags = tags ? Object.values(tags).map(v => v.id) : [];
+            // console.log(formatTags);
+            // const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
+            // dispatch(updateUser(update));
+            // return <Redirect to="/dashboard"/>
         }
     };
 
     return (
         <div className="editProfile">
+            {validationErrors?.map(error => (
+                <p>{error}</p>
+            ))}
             <form onSubmit={handleSubmit}>
                 <div>
                     <input
@@ -119,7 +127,7 @@ export default function EditProfile(){
                             </select> */}
                             <select onChange={e => setTitle(e.target.value)}>
                                 {roleCategory?.map(tO => (
-                                    <option value={tO.name}>{tO.name}</option>
+                                    <option value={tO.id}>{tO.name}</option>
                                 ))}
                             </select>
                         </div>
@@ -127,8 +135,8 @@ export default function EditProfile(){
                             <p>{`Current Industry: ${sessionUser.industry}`}</p>
                             <select onChange={e => setIndustry(e.target.value)}>
                                 {industryOptions?.map(tag => (
-                                    <option value={tag.name}>{tag.name}</option>
-                                    ))}
+                                    <option value={tag.id}>{tag.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div>
@@ -140,7 +148,7 @@ export default function EditProfile(){
                             </select> */}
                             <select onChange={e => setTags(e.target.selectedOptions)} multiple>
                                 {tagCategory?.map(tag => (
-                                    <option value={tag.name}>{tag.name}</option>
+                                    <option value={tag.id}>{tag.name}</option>
                                 ))}
                             </select>
                         </div>
@@ -162,7 +170,7 @@ export default function EditProfile(){
                         onChange={(e) => setState(e.target.value)}
                     />
                 </div>
-                <button>Update</button>
+                <button type="submit">Update</button>
             </form>
         </div>
     )
