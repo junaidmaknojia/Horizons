@@ -13,12 +13,16 @@ export default function BrowseMentors() {
     const [listMentors, setListMentors] = useState([]);
     let tagOptions;
 
-    useEffect(async () => {
-        const mentors = dispatch(getMentors());
-        setListMentors(mentors);
-        const tags = await fetch("/api/searches/tags");
-        tagOptions = await tags.json();
-        tagOptions = tagOptions.tags;
+    useEffect(() => {
+        async function loadMentors(){
+            const mentors = dispatch(getMentors());
+            console.log(mentors);
+            setListMentors(mentors);
+            const tags = await fetch("/api/searches/tags");
+            tagOptions = await tags.json();
+            tagOptions = tagOptions.tags;
+        }
+        loadMentors();
     }, [dispatch]);
 
     useEffect(() => {

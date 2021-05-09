@@ -22,8 +22,10 @@ export const updateUser = (user) => async (dispatch) => {
 }
 
 export const getMentors = async () => {
-    const response = await fetch("/api/users/mentors")
-    const data = await response.json()
+    console.log("inside getMentors");
+    const response = await fetch("/api/users/mentors/");
+    const data = await response.json();
+    console.log(data.mentors);
     return data.mentors;
 }
 

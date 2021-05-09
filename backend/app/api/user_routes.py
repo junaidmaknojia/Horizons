@@ -39,12 +39,13 @@ def update_user():
     return user.to_dict()
 
 
-@user_routes.route("/mentors")
+@user_routes.route("/mentors/")
 def get_all_mentors():
+    print("inside mentors get")
     all_mentors = User.query.filter(User.role == "Mentor").all()
     return {"mentors": [m.to_dict() for m in all_mentors]}
 
-@user_routes.route("/mentees")
+@user_routes.route("/mentees/")
 def get_all_mentees():
     all_mentees = User.query.filter(User.role == "Mentee").all()
     return {"mentees": [m.to_dict() for m in all_mentees]}
