@@ -70,7 +70,7 @@ export default function EditProfile(){
     return (
         <div className="editProfile">
             {validationErrors?.map(error => (
-                <p>{error}</p>
+                <p style={{color: "red"}}>{error}</p>
             ))}
             <form onSubmit={handleSubmit}>
                 <div>
