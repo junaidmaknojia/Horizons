@@ -57,11 +57,9 @@ export default function EditProfile(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("inside handle submit");
-        console.log(validationErrors);
-        console.log("tags", tags ? tags.map(t => Number(t.value)) : []);
+        const tagsArr = Array.from(tags);
+        const formatTags = tagsArr?.map(t => Number(t.value));
         if(!validationErrors){
-            console.log(tags);
             // const formatTags = tags ? Object.values(tags).map(v => v.id) : [];
             // console.log(formatTags);
             // const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
