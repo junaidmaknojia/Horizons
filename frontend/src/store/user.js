@@ -8,11 +8,12 @@ const initialState = {user: null};
 // }}
 
 export const allUsers = async () => {
-    const response = await fetch("api/users/all");
+    const response = await fetch("/api/users/all");
     const data = await response.json();
 }
 
 export const updateUser = (user) => async (dispatch) => {
+    console.log(user);
     const response = await fetch("/api/users/update/", {
         method: "PUT",
         headers: {'Content-Type': 'application/json'},
@@ -21,7 +22,7 @@ export const updateUser = (user) => async (dispatch) => {
 }
 
 export const getMentors = async () => {
-    const response = await fetch("api/users/mentors")
+    const response = await fetch("/api/users/mentors")
     const data = await response.json()
     return data.mentors;
 }

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from app.models import User, Tag
+from app.models import User, Tag, Role, Industry, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -22,16 +22,18 @@ def user(id):
 def update_user():
     data = request.json
     user = User.query.filter(User.id == current_user.id).one()
-    # currUser = current_user.to_dict()
     user.first_name = data["firstName"]
     user.last_name = data["lastName"]
     user.bio = data["bio"]
     user.city = data["city"]
     user.state = data["state"]
+    if data["title"]:
+        user.title = Role.query.get(data["title"])
+    if data["industry"]:
+        user.industry = Industry.query.get(data["industry"])
     user.tags = []
     for tagId in data["formatTags"]:
         tag = Tag.query.get(tagId)
-        tag.users.append(user)
         user.tags.append(tag)
     db.session.commit()
     return user.to_dict()

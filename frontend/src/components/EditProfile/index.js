@@ -59,11 +59,12 @@ export default function EditProfile(){
         e.preventDefault();
         const tagsArr = Array.from(tags);
         const formatTags = tagsArr?.map(t => Number(t.value));
-        if(!validationErrors){
-            const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
+        console.log(formatTags);
+        // if(!validationErrors){
+            const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
             dispatch(updateUser(update));
             // return <Redirect to="/dashboard"/>
-        }
+        // }
     };
 
     return (
