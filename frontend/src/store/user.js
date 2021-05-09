@@ -13,8 +13,9 @@ export const allUsers = async () => {
 }
 
 export const updateUser = (user) => async (dispatch) => {
-    const response = await fetch("api/users/update", {
-        method: "POST",
+    const response = await fetch("/api/users/update/", {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     });
 }

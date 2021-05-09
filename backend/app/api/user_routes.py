@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
-from app.models import User
+from flask import Blueprint, jsonify, session, request
+from flask_login import login_required, current_user
+from app.models import User, Tag
 
 user_routes = Blueprint('users', __name__)
 
@@ -18,9 +18,24 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-@user_routes.route("/update", methods=["PUT"])
+@user_routes.route("/update/", methods=["PUT"])
 def update_user():
-    pass
+    data = request.json
+    user = User.query.filter(User.id == current_user.id).one()
+    # currUser = current_user.to_dict()
+    user.first_name = data["firstName"]
+    user.last_name = data["lastName"]
+    user.bio = data["bio"]
+    user.city = data["city"]
+    user.state = data["state"]
+    user.tags = []
+    for tagId in data["formatTags"]:
+        tag = Tag.query.get(tagId)
+        tag.users.append(user)
+        user.tags.append(tag)
+    db.session.commit()
+    return user.to_dict()
+
 
 @user_routes.route("/mentors")
 def get_all_mentors():
