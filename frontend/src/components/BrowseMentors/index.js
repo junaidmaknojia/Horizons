@@ -28,6 +28,7 @@ export default function BrowseMentors() {
 
     useEffect(() => {
         const tempMentors = new Set([...addedTags.map(tag => tag.users)].flat());
+        console.log(Array.from(tempMentors));
         setListMentors([...tempMentors].flat());
     }, [addedTags]);
 
