@@ -27,8 +27,8 @@ export default function BrowseMentors() {
     }, [dispatch]);
 
     useEffect(() => {
-        const tempMentors = new Set([...addedTags.map(tag => tag.users)]);
-        setListMentors([...tempMentors]);
+        const tempMentors = new Set([...addedTags.map(tag => tag.users)].flat());
+        setListMentors([...tempMentors].flat());
     }, [addedTags]);
 
     function updateTags(action, tag){
