@@ -15,9 +15,11 @@ export default function BrowseMentors() {
 
     useEffect(() => {
         async function loadMentors(){
-            const mentors = dispatch(getMentors());
-            console.log(mentors);
-            setListMentors(mentors);
+            const response = await fetch("/api/users/mentors/");
+            const data = await response.json();
+            console.log(data.mentors);
+            setListMentors(data.mentors);
+            console.log(listMentors);
             const tags = await fetch("/api/searches/tags");
             tagOptions = await tags.json();
             tagOptions = tagOptions.tags;
