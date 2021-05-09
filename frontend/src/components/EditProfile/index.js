@@ -60,10 +60,8 @@ export default function EditProfile(){
         const tagsArr = Array.from(tags);
         const formatTags = tagsArr?.map(t => Number(t.value));
         if(!validationErrors){
-            // const formatTags = tags ? Object.values(tags).map(v => v.id) : [];
-            // console.log(formatTags);
-            // const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
-            // dispatch(updateUser(update));
+            const update = {sessionUser, firstName, lastName, title, bio, industry, formatTags, city, state};
+            dispatch(updateUser(update));
             // return <Redirect to="/dashboard"/>
         }
     };
