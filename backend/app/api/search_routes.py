@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 search_routes = Blueprint('searches', __name__)
 
 
-@search_routes.route("/tags")
+@search_routes.route("/tags/")
 def get_tags():
     # tags = Tag.query.options(joinedLoad(Tag.users)).all()
     tags = Tag.query.all()

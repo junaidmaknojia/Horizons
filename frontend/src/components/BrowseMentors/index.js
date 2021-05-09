@@ -2,6 +2,7 @@ import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeRequest } from "../../store/requests";
 import { getMentors } from "../../store/user";
+import "./BrowseMentors.css";
 
 
 
@@ -11,18 +12,16 @@ export default function BrowseMentors() {
     const sessionUser = useSelector(state => state.session.user);
     const [addedTags, setAddedTags] = useState([]);
     const [listMentors, setListMentors] = useState([]);
-    let tagOptions;
+    const [tagOptions, setTagOptions] = useState([]);
 
     useEffect(() => {
         async function loadMentors(){
             const response = await fetch("/api/users/mentors/");
             const data = await response.json();
-            console.log(data.mentors);
             setListMentors(data.mentors);
-            console.log(listMentors);
-            const tags = await fetch("/api/searches/tags");
-            tagOptions = await tags.json();
-            tagOptions = tagOptions.tags;
+            const tags = await fetch("/api/searches/tags/");
+            const tagOptions0 = await tags.json();
+            setTagOptions(tagOptions0.tags);
         }
         loadMentors();
     }, [dispatch]);
@@ -50,7 +49,7 @@ export default function BrowseMentors() {
     }
 
     return (
-        <div>
+        <div className="browseMentors">
             <h1>Find Mentors</h1>
             <div className="addedTags">
                 {addedTags?.map(tag => (
