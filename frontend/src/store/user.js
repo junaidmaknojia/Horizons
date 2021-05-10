@@ -13,7 +13,6 @@ export const allUsers = async () => {
 }
 
 export const updateUser = (user) => async (dispatch) => {
-    console.log(user);
     const response = await fetch("/api/users/update/", {
         method: "PUT",
         headers: {'Content-Type': 'application/json'},
@@ -22,10 +21,8 @@ export const updateUser = (user) => async (dispatch) => {
 }
 
 export const getMentors = async () => {
-    console.log("inside getMentors");
     const response = await fetch("/api/users/mentors/");
     const data = await response.json();
-    console.log(data.mentors);
     return data.mentors;
 }
 
