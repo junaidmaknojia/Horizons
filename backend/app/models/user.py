@@ -24,7 +24,6 @@ class User(db.Model, UserMixin):
     tags = db.relationship("Tag", secondary="user_tags", back_populates="users")
     title = db.relationship("Role", back_populates="users")
     industry = db.relationship("Industry", back_populates="users")
-    # requests = db.relationship("Request", back_populates="users")
 
     @property
     def password(self):

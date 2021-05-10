@@ -16,7 +16,6 @@ export const getRequests = () => async (dispatch) => {
 }
 
 export const makeRequest = (payload) => async (dispatch) => {
-    console.log("inside thunk");
     const response = await fetch("/api/requests/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},

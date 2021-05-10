@@ -9,11 +9,24 @@ request_routes = Blueprint('requests', __name__)
 @request_routes.route("/")
 def get_requests():
     currUser = current_user.to_dict()
+    hermes = []
     if currUser["role"] == "Mentor":
         found_requests = Request.query.filter(Request.mentorId == currUser["id"]).all()
+        for request in found_requests:
+            rq = request.to_dict()
+            print(rq)
+            rq["mentee"] = User.query.get(request.menteeId).to_dict()
+            hermes.append(rq)
+        return {"requests": hermes}
     else:
         found_requests = Request.query.filter(Request.menteeId == currUser["id"]).all()
-    return {"requests": [rq.to_dict() for rq in found_requests]}
+        for request in found_requests:
+            rq = request.to_dict()
+            print(rq)
+            rq["mentor"] = User.query.get(request.mentorId).to_dict()
+            hermes.append(rq)
+        return {"requests": hermes}
+    # return {"requests": [rq.to_dict() for rq in found_requests]}
 
 @request_routes.route("/", methods=["POST"])
 def make_request():
