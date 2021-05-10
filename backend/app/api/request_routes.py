@@ -9,10 +9,10 @@ request_routes = Blueprint('requests', __name__)
 @request_routes.route("/")
 def get_requests():
     currUser = current_user.to_dict()
-    if currUser.role == "Mentor":
-        found_requests = Request.query.filter(Request.mentorId == currUser.id).all()
+    if currUser["role"] == "Mentor":
+        found_requests = Request.query.filter(Request.mentorId == currUser["id"]).all()
     else:
-        found_requests = Request.query.filter(Request.menteeId == currUser.id).all()
+        found_requests = Request.query.filter(Request.menteeId == currUser["id"]).all()
     return {"requests": [rq.to_dict() for rq in found_requests]}
 
 @request_routes.route("/", methods=["POST"])
