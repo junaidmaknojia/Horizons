@@ -17,16 +17,16 @@ def get_requests():
 
 @request_routes.route("/", methods=["POST"])
 def make_request():
-    data = request.json()
-    currUser = current_user.to_dict()
-    package = {"menteeId": currUser.id, "mentorId": data["mentorId"], "pitch": data["pitch"], "accepted": False}
+    data = request.json
+    package = {"menteeId": current_user.id, "mentorId": data["mentorId"], "pitch": data["pitch"], "accepted": data["accepted"]}
     newRequest = Request(**package)
     db.session.add(newRequest)
     db.session.commit()
+    return newRequest.to_dict()
 
 @request_routes.route("/update", methods=["PATCH"])
 def update_request():
-    data = request.json()
+    data = request.json
     found_request = Request.query.get(data["requestId"])
     found_request.accepted = True
     db.session.commit()

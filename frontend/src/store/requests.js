@@ -10,21 +10,25 @@ const storeRequests = (requests) => {{
 }}
 
 export const getRequests = () => async (dispatch) => {
-    const response = await fetch("api/requests/");
+    const response = await fetch("/api/requests/");
     const data = await response.json();
     dispatch(storeRequests(data));
 }
 
 export const makeRequest = (payload) => async (dispatch) => {
-    const response = await fetch("api/requests/", {
+    console.log("inside thunk");
+    const response = await fetch("/api/requests/", {
         method: "POST",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
+    return
 }
 
 export const updateRequest = async (requestId) => {
-    const response = await fetch("api/requests/update", {
+    const response = await fetch("/api/requests/update", {
         method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
 }
