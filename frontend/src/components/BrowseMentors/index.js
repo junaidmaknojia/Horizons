@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeRequest } from "../../store/requests";
+import { getRequests, makeRequest } from "../../store/requests";
 import { getMentors } from "../../store/user";
 import "./BrowseMentors.css";
 
@@ -50,6 +50,7 @@ export default function BrowseMentors() {
     async function handleRequest(mentor){
         const pckg = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""}
         dispatch(makeRequest(pckg));
+        dispatch(getRequests());
     }
 
     return (

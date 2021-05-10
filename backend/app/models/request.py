@@ -9,10 +9,14 @@ class Request(db.Model):
   accepted = db.Column(db.Boolean, default = False, nullable = False)
   menteeId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
   mentorId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+  mentor = db.relationship("User", back_populates="requests")
+  mentee = db.relationship("User", back_populates="requests")
 
   def to_dict(self):
     return {
       "id": self.id,
       "pitch": self.pitch,
-      "accepted": self.accepted
+      "accepted": self.accepted,
+      "mentor": self.mentor,
+      "mentee": self.mentee
     }

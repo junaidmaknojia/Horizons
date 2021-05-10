@@ -41,7 +41,6 @@ def update_user():
 
 @user_routes.route("/mentors/")
 def get_all_mentors():
-    print("inside mentors get")
     all_mentors = User.query.filter(User.role == "Mentor").all()
     return {"mentors": [m.to_dict() for m in all_mentors]}
 
