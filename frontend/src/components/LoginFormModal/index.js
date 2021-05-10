@@ -9,12 +9,19 @@ export default function LoginFormModal() {
     const [showModal, setShowModal] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
 
+    async function linkedInSignIn(){
+        //handle sign in with linkedin here
+    }
+
     return (
         <>
             <button onClick={() => setShowModal(true)}>Log In</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     <LoginForm/>
+                    <div>
+                        <p onClick={linkedInSignIn}>Sign in with LinkedIn</p>
+                    </div>
                 </Modal>
             )}
         </>
