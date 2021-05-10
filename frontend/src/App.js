@@ -7,6 +7,7 @@ import Homepage from "./components/Homepage";
 import UserDashboard from "./components/UserDashboard";
 import EditProfile from "./components/EditProfile";
 import BrowseMentors from "./components/BrowseMentors";
+import UserPage from "./components/UserPage";
 
 function App() {
 
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/browse">
             <BrowseMentors />
+          </Route>
+          <Route path="/:id">
+            <UserPage/>
           </Route>
         </Switch>
       )}

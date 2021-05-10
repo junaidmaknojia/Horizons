@@ -14,7 +14,6 @@ def get_requests():
         found_requests = Request.query.filter(Request.mentorId == currUser["id"]).all()
         for request in found_requests:
             rq = request.to_dict()
-            print(rq)
             rq["mentee"] = User.query.get(request.menteeId).to_dict()
             hermes.append(rq)
         return {"requests": hermes}
@@ -22,7 +21,6 @@ def get_requests():
         found_requests = Request.query.filter(Request.menteeId == currUser["id"]).all()
         for request in found_requests:
             rq = request.to_dict()
-            print(rq)
             rq["mentor"] = User.query.get(request.mentorId).to_dict()
             hermes.append(rq)
         return {"requests": hermes}

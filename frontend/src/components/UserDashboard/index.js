@@ -1,23 +1,35 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./UserDashboard.css";
 import EditProfile from "../EditProfile";
+import { getRequests } from "../../store/requests";
 
 export default function UserDashboard() {
 
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const myRequests = useSelector(state => state.requests.requests);
     let warnings = [];
+
+    useEffect(() => {
+        dispatch(getRequests());
+        // refactor to change the requests map in the JSX
+        // so there's one section for both mentors and mentees
+        // and changes the requests.mentors or requests.mentees
+        // to requests[otherPerson] and otherPerson is a conditional
+        // set above near the selectors
+    }, [dispatch]);
 
     if (sessionUser.role === "Mentor") {
         const numTags = sessionUser.tags ? sessionUser.tags.length : 0;
-        if (!sessionUser.tags || numTags < 8) warnings.push(`${8 - numTags} more tag${8 - numTags === 1 ? "" : "s"}`);
-        if (!sessionUser.industry) warnings.push("Industry")
+        if (!sessionUser.tags || numTags < 5) warnings.push(`${5 - numTags} more tag${5 - numTags === 1 ? "" : "s"}`);
+        if (!sessionUser.industry) warnings.push("Industry");
     }
 
     return (
         <div className="userProfile">
-            {warnings && (
+            {warnings.length>0 && (
                 <>
                     <h2>Please go into your profile settings and add the following:</h2>
                     <ul>
@@ -25,7 +37,31 @@ export default function UserDashboard() {
                     </ul>
                 </>
             )}
-            <Link to="/edit" component={EditProfile}>Edit</Link>
+            <div className="requests">
+                <h2>Your Requests</h2>
+                {sessionUser.role === "Mentee" && (
+                    <>
+                        {myRequests?.map(request => (
+                            <div>
+                                <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                {request.accepted && (<p>{request.mentor.email}</p>)}
+                            </div>
+                        ))}
+                    </>
+                )}
+                {sessionUser.role === "Mentor" && (
+                    <>
+                        {myRequests?.map(request => (
+                            <div>
+                                <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+            <Link to="/edit">Edit Profile</Link>
         </div>
     );
 }
