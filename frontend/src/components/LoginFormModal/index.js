@@ -14,9 +14,10 @@ export default function LoginFormModal() {
 
         // https://horizon-aa.herokuapp.com/
         // encoded redirect url: text=https%3A%2F%2Fhorizon-aa.herokuapp.com%2F
-        // client ID: 78r408eh9x5ip8
+        // client ID: ----------
         // client secret: ------
-        const response = await fetch("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social")
+        // GET https://www.linkedin.com/oauth/v2/authorization
+        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
     }
 
     return (

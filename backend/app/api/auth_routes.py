@@ -50,12 +50,13 @@ def login():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-@auth_routes.route('/logout', methods=["DELETE"])
+@auth_routes.route('/logout/')
 def logout():
     """
     Logs a user out
     """
     logout_user()
+    print("----------after logout user")
     return {'message': 'User logged out'}
 
 

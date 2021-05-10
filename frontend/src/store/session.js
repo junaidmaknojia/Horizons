@@ -33,7 +33,7 @@ export function restoreUser(user) {
     return async (dispatch) => {
         const response = await fetch("/api/auth/");
         const parsed = await response.json();
-        dispatch(sessionAdd(parsed));
+        if (!parsed.errors) dispatch(sessionAdd(parsed));
         return response;
     }
 }
@@ -55,9 +55,7 @@ export function signupUser(user) {
 }
 
 export const logout = (user) => async (dispatch) => {
-    const response = fetch("/api/auth/logout", {
-        method: "DELETE"
-    });
+    const response = fetch("/api/auth/logout/");
     dispatch(sessionRemove());
     return response;
 }
