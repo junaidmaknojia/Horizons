@@ -3,6 +3,10 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from urllib.request import Request, urlopen
+from urllib.parse import urlencode
+from json import loads
+from os import environ
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -50,13 +54,12 @@ def login():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-@auth_routes.route('/logout/')
+@auth_routes.route('/logout/', methods=["DELETE"])
 def logout():
     """
     Logs a user out
     """
     logout_user()
-    print("----------after logout user")
     return {'message': 'User logged out'}
 
 
@@ -88,3 +91,28 @@ def unauthorized():
     Returns unauthorized JSON when flask-login authentication fails
     """
     return {'errors': ['Unauthorized']}, 401
+
+@auth_routes.route("/linkedIn/", methods=["POST"])
+def jsonURL():
+    data = request.json
+    token = data["token"]
+    sendoff = {
+        "grant_type": "authorization_code",
+        "code": token,
+        "client_id": environ.get("CLIENT_ID"),
+        "client_secret": environ.get("CLIENT_SECRET"),
+        "redirect_uri": "http://localhost:3000/linkedInAuth"
+    }
+    launch = urlencode(sendoff).encode()
+    request_send = Request("https://www.linkedin.com/oauth/v2/accessToken", data=launch)
+    response = urlopen(request_send)
+    response2 = response.read().decode("utf-8")
+    parsed_response = loads(response2)
+    # now break down the user info
+    access_token = parsed_response["access_token"]
+    request_user_info = Request("https://api.linkedin.com/v2/me", headers={"Authorization": f"Bearer {access_token}"})
+    user_response = urlopen(request_user_info)
+    user_response2 = user_response.read().decode("utf-8")
+    parsed_response2 = loads(user_response2)
+    print("---- user info", parsed_response2)
+    return {}

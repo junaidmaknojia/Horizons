@@ -23,7 +23,6 @@ export function login(user) {
             body: JSON.stringify({ email, password })
         });
         const data = await response.json();
-        console.log(data);
         dispatch(sessionAdd(data));
         return response;
     }
@@ -55,7 +54,9 @@ export function signupUser(user) {
 }
 
 export const logout = (user) => async (dispatch) => {
-    const response = fetch("/api/auth/logout/");
+    const response = fetch("/api/auth/logout/", {
+        method: "DELETE"
+    });
     dispatch(sessionRemove());
     return response;
 }
