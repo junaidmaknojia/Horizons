@@ -43,66 +43,91 @@ export default function SignupForm() {
         return setErrors(['Password and confirmed password must match']);
     };
 
+    async function linkedInSignUp(){
+        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+    }
+    async function googleSignUp(){
+        // change client id and redirect uri
+        // window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                </ul>
-            </div>
+        <>
             <div>
                 I'm signing up as a:
                 <input type="radio" id="mentor" name="role" onClick={()=> setRole("Mentor")}/>Mentor<br/>
                 <input type="radio" id="mentee" name="role" onClick={()=> setRole("Mentee")}/>Mentee<br/>
             </div>
-            <div>
-                <input
-                    placeholder="First Name"
-                    type="text"
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-               <input
-                    placeholder="Last Name"
-                    type="text"
-                    value={lastName}
-                    onChange={e => setLastName(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <input
-                    placeholder="Email"
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-               <input
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <input
-                    placeholder="Confirm Password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <button type="submit">Join!</button>
-            </div>
-        </form>
+            {role && (
+                <>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <ul>
+                                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                            </ul>
+                        </div>
+                        <div>
+                            <input
+                                placeholder="First Name"
+                                type="text" value={firstName}
+                                onChange={e => setFirstName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                placeholder="Last Name"
+                                type="text"
+                                value={lastName}
+                                onChange={e => setLastName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                placeholder="Email"
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                placeholder="Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                placeholder="Confirm Password"
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <button type="submit">Join!</button>
+                        </div>
+                    </form>
+                    <div>
+                        <div>
+                            <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
+                                onClick={linkedInSignUp}
+                                style={{width:100, height:"auto"}}/>
+                        </div>
+                        <div>
+                            <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
+                                onClick={googleSignUp}
+                                style={{width:100, height:"auto"}}/>
+                        </div>
+                    </div>
+                </>
+            )}
+        </>
     );
 }
