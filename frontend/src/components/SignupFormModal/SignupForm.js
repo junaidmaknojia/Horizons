@@ -30,7 +30,6 @@ export default function SignupForm() {
     // }, [name, email, phoneNumber, bio]);
 
     const handleSubmit = (e) => {
-        console.log("inside handleSubmit");
         e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);

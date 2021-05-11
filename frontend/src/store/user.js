@@ -1,11 +1,13 @@
 const initialState = {user: null};
 
-// const sessionAdd = (user) => {{
-//     return {
-//         type: SESSION_ADD,
-//         payload: user
-//     }
-// }}
+const USER_ROLE = "user/role";
+
+const signUpRole = (role) => {{
+    return {
+        type: USER_ROLE,
+        role
+    }
+}}
 
 export const allUsers = async () => {
     const response = await fetch("/api/users/all");
@@ -29,10 +31,10 @@ export const getMentors = async () => {
 export default function userReducer(state=initialState, action){
     let newState = {};
     switch(action.type){
-        // case SESSION_ADD:
-        //     newState = Object.assign({}, state);
-        //     newState.user = action.payload;
-        //     return newState
+        case USER_ROLE:
+            newState = Object.assign({}, state);
+            newState.role = action.role;
+            return newState
         // case SESSION_REMOVE:
         //     newState = Object.assign({}, state);
         //     newState.user = null;
