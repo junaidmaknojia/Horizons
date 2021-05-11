@@ -47,6 +47,11 @@ export function signupUser(user) {
             body: JSON.stringify({firstName, lastName, role, email, password})
         });
         const parsed = await response.json();
+        if(parsed.errors){
+            const err = new Error();
+            err.errors = parsed.errors;
+            throw err;
+        }
         console.log(parsed);
         dispatch(sessionAdd(parsed));
         return parsed;

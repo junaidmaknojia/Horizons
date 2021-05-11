@@ -69,6 +69,8 @@ def sign_up():
     Creates a new user and logs them in
     """
     form = SignUpForm()
+    data = request.json
+    print("---------", form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(
@@ -116,15 +118,20 @@ def linkedIn_sign_up():
     user_response2 = user_response.read().decode("utf-8")
     parsed_response2 = loads(user_response2)
     profilePhoto = parsed_response2["profilePicture"]["displayImage~"]["elements"][0]["identifiers"][0]["identifier"]
+    print(profilePhoto)
     firstName = parsed_response2["firstName"]["localized"]["en_US"]
+    print(firstName)
     lastName = parsed_response2["lastName"]["localized"]["en_US"]
-    password =
+    print(lastName)
+    # password =
     # get email
     request_user_info = Request("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))", headers={"Authorization": f"Bearer {access_token}"})
     user_response3 = urlopen(request_user_info)
     user_response4 = user_response3.read().decode("utf-8")
     parsed_response3 = loads(user_response4)
     email = parsed_response3["elements"][0]["handle~"]["emailAddress"]
+    print(email)
+    return {"firstName": firstName, "lastName": lastName, "profilePhoto": profilePhoto, "email": email}
     # print("---- user info", parsed_response2)
 
     # {
@@ -157,12 +164,6 @@ def linkedIn_sign_up():
     #             },
     #                 {'artifact': 'urn:li:digitalmediaMediaArtifact:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_200_200)', 'authorizationMethod': 'PUBLIC', 'data': {'com.linkedin.digitalmedia.mediaartifact.StillImage': {'mediaType': 'image/jpeg', 'rawCodecSpec': {'name': 'jpeg', 'type': 'image'}, 'displaySize': {'width': 200.0, 'uom': 'PX', 'height': 200.0}, 'storageSize': {'width': 200, 'height': 200}, 'storageAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}, 'displayAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}}}, 'identifiers': [{'identifier': 'https://media-exp1.licdn.com/dms/image/C5603AQHmoyU649gm1A/profile-displayphoto-shrink_200_200/0/1528025831520?e=1626307200&v=beta&t=1P02h1bcnFojLB6TthCNnyKRs70RzqQxRcVas51_stU', 'index': 0, 'mediaType': 'image/jpeg', 'file': 'urn:li:digitalmediaFile:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_200_200,0)', 'identifierType': 'EXTERNAL_URL', 'identifierExpiresInSeconds': 1626307200}]}, {'artifact': 'urn:li:digitalmediaMediaArtifact:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_400_400)', 'authorizationMethod': 'PUBLIC', 'data': {'com.linkedin.digitalmedia.mediaartifact.StillImage': {'mediaType': 'image/jpeg', 'rawCodecSpec': {'name': 'jpeg', 'type': 'image'}, 'displaySize': {'width': 400.0, 'uom': 'PX', 'height': 400.0}, 'storageSize': {'width': 400, 'height': 400}, 'storageAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}, 'displayAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}}}, 'identifiers': [{'identifier': 'https://media-exp1.licdn.com/dms/image/C5603AQHmoyU649gm1A/profile-displayphoto-shrink_400_400/0/1528025831520?e=1626307200&v=beta&t=4lp23y2GFoN_Au_YKP8-dd7btuHp6QqlLP4o6fYinPg', 'index': 0, 'mediaType': 'image/jpeg', 'file': 'urn:li:digitalmediaFile:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_400_400,0)', 'identifierType': 'EXTERNAL_URL', 'identifierExpiresInSeconds': 1626307200}]}, {'artifact': 'urn:li:digitalmediaMediaArtifact:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_800_800)', 'authorizationMethod': 'PUBLIC', 'data': {'com.linkedin.digitalmedia.mediaartifact.StillImage': {'mediaType': 'image/jpeg', 'rawCodecSpec': {'name': 'jpeg', 'type': 'image'}, 'displaySize': {'width': 800.0, 'uom': 'PX', 'height': 800.0}, 'storageSize': {'width': 800, 'height': 800}, 'storageAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}, 'displayAspectRatio': {'widthAspect': 1.0, 'heightAspect': 1.0, 'formatted': '1.00:1.00'}}}, 'identifiers': [{'identifier': 'https://media-exp1.licdn.com/dms/image/C5603AQHmoyU649gm1A/profile-displayphoto-shrink_800_800/0/1528025831520?e=1626307200&v=beta&t=kjLSbDaT4EhFN0EtjgyhrNRLgQ0Zht37fJPAAUYCtws', 'index': 0, 'mediaType': 'image/jpeg', 'file': 'urn:li:digitalmediaFile:(urn:li:digitalmediaAsset:C5603AQHmoyU649gm1A,urn:li:digitalmediaMediaArtifactClass:profile-displayphoto-shrink_800_800,0)', 'identifierType': 'EXTERNAL_URL', 'identifierExpiresInSeconds': 1626307200}]}]}}, 'id': 'moX5OKsyib'}
     # user = User(first_name, last_name, email, password, role)
-    # db.session.add(user)
-    # db.session.commit()
-    # login_user(user)
-    # return user.to_dict()
-
-    return {"name": "name"}
 
 @auth_routes.route("/linkedInSignIn/", methods=["POST"])
 def linkedInSignIn():

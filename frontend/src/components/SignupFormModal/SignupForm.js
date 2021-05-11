@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { Redirect } from "react-router";
 import * as sessionActions from "../../store/session";
@@ -7,6 +7,7 @@ import './SignupForm.css';
 
 export default function SignupForm() {
 
+    const windowRef = useRef(null);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [email, setEmail] = useState("");
@@ -43,9 +44,24 @@ export default function SignupForm() {
         return setErrors(['Password and confirmed password must match']);
     };
 
+    useEffect(() => {
+        window.onmessage = function afterSignup(message){
+            console.log(message);
+            const { firstName, lastName, email, profilePhoto } = message.data;
+            dispatch(sessionActions.signupUser({firstName, lastName, email, profilePhoto, "password": "linkedInPassword", role}))
+                .then(() => {
+                    windowRef.current.close()
+                })
+                .catch((err) => {
+                    console.error(err.errors);
+                });
+        };
+        return () => {window.onmessage = null}
+    }, [role, linkedInSignUp]);
+
     async function linkedInSignUp(){
-        dispatch(signUpRole(role));
-        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+        // dispatch(signUpRole(role));
+        windowRef.current = window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
     }
     async function googleSignUp(){
         // change client id and redirect uri
