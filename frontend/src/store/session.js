@@ -40,7 +40,6 @@ export function restoreUser(user) {
 export function signupUser(user) {
     return async (dispatch) => {
         const {firstName, lastName, role, email, password} = user;
-        console.log(user);
         const response = await fetch("/api/auth/signup/", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
@@ -52,7 +51,25 @@ export function signupUser(user) {
             err.errors = parsed.errors;
             throw err;
         }
-        console.log(parsed);
+        dispatch(sessionAdd(parsed));
+        return parsed;
+    }
+}
+
+export function linkedInSignUp(user) {
+    return async (dispatch) => {
+        const {firstName, lastName, role, email, password, profilePhoto} = user;
+        const response = await fetch("/api/auth/linkedIncreate/", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({firstName, lastName, role, email, password, profilePhoto})
+        });
+        const parsed = await response.json();
+        if(parsed.errors){
+            const err = new Error();
+            err.errors = parsed.errors;
+            throw err;
+        }
         dispatch(sessionAdd(parsed));
         return parsed;
     }

@@ -8,7 +8,9 @@ import UserDashboard from "./components/UserDashboard";
 import EditProfile from "./components/EditProfile";
 import BrowseMentors from "./components/BrowseMentors";
 import UserPage from "./components/UserPage";
-import LinkedInURL from "./components/LinkedInURL";
+import LinkedInSignUp from "./components/LinkedInSignUp";
+import LinkedInLogIn from "./components/LinkedInLogIn";
+
 
 function App() {
 
@@ -35,8 +37,11 @@ function App() {
           <Route path="/browse">
             <BrowseMentors />
           </Route>
-          <Route exact path="/linkedInAuth">
-            <LinkedInURL/>
+          <Route exact path="/linkedin-sign-up">
+            <LinkedInSignUp/>
+          </Route>
+          <Route exact path="/linkedin-log-in">
+            <LinkedInLogIn/>
           </Route>
           <Route path="/:id">
             <UserPage/>
