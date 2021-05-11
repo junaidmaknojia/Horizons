@@ -92,7 +92,7 @@ def unauthorized():
     """
     return {'errors': ['Unauthorized']}, 401
 
-@auth_routes.route("/linkedIn/", methods=["POST"])
+@auth_routes.route("/linkedInSignIn/", methods=["POST"])
 def jsonURL():
     data = request.json
     token = data["token"]
@@ -115,4 +115,34 @@ def jsonURL():
     user_response2 = user_response.read().decode("utf-8")
     parsed_response2 = loads(user_response2)
     print("---- user info", parsed_response2)
-    return {}
+    # {
+    #     'localizedLastName': 'Maknojia',
+    #     'profilePicture': {
+    #         'displayImage': 'urn:li:digitalmediaAsset:CKSJABCDEFGH'
+    #     },
+    #     'firstName': {
+    #         'localized': {
+    #             'en_US': 'Junaid'
+    #         },
+    #         'preferredLocale': {
+    #             'country': 'US',
+    #             'language': 'en'
+    #         }
+    #     },
+    #     'lastName': {
+    #         'localized': {
+    #             'en_US': 'Maknojia'
+    #         },
+    #         'preferredLocale': {
+    #             'country': 'US',
+    #             'language': 'en'
+    #         }
+    #     },
+    #     'id': 'yadayadayada',
+    #     'localizedFirstName': 'Junaid'
+    # }
+    # user = User.query.filter(User.email == ).first()
+    # login_user(user)
+    # return user.to_dict()
+    # https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))
+    return {"lastName": parsed_response2.localizedLastName}
