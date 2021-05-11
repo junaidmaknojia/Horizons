@@ -2,7 +2,7 @@ const initialState = {user: null};
 
 const USER_ROLE = "user/role";
 
-const signUpRole = (role) => {{
+export const signUpRole = (role) => {{
     return {
         type: USER_ROLE,
         role
