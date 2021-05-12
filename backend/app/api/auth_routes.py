@@ -40,7 +40,6 @@ def login():
     """
     Logs a user in
     """
-    print("Inside login route")
     form = LoginForm()
     # print(request.get_json())
     # Get the csrf_token from the request cookie and put it into the
@@ -94,7 +93,6 @@ def unauthorized():
 
 @auth_routes.route("/linkedInSignUp/", methods=["POST"])
 def linkedIn_sign_up():
-    print("in sign up for token")
     data = request.json
     token = data["token"]
     sendoff = {
@@ -124,14 +122,11 @@ def linkedIn_sign_up():
     user_response4 = user_response3.read().decode("utf-8")
     parsed_response3 = loads(user_response4)
     email = parsed_response3["elements"][0]["handle~"]["emailAddress"]
-    print("made it to the end")
     return {"firstName": firstName, "lastName": lastName, "profilePhoto": profilePhoto, "email": email}
 
 @auth_routes.route("/linkedIncreate/", methods=["POST"])
 def linkedIn_create_user():
-    print("inside create user")
     data = request.json
-    print("--------", data)
     package = {
         "first_name": data["firstName"],
         "last_name": data["lastName"],
@@ -140,7 +135,6 @@ def linkedIn_create_user():
         "role": data["role"],
         "profile_photo": data["profilePhoto"]
     }
-    print(package)
     user = User(**package)
     db.session.add(user)
     db.session.commit()

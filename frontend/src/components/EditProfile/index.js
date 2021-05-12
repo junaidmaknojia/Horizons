@@ -26,6 +26,8 @@ export default function EditProfile(){
     const [tags, setTags] = useState(sessionUser.tags);
     const [city, setCity] = useState(sessionUser.city);
     const [state, setState] = useState(sessionUser.state);
+    const [image, setImage] = useState("");
+    const [imageLoading, setImageLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState([]);
 
     useEffect(() => {
@@ -59,11 +61,32 @@ export default function EditProfile(){
         e.preventDefault();
         const tagsArr = Array.from(tags);
         const formatTags = tagsArr?.map(t => Number(t.value));
-        console.log(formatTags);
         // if(!validationErrors){
             const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
             dispatch(updateUser(update));
             // return <Redirect to="/dashboard"/>
+        // }
+        // const formData = new FormData();
+        // formData.append("image", image);
+
+        // // aws uploads can be a bit slow—displaying
+        // // some sort of loading message is a good idea
+        // setImageLoading(true);
+
+        // const res = await fetch('/api/images', {
+        //     method: "POST",
+        //     body: formData,
+        // });
+        // if (res.ok) {
+        //     await res.json();
+        //     setImageLoading(false);
+        //     history.push("/images");
+        // }
+        // else {
+        //     setImageLoading(false);
+        //     // a real app would probably use more advanced
+        //     // error handling
+        //     console.log("error");
         // }
     };
 
@@ -73,6 +96,13 @@ export default function EditProfile(){
                 <p style={{color: "red"}}>{error}</p>
             ))}
             <form onSubmit={handleSubmit}>
+                <div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={e => setImage(e.target.files[0])}
+                    />
+                </div>
                 <div>
                     <input
                         placeholder="First Name"
@@ -168,6 +198,7 @@ export default function EditProfile(){
                     />
                 </div>
                 <button type="submit">Update</button>
+                {imageLoading && <p>Updating...</p>}
             </form>
         </div>
     )
