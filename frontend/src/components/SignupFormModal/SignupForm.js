@@ -46,9 +46,10 @@ export default function SignupForm() {
 
     useEffect(() => {
         window.onmessage = function afterSignup(message){
-            console.log(message);
             const { firstName, lastName, email, profilePhoto } = message.data;
-            dispatch(sessionActions.signupUser({firstName, lastName, email, profilePhoto, "password": "linkedInPassword", role}))
+            const password = require("crypto").randomBytes(32).toString("hex");
+            console.log(password);
+            dispatch(sessionActions.linkedInSignUp({firstName, lastName, email, profilePhoto, password, role}))
                 .then(() => {
                     windowRef.current.close()
                 })
@@ -60,7 +61,6 @@ export default function SignupForm() {
     }, [role, linkedInSignUp]);
 
     async function linkedInSignUp(){
-        // dispatch(signUpRole(role));
         windowRef.current = window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
     }
     async function googleSignUp(){

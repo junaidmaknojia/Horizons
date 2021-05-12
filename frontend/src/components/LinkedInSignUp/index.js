@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Redirect, useLocation} from "react-router-dom";
+import "./LinkedIn.css";
 
 export default function LinkedInSignUp(){
 
@@ -33,6 +34,7 @@ export default function LinkedInSignUp(){
     // add modal to prevent user clicks while processing user signup
     return (
         <>
+            <img className="loadingGif" src="https://cliply.co/wp-content/uploads/2021/02/372102050_LINKEDIN_ICON_TRANSPARENT_1080.gif"/>
         </>
     )
 }
