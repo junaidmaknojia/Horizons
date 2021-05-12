@@ -8,11 +8,8 @@ export default function LinkedInSignUp(){
 
     const dispatch = useDispatch();
     const location = useLocation();
-    const [showModal, setShowModal] = useState(false);
 
-    console.log(location.search);
     const parsedURL = location.search.match(/(?<=\?code=).*(?=&)/);
-    console.log(parsedURL && parsedURL[0]);
 
     useEffect(() => {linkedInSignUp()}, []);
 

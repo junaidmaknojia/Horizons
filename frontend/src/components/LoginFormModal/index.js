@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./LoginForm.css";
 import LoginForm from "./LoginForm";
 import { Modal } from "../../context/Modal";
-import { useSelector } from "react-redux";
 
 export default function LoginFormModal() {
 
+    const windowRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
-    const sessionUser = useSelector(state => state.session.user);
+
+    useEffect(() => {
+        window.onmessage = function afterSignup(message){
+            windowRef.current.close();
+            return () => {window.onmessage = null};
+        }
+    }, [linkedInSignIn]);
 
     async function linkedInSignIn(){
         window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-log-in&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
