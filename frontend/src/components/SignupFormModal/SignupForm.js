@@ -48,7 +48,6 @@ export default function SignupForm() {
         window.onmessage = function afterSignup(message){
             const { firstName, lastName, email, profilePhoto } = message.data;
             const password = require("crypto").randomBytes(32).toString("hex");
-            console.log(password);
             dispatch(sessionActions.linkedInSignUp({firstName, lastName, email, profilePhoto, password, role}))
                 .then(() => {
                     windowRef.current.close()

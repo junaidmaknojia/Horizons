@@ -2,21 +2,25 @@ import React, { useRef, useState, useEffect } from "react";
 import "./LoginForm.css";
 import LoginForm from "./LoginForm";
 import { Modal } from "../../context/Modal";
+import {useHistory} from "react-router-dom";
 
 export default function LoginFormModal() {
 
+    const history = useHistory();
     const windowRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         window.onmessage = function afterSignup(message){
             windowRef.current.close();
+            setShowModal(false);
+            history.push("/");
             return () => {window.onmessage = null};
         }
     }, [linkedInSignIn]);
 
     async function linkedInSignIn(){
-        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-log-in&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+        windowRef.current = window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-log-in&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
     }
     async function googleSignIn(){
         // change client id and redirect uri

@@ -21,7 +21,6 @@ export default function LinkedInSignUp(){
         });
         if(response.ok){
             const data = await response.json();
-            console.log(data);
             window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
             // window.close();
             // dispatch(sessionAdd(data));
