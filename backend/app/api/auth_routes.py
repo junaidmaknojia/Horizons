@@ -94,6 +94,7 @@ def unauthorized():
 
 @auth_routes.route("/linkedInSignUp/", methods=["POST"])
 def linkedIn_sign_up():
+    print("in sign up for token")
     data = request.json
     token = data["token"]
     sendoff = {
@@ -101,7 +102,7 @@ def linkedIn_sign_up():
         "code": token,
         "client_id": environ.get("CLIENT_ID"),
         "client_secret": environ.get("CLIENT_SECRET"),
-        "redirect_uri": "http://localhost:3000/linkedInAuth"
+        "redirect_uri": "http://localhost:3000/linkedin-sign-up"
     }
     launch = urlencode(sendoff).encode()
     request_send = Request("https://www.linkedin.com/oauth/v2/accessToken", data=launch)
@@ -123,11 +124,14 @@ def linkedIn_sign_up():
     user_response4 = user_response3.read().decode("utf-8")
     parsed_response3 = loads(user_response4)
     email = parsed_response3["elements"][0]["handle~"]["emailAddress"]
+    print("made it to the end")
     return {"firstName": firstName, "lastName": lastName, "profilePhoto": profilePhoto, "email": email}
 
 @auth_routes.route("/linkedIncreate/", methods=["POST"])
 def linkedIn_create_user():
+    print("inside create user")
     data = request.json
+    print("--------", data)
     package = {
         "first_name": data["firstName"],
         "last_name": data["lastName"],
@@ -136,6 +140,7 @@ def linkedIn_create_user():
         "role": data["role"],
         "profile_photo": data["profilePhoto"]
     }
+    print(package)
     user = User(**package)
     db.session.add(user)
     db.session.commit()
@@ -144,7 +149,7 @@ def linkedIn_create_user():
 
 
 @auth_routes.route("/linkedInSignIn/", methods=["POST"])
-def linkedInSignIn():
+def linkedIn_sign_in():
     data = request.json
     token = data["token"]
     sendoff = {
@@ -152,7 +157,7 @@ def linkedInSignIn():
         "code": token,
         "client_id": environ.get("CLIENT_ID"),
         "client_secret": environ.get("CLIENT_SECRET"),
-        "redirect_uri": "http://localhost:3000/linkedInAuth"
+        "redirect_uri": "http://localhost:3000/linkedin-log-in"
     }
     launch = urlencode(sendoff).encode()
     request_send = Request("https://www.linkedin.com/oauth/v2/accessToken", data=launch)

@@ -10,7 +10,7 @@ export default function LoginFormModal() {
     const sessionUser = useSelector(state => state.session.user);
 
     async function linkedInSignIn(){
-        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+        window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-log-in&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
     }
     async function googleSignIn(){
         // change client id and redirect uri
