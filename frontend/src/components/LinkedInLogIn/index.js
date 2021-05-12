@@ -22,8 +22,8 @@ export default function LinkedInLogIn(){
         });
         if(response.ok){
             const data = await response.json();
+            console.log(data);
             window.opener.postMessage(data, "*");
-            // dispatch(sessionAdd(data));
             // <Redirect to={`/${sessionUser.id}`}/>
         }
     }

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Redirect } from "react-router";
+import { Redirect } from "react-router";
 import * as sessionActions from "../../store/session";
 import {signUpRole} from "../../store/user";
 import './SignupForm.css';
@@ -58,6 +58,10 @@ export default function SignupForm() {
         };
         return () => {window.onmessage = null}
     }, [role, linkedInSignUp]);
+
+    if(sessionUser){
+        return <Redirect to={`/${sessionUser.id}`}/>
+    }
 
     async function linkedInSignUp(){
         windowRef.current = window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-sign-up&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");

@@ -2,22 +2,30 @@ import React, { useRef, useState, useEffect } from "react";
 import "./LoginForm.css";
 import LoginForm from "./LoginForm";
 import { Modal } from "../../context/Modal";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { sessionAdd } from "../../store/session";
 
 export default function LoginFormModal() {
 
+    const dispatch = useDispatch();
     const history = useHistory();
     const windowRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
+    const sessionUser = useSelector(state => state.session.state);
 
     useEffect(() => {
         window.onmessage = function afterSignup(message){
             windowRef.current.close();
             setShowModal(false);
-            history.push("/");
-            return () => {window.onmessage = null};
+            dispatch(sessionAdd(message.data));
         }
+        return () => {window.onmessage = null};
     }, [linkedInSignIn]);
+
+    if(sessionUser){
+        return <Redirect to={`/${sessionUser.id}`}/>
+    }
 
     async function linkedInSignIn(){
         windowRef.current = window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedin-log-in&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
