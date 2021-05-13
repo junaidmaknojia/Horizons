@@ -19,8 +19,6 @@ export default function SignupForm() {
     const [errors, setErrors] = useState([]);
     // const [validationErrors, setValidationErrors] = useState([]);
 
-    // if (sessionUser) return <Redirect to="/" />;
-
     // useEffect(() => {
     //     const errors = [];
     //     if(!name) errors.push("Name must be present")

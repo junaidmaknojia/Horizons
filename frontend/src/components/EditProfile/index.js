@@ -57,37 +57,34 @@ export default function EditProfile(){
         getOptions();
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const tagsArr = Array.from(tags);
-        const formatTags = tagsArr?.map(t => Number(t.value));
+        if(image){
+            const formData = new FormData();
+            formData.append("image", image);
+            setImageLoading(true);
+
+            const res = await fetch('/api/users/image/', {
+                method: "PATCH",
+                body: formData,
+            });
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                setImageLoading(false);
+            }
+            else {
+                setImageLoading(false);
+            }
+        }
         // if(!validationErrors){
+            const tagsArr = Array.from(tags);
+            const formatTags = tagsArr?.map(t => Number(t.value));
             const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
             dispatch(updateUser(update));
             // return <Redirect to="/dashboard"/>
         // }
-        // const formData = new FormData();
-        // formData.append("image", image);
-
-        // // aws uploads can be a bit slow—displaying
-        // // some sort of loading message is a good idea
-        // setImageLoading(true);
-
-        // const res = await fetch('/api/images', {
-        //     method: "POST",
-        //     body: formData,
-        // });
-        // if (res.ok) {
-        //     await res.json();
-        //     setImageLoading(false);
-        //     history.push("/images");
-        // }
-        // else {
-        //     setImageLoading(false);
-        //     // a real app would probably use more advanced
-        //     // error handling
-        //     console.log("error");
-        // }
+        history.push(`/${sessionUser.id}`);
     };
 
     return (
