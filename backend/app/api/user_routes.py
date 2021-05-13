@@ -33,10 +33,11 @@ def update_user():
         user.title = Role.query.get(data["title"])
     if data["industry"]:
         user.industry = Industry.query.get(data["industry"])
-    user.tags = []
-    for tagId in data["formatTags"]:
-        tag = Tag.query.get(tagId)
-        user.tags.append(tag)
+    if data["formatTags"]:
+        user.tags = []
+        for tagId in data["formatTags"]:
+            tag = Tag.query.get(tagId)
+            user.tags.append(tag)
     db.session.commit()
     return user.to_dict()
 
@@ -62,9 +63,10 @@ def update_profile_photo():
 
     url = upload["url"]
     # flask_login allows us to get the current user from the request
-    current_user["profile_photo"] = url
+    currUser = User.query.get(current_user.id)
+    currUser.profile_photo = url
     db.session.commit()
-    return current_user.to_dict()
+    return currUser.to_dict()
 
 @user_routes.route("/mentors/")
 def get_all_mentors():
