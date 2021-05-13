@@ -24,6 +24,10 @@ export default function Navigation({ isLoaded }) {
     }
 
     useEffect(() => {
+        console.log(showLogin);
+    }, [showLogin])
+
+     useEffect(() => {
         if (!showMenu) return;
 
         const closeMenu = () => {
@@ -57,7 +61,7 @@ export default function Navigation({ isLoaded }) {
                 <>
                     <Nav.Link onClick={() => setShowSignUp(true)}>Get Started
                         {showSignUp && (
-                            <Modal onClose={() => setShowSignUp(false)}>
+                            <Modal onClose={() => {setShowSignUp(false)}}>
                                 <SignupForm/>
                             </Modal>
                         )}
@@ -71,22 +75,9 @@ export default function Navigation({ isLoaded }) {
                     </Nav.Link>
                 </>
             )}
-
-            {sessionUser && (
-                <NavDropdown title="Profile" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/edit">Edit Profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={logout}>Log Out</NavDropdown.Item>
-                {/* <NavDropdown.Item href="#action/3.3">S</NavDropdown.Item> */}
-                {/* <NavDropdown.Divider /> */}
-                {/* <NavDropdown.Item href="#action/3.4"></NavDropdown.Item> */}
-                </NavDropdown>
-            )}
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
