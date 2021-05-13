@@ -10,6 +10,7 @@ import BrowseMentors from "./components/BrowseMentors";
 import UserPage from "./components/UserPage";
 import LinkedInSignUp from "./components/LinkedInSignUp";
 import LinkedInLogIn from "./components/LinkedInLogIn";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
