@@ -32,18 +32,16 @@ export default function UserDashboard() {
         if (!sessionUser.industry) warnings.push("Industry");
     }
 
-    async function handleCancel(request){
-        if(window.confirm(`Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`)){
+    async function handleDelete(person, request){
+        const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
+                                            `Confirm reject request from ${request.mentee.firstName} ${request.mentee.lastName}?`
+        if(window.confirm(message)){
             await dispatch(deleteRequest(request.id));
-            dispatch(getRequests);
         }
     }
 
-    async function handleReject(request){
-        if(window.confirm(`Confirm reject request from ${request.mentee.firstName} ${request.mentee.lastName}?`)){
-            await dispatch(updateRequest(request.id));
-            dispatch(getRequests);
-        }
+    async function handleAccept(request){
+        await dispatch(updateRequest(request.id));
     }
 
 
@@ -85,7 +83,7 @@ export default function UserDashboard() {
                                 <div>
                                     <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
                                     <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                    <div onClick={() => {handleCancel(request)}}>Cancel</div>
+                                    <div onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
                                 </div>
                             ))}
                         </div>
@@ -97,6 +95,7 @@ export default function UserDashboard() {
                             <div>
                                 <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
                                 <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
                             </div>
                         ))}
                     </>

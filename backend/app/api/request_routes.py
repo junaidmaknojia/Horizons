@@ -35,12 +35,13 @@ def make_request():
     db.session.commit()
     return newRequest.to_dict()
 
-@request_routes.route("/update", methods=["PATCH"])
+@request_routes.route("/update/", methods=["PATCH"])
 def update_request():
     data = request.json
     found_request = Request.query.get(data["requestId"])
     found_request.accepted = True
     db.session.commit()
+    return found_request.to_dict()
 
 @request_routes.route("/delete", methods=["DELETE"])
 def delete_request():
@@ -48,3 +49,4 @@ def delete_request():
     found_request = Request.query.get(data["requestId"])
     db.session.delete(found_request)
     db.session.commit()
+    return {}

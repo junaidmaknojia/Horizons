@@ -24,18 +24,20 @@ export const makeRequest = (payload) => async (dispatch) => {
 }
 
 export const updateRequest = async (requestId) => {
-    const response = await fetch("/api/requests/update", {
+    const response = await fetch("/api/requests/update/", {
         method: "PATCH",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
+    getRequests();
 }
 
 export const deleteRequest = async (requestId) => {
-    const response = await fetch("api/requests/delete", {
+    const response = await fetch("/api/requests/delete", {
         method: "DELETE",
         body: JSON.stringify({requestId})
     });
+    getRequests();
 }
 
 export default function requestReducer(state=initialState, action){
