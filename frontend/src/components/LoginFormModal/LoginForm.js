@@ -17,6 +17,7 @@ export default function LoginForm() {
     // }
 
     const handleSubmit = (e) => {
+        console.log("inside submit");
         e.preventDefault();
         setErrors([]);
         return dispatch(sessionActions.login({ email, password }))

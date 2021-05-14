@@ -37,22 +37,17 @@ export default function LoginFormModal() {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)}>Log In</button>
-            {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
-                    <LoginForm/>
-                    <div>
-                        <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
-                            onClick={linkedInSignIn}
-                            style={{width:100, height:"auto"}}/>
-                    </div>
-                    <div>
-                        <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
-                            onClick={googleSignIn}
-                            style={{width:100, height:"auto"}}/>
-                    </div>
-                </Modal>
-            )}
+            <LoginForm/>
+            <div>
+                <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
+                    onClick={linkedInSignIn}
+                    style={{width:100, height:"auto"}}/>
+            </div>
+            <div>
+                <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
+                    onClick={googleSignIn}
+                    style={{width:100, height:"auto"}}/>
+            </div>
         </>
     );
 }
