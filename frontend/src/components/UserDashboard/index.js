@@ -32,18 +32,16 @@ export default function UserDashboard() {
         if (!sessionUser.industry) warnings.push("Industry");
     }
 
-    async function handleDelete(person, request){
+    function handleDelete(person, request){
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
                                             `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if(window.confirm(message)){
-            await dispatch(deleteRequest(request.id));
-            await dispatch(getRequests());
+            deleteRequest(request.id);
         }
     }
 
-    async function handleAccept(request){
-        await dispatch(updateRequest(request.id));
-        await dispatch(getRequests());
+    function handleAccept(request){
+        updateRequest(request.id);
     }
 
 
