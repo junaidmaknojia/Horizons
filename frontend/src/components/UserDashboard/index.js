@@ -32,6 +32,21 @@ export default function UserDashboard() {
         if (!sessionUser.industry) warnings.push("Industry");
     }
 
+    async function handleCancel(request){
+        if(window.confirm(`Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`)){
+            await dispatch(deleteRequest(request.id));
+            dispatch(getRequests);
+        }
+    }
+
+    async function handleReject(request){
+        if(window.confirm(`Confirm reject request from ${request.mentee.firstName} ${request.mentee.lastName}?`)){
+            await dispatch(updateRequest(request.id));
+            dispatch(getRequests);
+        }
+    }
+
+
     return (
         <div className="userProfile">
             {warnings.length>0 && (
@@ -55,15 +70,26 @@ export default function UserDashboard() {
             <div className="requests">
                 <h2>Your Requests</h2>
                 {sessionUser.role === "Mentee" && (
-                    <div>
-                        {myRequests?.map(request => (
-                            <div>
-                                <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                {request.accepted && (<p>{request.mentor.email}</p>)}
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div>
+                            {acceptedRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                    <p>{request.mentor.email}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div>
+                            {pendingRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                    <div onClick={() => {handleCancel(request)}}>Cancel</div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
                 )}
                 {sessionUser.role === "Mentor" && (
                     <>
