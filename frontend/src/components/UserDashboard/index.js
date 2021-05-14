@@ -34,14 +34,16 @@ export default function UserDashboard() {
 
     async function handleDelete(person, request){
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
-                                            `Confirm reject request from ${request.mentee.firstName} ${request.mentee.lastName}?`
+                                            `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if(window.confirm(message)){
-            dispatch(deleteRequest(request.id));
+            await dispatch(deleteRequest(request.id));
+            await dispatch(getRequests());
         }
     }
 
     async function handleAccept(request){
-        dispatch(updateRequest(request.id));
+        await dispatch(updateRequest(request.id));
+        await dispatch(getRequests());
     }
 
 
