@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom"
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { Modal } from "../../context/Modal";
+import "../../context/Modal.css";
 import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from '../../store/session';
@@ -61,7 +62,7 @@ export default function Navigation({ isLoaded }) {
                 <>
                     <Nav.Link onClick={() => setShowSignUp(true)}>Get Started
                         {showSignUp && (
-                            <Modal onClose={() => {setShowSignUp(false)}}>
+                            <Modal onClose={() => setShowSignUp(false)}>
                                 <SignupForm/>
                             </Modal>
                         )}
@@ -77,7 +78,9 @@ export default function Navigation({ isLoaded }) {
             )}
           </Nav>
           <Nav>
+            {/* {sessionUser && (
 
+            )} */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
