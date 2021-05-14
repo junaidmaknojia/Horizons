@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
 import "./UserDashboard.css";
-import EditProfile from "../EditProfile";
-import { getRequests } from "../../store/requests";
 
 export default function UserDashboard() {
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const myRequests = useSelector(state => state.requests.requests);
+    const acceptedRequests = myRequests?.filter(request => request.accepted);
+    const pendingRequests = myRequests?.filter(request => !request.accepted);
     let warnings = [];
 
     useEffect(() => {
@@ -21,33 +22,73 @@ export default function UserDashboard() {
         // set above near the selectors
     }, [dispatch]);
 
+    if(!sessionUser){
+        return <Redirect to="/"/>
+    }
+
     if (sessionUser.role === "Mentor") {
         const numTags = sessionUser.tags ? sessionUser.tags.length : 0;
         if (!sessionUser.tags || numTags < 5) warnings.push(`${5 - numTags} more tag${5 - numTags === 1 ? "" : "s"}`);
         if (!sessionUser.industry) warnings.push("Industry");
     }
 
+    function handleDelete(person, request){
+        const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
+                                            `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
+        if(window.confirm(message)){
+            deleteRequest(request.id);
+        }
+    }
+
+    function handleAccept(request){
+        updateRequest(request.id);
+    }
+
+
     return (
         <div className="userProfile">
             {warnings.length>0 && (
-                <>
+                <div className="userProfile__warnings">
                     <h2>Please go into your profile settings and add the following:</h2>
                     <ul>
                         {warnings.map(warning => (<li>{warning}</li>))}
                     </ul>
-                </>
+                </div>
             )}
+            <div className="userProfile__card">
+                <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
+                <div>{`${sessionUser.firstName} ${sessionUser.lastName}`}</div>
+                <div>{sessionUser.role}</div>
+                <div>{sessionUser.title}</div>
+                <div>
+                    {sessionUser.tags.map(tag => (
+                        <div>{tag}</div>
+                    ))}
+                </div>
+                <Link to="/edit">Edit Profile</Link>
+            </div>
             <div className="requests">
                 <h2>Your Requests</h2>
                 {sessionUser.role === "Mentee" && (
                     <>
-                        {myRequests?.map(request => (
-                            <div>
-                                <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                {request.accepted && (<p>{request.mentor.email}</p>)}
-                            </div>
-                        ))}
+                        <div>
+                            {acceptedRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                    <p>{request.mentor.email}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div>
+                            {pendingRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                    <div onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
+                                </div>
+                            ))}
+                        </div>
                     </>
                 )}
                 {sessionUser.role === "Mentor" && (
@@ -56,12 +97,13 @@ export default function UserDashboard() {
                             <div>
                                 <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
                                 <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
+                                <div onClick={() => {handleAccept(request)}}>Accept</div>
                             </div>
                         ))}
                     </>
                 )}
             </div>
-            <Link to="/edit">Edit Profile</Link>
         </div>
     );
 }

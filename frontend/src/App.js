@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/">
             <Homepage isLoaded={isLoaded}/>
           </Route>
-          <Route exact path="/dashboard">
+          <Route path="/dashboard">
             <UserDashboard/>
           </Route>
           <Route path="/edit">
