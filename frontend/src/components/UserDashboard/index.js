@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import { getRequests } from "../../store/requests";
+import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
 import "./UserDashboard.css";
 
 export default function UserDashboard() {
@@ -36,12 +36,12 @@ export default function UserDashboard() {
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
                                             `Confirm reject request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if(window.confirm(message)){
-            await dispatch(deleteRequest(request.id));
+            dispatch(deleteRequest(request.id));
         }
     }
 
     async function handleAccept(request){
-        await dispatch(updateRequest(request.id));
+        dispatch(updateRequest(request.id));
     }
 
 
@@ -65,6 +65,7 @@ export default function UserDashboard() {
                         <div>{tag}</div>
                     ))}
                 </div>
+                <Link to="/edit">Edit Profile</Link>
             </div>
             <div className="requests">
                 <h2>Your Requests</h2>

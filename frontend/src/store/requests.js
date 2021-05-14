@@ -35,6 +35,7 @@ export const updateRequest = async (requestId) => {
 export const deleteRequest = async (requestId) => {
     const response = await fetch("/api/requests/delete", {
         method: "DELETE",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
     getRequests();

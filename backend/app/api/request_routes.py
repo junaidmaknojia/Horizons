@@ -45,7 +45,8 @@ def update_request():
 
 @request_routes.route("/delete", methods=["DELETE"])
 def delete_request():
-    data = request.json()
+    data = request.json
+    print(data)
     found_request = Request.query.get(data["requestId"])
     db.session.delete(found_request)
     db.session.commit()
