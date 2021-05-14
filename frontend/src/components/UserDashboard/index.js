@@ -57,6 +57,7 @@ export default function UserDashboard() {
             )}
             <div className="userProfile__card">
                 <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
+                <div>{`${sessionUser.firstName} ${sessionUser.lastName}`}</div>
                 <div>{sessionUser.role}</div>
                 <div>{sessionUser.title}</div>
                 <div>
@@ -96,12 +97,12 @@ export default function UserDashboard() {
                                 <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
                                 <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
                                 <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
+                                <div onClick={() => {handleAccept(request)}}>Accept</div>
                             </div>
                         ))}
                     </>
                 )}
             </div>
-            <Link to="/edit">Edit Profile</Link>
         </div>
     );
 }
