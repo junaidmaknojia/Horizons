@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import "./UserPage.css";
 
 export default function UserPage(){
 
     const {id} = useParams();
     const [user, setUser] = useState({});
+    const sessionUser = useSelector(state => state.session.user);
 
     useEffect(async () => {
-        console.log("inside useEffect");
         const response = await fetch(`/api/users/${id}`);
         const data = await response.json();
         setUser(data);
-        // user = data.user;
     }, []);
+
+    if(sessionUser.id == id){
+        return <Redirect to="/dashboard"/>
+    }
 
     return (
         <div className="userPage">

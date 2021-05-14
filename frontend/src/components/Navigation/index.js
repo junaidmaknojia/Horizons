@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom"
-import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { Modal } from "react-bootstrap";
 import SignupForm from "../SignupForm";
