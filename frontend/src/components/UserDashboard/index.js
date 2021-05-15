@@ -52,19 +52,19 @@ export default function UserDashboard() {
             <div className="userDashboard__card">
                 <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
                 <Link to="/edit">Edit Profile</Link>
-                <div>{`${sessionUser.firstName} ${sessionUser.lastName}`}</div>
-                <div>{sessionUser.role}</div>
-                <div>{sessionUser.title}</div>
+                <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}</h4>
+                <h6>{sessionUser.role}</h6>
+                <h6>{sessionUser.title}</h6>
                 <div>
                     {sessionUser.tags.map(tag => (
-                        <div>{tag}</div>
+                        <div className="tag">{tag}</div>
                     ))}
                 </div>
             </div>
             <div className="requestsContainer">
                 {warnings.length>0 && (
                     <div className="requests__warnings">
-                        <h2>Please go into your profile settings and add the following:</h2>
+                        <h3>Please go into your profile settings and add the following:</h3>
                         <ul>
                             {warnings.map(warning => (<li>{warning}</li>))}
                         </ul>
@@ -79,9 +79,9 @@ export default function UserDashboard() {
                                 {pendingRequests?.map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
-                                        <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
-                                        <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
-                                        <div onClick={() => {handleAccept(request)}}>Accept</div>
+                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        <div className="delete" onClick={() => {handleDelete("mentor", request)}}>Reject</div>
+                                        <div className="accept" onClick={() => {handleAccept(request)}}>Accept</div>
                                     </div>
                                 ))}
                             </div>
@@ -90,7 +90,7 @@ export default function UserDashboard() {
                                 {acceptedRequests?.map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
-                                        <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
                                     </div>
                                 ))}
                             </div>
@@ -103,7 +103,7 @@ export default function UserDashboard() {
                                 {acceptedRequests?.map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                        <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
                                         <p>{request.mentor.email}</p>
                                     </div>
                                 ))}
@@ -113,8 +113,8 @@ export default function UserDashboard() {
                                 {pendingRequests?.map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                        <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                        <div onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
+                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        <div className="delete" onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
                                     </div>
                                 ))}
                             </div>
