@@ -49,6 +49,7 @@ export default function UserDashboard() {
         <div className="userDashboard">
             <div className="userDashboard__card">
                 <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
+                <Link to="/edit">Edit Profile</Link>
                 <div>{`${sessionUser.firstName} ${sessionUser.lastName}`}</div>
                 <div>{sessionUser.role}</div>
                 <div>{sessionUser.title}</div>
@@ -57,11 +58,10 @@ export default function UserDashboard() {
                         <div>{tag}</div>
                     ))}
                 </div>
-                <Link to="/edit">Edit Profile</Link>
             </div>
             <div className="requests">
                 {warnings.length>0 && (
-                    <div className="userDashboard__warnings">
+                    <div className="requests__warnings">
                         <h2>Please go into your profile settings and add the following:</h2>
                         <ul>
                             {warnings.map(warning => (<li>{warning}</li>))}
@@ -69,9 +69,21 @@ export default function UserDashboard() {
                     </div>
                 )}
                 <h2>Your Requests</h2>
-                {sessionUser.role === "Mentee" && (
+                {sessionUser.role === "Mentor" && (
                     <>
-                        <div>
+                        <div className="requests__pendingRequests">
+                            <h4>Pending Requests</h4>
+                            {pendingRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                    <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
+                                    <div onClick={() => {handleAccept(request)}}>Accept</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="requests__acceptedRequests">
+                            <h4>Accepted Requests</h4>
                             {acceptedRequests?.map(request => (
                                 <div>
                                     <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
@@ -80,7 +92,22 @@ export default function UserDashboard() {
                                 </div>
                             ))}
                         </div>
-                        <div>
+                    </>
+                )}
+                {sessionUser.role === "Mentee" && (
+                    <>
+                        <div className="requests__acceptedRequests">
+                            <h4>Accepted Requests</h4>
+                            {acceptedRequests?.map(request => (
+                                <div>
+                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                    <p>{request.mentor.email}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="requests__pendingRequests">
+                            <h4>Pending Requests</h4>
                             {pendingRequests?.map(request => (
                                 <div>
                                     <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
@@ -89,18 +116,6 @@ export default function UserDashboard() {
                                 </div>
                             ))}
                         </div>
-                    </>
-                )}
-                {sessionUser.role === "Mentor" && (
-                    <>
-                        {myRequests?.map(request => (
-                            <div>
-                                <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
-                                <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
-                                <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
-                                <div onClick={() => {handleAccept(request)}}>Accept</div>
-                            </div>
-                        ))}
                     </>
                 )}
             </div>

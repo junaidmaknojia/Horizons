@@ -5,3 +5,13 @@
     grid-template-columns: repeat(1fr, 7);
     grid-template-rows: repeat(1fr, 10);
 }
+
+.userDashboard__card {
+    grid-area: 1/1/7/4;
+    display: flex;
+    flex-flow: row;
+}
+
+.requests {
+    grid-area: 1/4/10/8;
+}
