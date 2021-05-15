@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
-import UserProfile from "../UserDashboard";
 import "./EditProfile.css";
+import {Form, Button} from "react-bootstrap";
 
 export default function EditProfile(){
 
@@ -92,6 +92,9 @@ export default function EditProfile(){
             {validationErrors?.map(error => (
                 <p style={{color: "red"}}>{error}</p>
             ))}
+            <Form onSubmit={handleSubmit}>
+
+            </Form>
             <form onSubmit={handleSubmit}>
                 <div>
                     <input
@@ -100,82 +103,64 @@ export default function EditProfile(){
                         onChange={e => setImage(e.target.files[0])}
                     />
                 </div>
-                <div>
-                    <input
-                        placeholder="First Name"
-                        type="text"
-                        value={firstName}
-                        onChange={e => setFirstName(e.target.value)}
-                        required
-                        />
-                </div>
-                <div>
-                    <input
-                        placeholder="Last Name"
-                        type="text"
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <textarea
-                        placeholder="Write your bio here"
-                        type="text"
+                <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Control type="text" placeholder="First Name" value={firstName}
+                        onChange={e => setFirstName(e.target.value)} required/>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Control type="text" placeholder="Last Name" value={lastName}
+                        onChange={e => setLastName(e.target.value)} required/>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
                         value={bio}
-                        onChange={(e) => setBio(e.target.value)}
-                    />
-                </div>
+                        onChange={(e) => setBio(e.target.value)}/>
+                </Form.Group>
 
                 {(sessionUser.role === "Mentee") && (
-                    <div>
-                        <input
-                            placeholder="Title"
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <Form.Group controlId="exampleForm.ControlInput1">
+                        <Form.Control type="text" placeholder="Title" value={title}
+                            onChange={(e) => setTitle(e.target.value)} required/>
+                    </Form.Group>
                 )}
                 {(sessionUser.role === "Mentor") && (
                     <>
-                        <div>
-                            <p>{`Current Title: ${sessionUser.title}`}</p>
-                            {/* <select value={roleCategory} onChange={e => {
-                                console.log(e.target);
-                                setRoleCategory(e.target.value.roles)}}>
-                                {roleCategories?.map(opt => (
-                                    <option value={opt} id={opt.id}>{opt.name}</option>
-                                ))}
-                            </select> */}
-                            <select onChange={e => setTitle(e.target.value)}>
+                        {/* <select value={roleCategory} onChange={e => {
+                            console.log(e.target);
+                            setRoleCategory(e.target.value.roles)}}>
+                            {roleCategories?.map(opt => (
+                                <option value={opt} id={opt.id}>{opt.name}</option>
+                            ))}
+                        </select> */}
+                        <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Label>{`Current Title: ${sessionUser.title}`}</Form.Label>
+                            <Form.Control as="select" onChange={e => setTitle(e.target.value)}>
                                 {roleCategory?.map(tO => (
                                     <option value={tO.id}>{tO.name}</option>
                                 ))}
-                            </select>
-                        </div>
-                        <div>
-                            <p>{`Current Industry: ${sessionUser.industry}`}</p>
-                            <select onChange={e => setIndustry(e.target.value)}>
-                                {industryOptions?.map(tag => (
-                                    <option value={tag.id}>{tag.name}</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Label>{`Current Industry: ${sessionUser.industry}`}</Form.Label>
+                            <Form.Control as="select" onChange={e => setIndustry(e.target.value)}>
+                                {industryOptions?.map(indus => (
+                                    <option value={indus.id}>{indus.name}</option>
                                 ))}
-                            </select>
-                        </div>
-                        <div>
-                            <p>{`Current Tags: ${sessionUser.tags}`}</p>
-                            {/* <select onChange={e => setTagCategory(e.target.value)} multiple>
-                                {tagCategories?.map(tag => (
-                                    <option value={tag.name}>{tag.name}</option>
-                                ))}
-                            </select> */}
-                            <select onChange={e => setTags(e.target.selectedOptions)} multiple>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Label>{`Current Tags: ${sessionUser.tags?.join(", ")}`}</Form.Label>
+                            <Form.Control as="select" onChange={e => setTags(e.target.selectedOptions)} multiple>
                                 {tagCategory?.map(tag => (
                                     <option value={tag.id}>{tag.name}</option>
                                 ))}
-                            </select>
-                        </div>
+                            </Form.Control>
+                        </Form.Group>
+                        {/* <select onChange={e => setTagCategory(e.target.value)} multiple>
+                            {tagCategories?.map(tag => (
+                                <option value={tag.name}>{tag.name}</option>
+                            ))}
+                        </select> */}
                     </>
                 )}
                 <div>
@@ -194,7 +179,7 @@ export default function EditProfile(){
                         onChange={(e) => setState(e.target.value)}
                     />
                 </div>
-                <button type="submit">Update</button>
+                <Button variant="primary" type="submit">Update</Button>
                 {imageLoading && <p>Updating...</p>}
             </form>
         </div>
