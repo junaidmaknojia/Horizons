@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
@@ -9,18 +9,20 @@ export default function UserDashboard() {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const myRequests = useSelector(state => state.requests.requests);
-    const acceptedRequests = myRequests?.filter(request => request.accepted);
-    const pendingRequests = myRequests?.filter(request => !request.accepted);
+    const [acceptedRequests, setAcceptedRequests] = useState([]);
+    const [pendingRequests, setPendingRequests] = useState([]);
     let warnings = [];
 
     useEffect(() => {
         dispatch(getRequests());
+        setAcceptedRequests(myRequests?.filter(request => request.accepted));
+        setPendingRequests(myRequests?.filter(request => !request.accepted));
         // refactor to change the requests map in the JSX
         // so there's one section for both mentors and mentees
         // and changes the requests.mentors or requests.mentees
         // to requests[otherPerson] and otherPerson is a conditional
         // set above near the selectors
-    }, [dispatch]);
+    }, [myRequests, dispatch]);
 
     if(!sessionUser){
         return <Redirect to="/"/>
@@ -59,7 +61,7 @@ export default function UserDashboard() {
                     ))}
                 </div>
             </div>
-            <div className="requests">
+            <div className="requestsContainer">
                 {warnings.length>0 && (
                     <div className="requests__warnings">
                         <h2>Please go into your profile settings and add the following:</h2>
@@ -69,55 +71,56 @@ export default function UserDashboard() {
                     </div>
                 )}
                 <h2>Your Requests</h2>
-                {sessionUser.role === "Mentor" && (
-                    <>
-                        <div className="requests__pendingRequests">
-                            <h4>Pending Requests</h4>
-                            {pendingRequests?.map(request => (
-                                <div>
-                                    <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
-                                    <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
-                                    <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
-                                    <div onClick={() => {handleAccept(request)}}>Accept</div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="requests__acceptedRequests">
-                            <h4>Accepted Requests</h4>
-                            {acceptedRequests?.map(request => (
-                                <div>
-                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                    <p>{request.mentor.email}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-                {sessionUser.role === "Mentee" && (
-                    <>
-                        <div className="requests__acceptedRequests">
-                            <h4>Accepted Requests</h4>
-                            {acceptedRequests?.map(request => (
-                                <div>
-                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                    <p>{request.mentor.email}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="requests__pendingRequests">
-                            <h4>Pending Requests</h4>
-                            {pendingRequests?.map(request => (
-                                <div>
-                                    <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
-                                    <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
-                                    <div onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
+                <div className="requests">
+                    {sessionUser.role === "Mentor" && (
+                        <>
+                            <div className="requests__pendingRequests">
+                                <h4>Pending Requests</h4>
+                                {pendingRequests?.map(request => (
+                                    <div className="request">
+                                        <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                        <div onClick={() => {handleDelete("mentor", request)}}>Reject</div>
+                                        <div onClick={() => {handleAccept(request)}}>Accept</div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="requests__acceptedRequests">
+                                <h4>Accepted Requests</h4>
+                                {acceptedRequests?.map(request => (
+                                    <div className="request">
+                                        <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <h3>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h3>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
+                    {sessionUser.role === "Mentee" && (
+                        <>
+                            <div className="requests__acceptedRequests">
+                                <h4>Accepted Requests</h4>
+                                {acceptedRequests?.map(request => (
+                                    <div className="request">
+                                        <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                        <p>{request.mentor.email}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="requests__pendingRequests">
+                                <h4>Pending Requests</h4>
+                                {pendingRequests?.map(request => (
+                                    <div className="request">
+                                        <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <h3>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h3>
+                                        <div onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

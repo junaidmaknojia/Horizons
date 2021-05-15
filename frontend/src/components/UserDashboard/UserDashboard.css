@@ -1,17 +1,38 @@
 .userDashboard {
     position: absolute;
     top: 100px;
-    display: grid;
-    grid-template-columns: repeat(1fr, 7);
-    grid-template-rows: repeat(1fr, 10);
-}
-
-.userDashboard__card {
-    grid-area: 1/1/7/4;
     display: flex;
     flex-flow: row;
 }
 
+.userDashboard__card {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.requestsContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-left: 100px;
+}
+
 .requests {
-    grid-area: 1/4/10/8;
+    display: flex;
+    flex-flow: row;
+}
+
+.requests__pendingRequests, .requests__acceptedRequests {
+    display: flex;
+    flex-flow: column;
+    margin: 30px;
+}
+
+.request {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: 20px 0;
 }
