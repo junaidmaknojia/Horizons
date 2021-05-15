@@ -13,14 +13,21 @@
     margin: 20px 20px 20px 50px;
 }
 
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 350px;
+}
+
 .tag {
     position: relative;
     display: inline-block;
     width: auto;
     height: 20px;
     margin: 20px;
-    padding-left: 15px;
-    background: #E8EDF2;
+    padding: 5px 5px 5px 15px;
+    background: #ffe7a6;
     color: #888DA3;
     line-height: 20px;
     border-radius: 4px;
@@ -37,7 +44,7 @@
     height: 14px;
     width: 14px;
     transform: rotate(45deg);
-    background: #E8EDF2;
+    background: #ffe7a6;
     border-color: transparent transparent #C7D2DB #C7D2DB;
     left: -6px;
     top: 2px;

@@ -55,7 +55,7 @@ export default function UserDashboard() {
                 <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}</h4>
                 <h6>{sessionUser.role}</h6>
                 <h6>{sessionUser.title}</h6>
-                <div>
+                <div className="tagContainer">
                     {sessionUser.tags.map(tag => (
                         <div className="tag">{tag}</div>
                     ))}
