@@ -21,12 +21,15 @@ export default function UserPage(){
 
     return (
         <div className="userPage">
+            <img src={user.profilePhoto} className="userPage__photo"/>
             {user && (
-                <>
+                <div className="userPage__info">
                     <h1>{`${user.firstName} ${user.lastName}`}</h1>
-                    <h2>{user.role}</h2>
-                    {user.title && (<h2>{user.title}</h2>)}
-                </>
+                    <h3>{user.role}</h3>
+                    {user.title && (<h3>{user.title}</h3>)}
+                    {user.industry && (<h4>{user.industry}</h4>)}
+                    {user.bio && (<p>{user.bio}</p>)}
+                </div>
             )}
         </div>
     )
