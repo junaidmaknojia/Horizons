@@ -46,16 +46,8 @@ export default function UserDashboard() {
 
 
     return (
-        <div className="userProfile">
-            {warnings.length>0 && (
-                <div className="userProfile__warnings">
-                    <h2>Please go into your profile settings and add the following:</h2>
-                    <ul>
-                        {warnings.map(warning => (<li>{warning}</li>))}
-                    </ul>
-                </div>
-            )}
-            <div className="userProfile__card">
+        <div className="userDashboard">
+            <div className="userDashboard__card">
                 <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
                 <div>{`${sessionUser.firstName} ${sessionUser.lastName}`}</div>
                 <div>{sessionUser.role}</div>
@@ -68,6 +60,14 @@ export default function UserDashboard() {
                 <Link to="/edit">Edit Profile</Link>
             </div>
             <div className="requests">
+                {warnings.length>0 && (
+                    <div className="userDashboard__warnings">
+                        <h2>Please go into your profile settings and add the following:</h2>
+                        <ul>
+                            {warnings.map(warning => (<li>{warning}</li>))}
+                        </ul>
+                    </div>
+                )}
                 <h2>Your Requests</h2>
                 {sessionUser.role === "Mentee" && (
                     <>
