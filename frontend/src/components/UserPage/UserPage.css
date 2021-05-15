@@ -1,0 +1,27 @@
+.userPage {
+    position: absolute;
+    top: 100px;
+    display: flex;
+    flex-flow: row;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.userPage__photo {
+    width: 350px;
+    height: auto;
+    margin: 40px;
+    box-shadow: 2px 3px 10px black ;
+}
+
+.userPage__info {
+    display: flex;
+    flex-flow: column;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+h1 {
+    padding-bottom: 20px;
+    color: rgb(57, 33, 114);
+    font-weight: bold;
+}
