@@ -1,9 +1,10 @@
 import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Link } from "react-router-dom";
 import { getRequests, makeRequest } from "../../store/requests";
-import { getMentors } from "../../store/user";
 import "./BrowseMentors.css";
-
+import {Card} from "react-bootstrap";
+import CardDeck from 'react-bootstrap/CardDeck';
 
 
 export default function BrowseMentors() {
@@ -53,6 +54,10 @@ export default function BrowseMentors() {
         dispatch(getRequests());
     }
 
+    if(!sessionUser){
+        return <Redirect to="/"/>
+    }
+
     return (
         <div className="browseMentors">
             <h1>Find Mentors</h1>
@@ -67,14 +72,21 @@ export default function BrowseMentors() {
                 ))}
             </div>
             <div className="listMentors">
-                {listMentors?.map(mentor => (
-                    <div className="listMentors__mentor">
-                        <h3>{`${mentor.firstName} ${mentor.lastName}`}</h3>
-                        <p>{mentor.title}</p>
-                        <p>{mentor.industry}</p>
-                        <button onClick={() => handleRequest(mentor)}>Request</button>
-                    </div>
-                ))}
+                <CardDeck>
+                    {listMentors?.map(mentor => (
+                        <Card>
+                            <Card.Img variant="top" src={mentor.profilePhoto} />
+                            <Card.Body>
+                                <Card.Title><Link to={`/${mentor.id}`}>{`${mentor.firstName} ${mentor.lastName}`}</Link></Card.Title>
+                                <Card.Text>{mentor.title}</Card.Text>
+                                <Card.Text>{mentor.industry}</Card.Text>
+                            </Card.Body>
+                            <Card.Footer>
+                                <button onClick={() => handleRequest(mentor)}>Request</button>
+                            </Card.Footer>
+                        </Card>
+                    ))}
+                </CardDeck>
             </div>
         </div>
     )
