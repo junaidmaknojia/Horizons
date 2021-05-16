@@ -24,11 +24,11 @@ function App() {
 
 	return (
 		<>
+			{sessionUser && (
+				<Navigation isLoaded={isLoaded} />
+			)}
 			{isLoaded && (
 				<Switch>
-					{sessionUser && (
-						<Navigation isLoaded={isLoaded} />
-					)}
 					<Route exact path="/">
 						<Homepage isLoaded={isLoaded} />
 					</Route>
