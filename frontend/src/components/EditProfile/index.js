@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
 import "./EditProfile.css";
-import {Form, Button} from "react-bootstrap";
+import {Form, Button, Row, Col} from "react-bootstrap";
 
 export default function EditProfile(){
 
@@ -93,23 +93,24 @@ export default function EditProfile(){
                 <p style={{color: "red"}}>{error}</p>
             ))}
             <Form onSubmit={handleSubmit}>
-
-            </Form>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={e => setImage(e.target.files[0])}
-                    />
-                </div>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Control type="text" placeholder="First Name" value={firstName}
-                        onChange={e => setFirstName(e.target.value)} required/>
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Control type="text" placeholder="Last Name" value={lastName}
-                        onChange={e => setLastName(e.target.value)} required/>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Control type="text" placeholder="First Name" value={firstName}
+                                onChange={e => setFirstName(e.target.value)} required/>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Control type="text" placeholder="Last Name" value={lastName}
+                                onChange={e => setLastName(e.target.value)} required/>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Form.Group>
+                    <Form.Label>Choose Profile Photo</Form.Label>
+                    <Form.File id="exampleFormControlFile1" type="file" accept="image/*"
+                        onChange={e => setImage(e.target.files[0])}/>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
@@ -163,25 +164,23 @@ export default function EditProfile(){
                         </select> */}
                     </>
                 )}
-                <div>
-                    <input
-                        placeholder="City"
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        />
-                </div>
-                <div>
-                    <input
-                        placeholder="State"
-                        type="text"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                    />
-                </div>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Control placeholder="City" type="text" value={city}
+                                onChange={(e) => setCity(e.target.value)}/>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Control placeholder="State" type="text" value={state}
+                                onChange={(e) => setState(e.target.value)}/>
+                        </Form.Group>
+                    </Col>
+                </Row>
                 <Button variant="primary" type="submit">Update</Button>
                 {imageLoading && <p>Updating...</p>}
-            </form>
+            </Form>
         </div>
     )
 }
