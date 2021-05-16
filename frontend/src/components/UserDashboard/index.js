@@ -14,6 +14,7 @@ export default function UserDashboard() {
     let warnings = [];
 
     useEffect(() => {
+        console.log("inside dashboard");
         dispatch(getRequests());
         setAcceptedRequests(myRequests?.filter(request => request.accepted));
         setPendingRequests(myRequests?.filter(request => !request.accepted));
