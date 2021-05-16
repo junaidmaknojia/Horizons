@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import * as sessionActions from "../../store/session";
 import {signUpRole} from "../../store/user";
+import {Form, Row, Col, Button, InputGroup} from "react-bootstrap";
 import './SignupForm.css';
 
 export default function SignupForm() {
@@ -72,78 +73,68 @@ export default function SignupForm() {
 
     return (
         <>
-            <div>
-                I'm signing up as a:
-                <input type="radio" id="mentor" name="role" onClick={()=> setRole("Mentor")}/>Mentor<br/>
-                <input type="radio" id="mentee" name="role" onClick={()=> setRole("Mentee")}/>Mentee<br/>
-            </div>
+            {/* <div>
+                <input type="radio" />Mentor<br/>
+                <input type="radio" />Mentee<br/>
+            </div> */}
+            <InputGroup>
+                <p>I'm signing up as a:</p>
+                <InputGroup.Prepend>
+                    <InputGroup.Radio id="mentor" name="role" onClick={()=> setRole("Mentor")} value="Mentor"/>Mentor
+                    <InputGroup.Radio id="mentee" name="role" onClick={()=> setRole("Mentee")} value="Mentee"/>Mentee
+                </InputGroup.Prepend>
+            </InputGroup>
             {role && (
                 <>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <ul>
-                                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                            </ul>
-                        </div>
-                        <div>
-                            <input
-                                placeholder="First Name"
-                                type="text" value={firstName}
-                                onChange={e => setFirstName(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                placeholder="Last Name"
-                                type="text"
-                                value={lastName}
-                                onChange={e => setLastName(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                placeholder="Email"
-                                type="text"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                placeholder="Password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                placeholder="Confirm Password"
-                                type="password"
-                                value={confirmPassword}
+                    <Form onSubmit={handleSubmit}>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                    <Form.Control type="text" placeholder="First Name" value={firstName}
+                                        onChange={e => setFirstName(e.target.value)} required/>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                    <Form.Control type="text" placeholder="Last Name" value={lastName}
+                                        onChange={e => setLastName(e.target.value)} required/>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Control placeholder="Email" type="email" value={email}
+                                onChange={(e) => setEmail(e.target.value)} required />
+                        </Form.Group>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                    <Form.Control placeholder="Password" type="password" value={password}
+                                        onChange={(e) => setPassword(e.target.value)} required />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                    <Form.Control placeholder="Confirm Password" type="password" value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <button type="submit">Join!</button>
-                        </div>
-                    </form>
+                                required/>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Button variant="primary" type="submit">Sign Up!</Button>
+                    </Form>
                     <div>
-                        <div>
-                            <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
-                                onClick={linkedInSignUp}
-                                style={{width:100, height:"auto"}}/>
-                        </div>
-                        <div>
-                            <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
-                                onClick={googleSignUp}
-                                style={{width:100, height:"auto"}}/>
-                        </div>
+                        <Row>
+                            <Col>
+                                <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
+                                    onClick={linkedInSignUp}
+                                    style={{width:150, height:"auto"}}/>
+                            </Col>
+                            <Col>
+                                <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
+                                    onClick={googleSignUp}
+                                    style={{width:150, height:"auto"}}/>
+                            </Col>
+                        </Row>
                     </div>
                 </>
             )}

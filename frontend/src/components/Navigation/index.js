@@ -25,10 +25,16 @@ export default function Navigation({ isLoaded }) {
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar.Brand>
+                <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/horizon-logo.png"
+                    width="35" height="35" className="d-inline-block align-top"/>
+            </Navbar.Brand>
             <Navbar.Brand href="/">Horizons</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav.Link href="/browse">Browse</Nav.Link>
+                {sessionUser && (
+                    <Nav.Link href="/browse">Browse</Nav.Link>
+                )}
                 <Nav className="mr-auto">
                     {sessionUser === null && (
                         <>
