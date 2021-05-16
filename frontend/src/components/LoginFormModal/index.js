@@ -5,6 +5,7 @@ import { Modal } from "../../context/Modal";
 import {Redirect, useHistory} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sessionAdd } from "../../store/session";
+import {Row} from "react-bootstrap";
 
 export default function LoginFormModal() {
 
@@ -38,15 +39,19 @@ export default function LoginFormModal() {
     return (
         <>
             <LoginForm/>
-            <div>
-                <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
-                    onClick={linkedInSignIn}
-                    style={{width:100, height:"auto"}}/>
-            </div>
-            <div>
-                <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
-                    onClick={googleSignIn}
-                    style={{width:100, height:"auto"}}/>
+            <div className="otherAuths">
+                <Row>
+                <div>
+                    <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
+                        onClick={linkedInSignIn}
+                        style={{width:150, height:"auto"}}/>
+                </div>
+                </Row>
+                <Row>
+                    <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
+                        onClick={googleSignIn}
+                        style={{width:150, height:"auto"}}/>
+                </Row>
             </div>
         </>
     );
