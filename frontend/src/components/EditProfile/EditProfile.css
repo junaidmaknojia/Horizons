@@ -1,4 +1,7 @@
 .editProfile {
     position: absolute;
-    top: 50px;
+    top: 100px;
+    display: flex;
+    flex-flow: column;
+    margin-left: 30%;
 }
