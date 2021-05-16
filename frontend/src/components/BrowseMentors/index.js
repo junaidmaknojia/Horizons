@@ -1,9 +1,9 @@
 import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Link } from "react-router-dom";
 import { getRequests, makeRequest } from "../../store/requests";
-import { getMentors } from "../../store/user";
+import {Card, Modal, Button} from "react-bootstrap";
 import "./BrowseMentors.css";
-
 
 
 export default function BrowseMentors() {
@@ -32,7 +32,8 @@ export default function BrowseMentors() {
         temp.forEach(user => {
             tempObj[user.id] = user;
         });
-        setListMentors(Object.values(tempObj));
+        const setter = Object.values(tempObj);
+        setListMentors(setter);
     }, [addedTags]);
 
     function updateTags(action, tag){
@@ -53,6 +54,10 @@ export default function BrowseMentors() {
         dispatch(getRequests());
     }
 
+    if(!sessionUser){
+        return <Redirect to="/"/>
+    }
+
     return (
         <div className="browseMentors">
             <h1>Find Mentors</h1>
@@ -67,14 +72,39 @@ export default function BrowseMentors() {
                 ))}
             </div>
             <div className="listMentors">
-                {listMentors?.map(mentor => (
-                    <div className="listMentors__mentor">
-                        <h3>{`${mentor.firstName} ${mentor.lastName}`}</h3>
-                        <p>{mentor.title}</p>
-                        <p>{mentor.industry}</p>
-                        <button onClick={() => handleRequest(mentor)}>Request</button>
-                    </div>
-                ))}
+                {/* <CardDeck> */}
+                    {listMentors?.map(mentor => (
+                        <Card className="card">
+                            <Card.Img variant="top" src={mentor.profilePhoto} />
+                            <Card.Body>
+                                <Card.Title><Link to={`/${mentor.id}`}>{`${mentor.firstName} ${mentor.lastName}`}</Link></Card.Title>
+                                <Card.Text>{mentor.title}</Card.Text>
+                                <Card.Text>{mentor.industry}</Card.Text>
+                            </Card.Body>
+                            {(sessionUser?.role === "Mentee") && (
+                                <>
+                                    <Card.Footer>
+                                        <Button onClick={() => handleRequest(mentor)}>Request</Button>
+                                    </Card.Footer>
+                                    {/* <Modal show={showSignUp} onHide={() => { setShowSignUp(false) }}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>{`Pitch to ${mentor.firstName} ${mentor.lastName}`}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                                <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
+                                                    value={bio}
+                                                    onChange={(e) => setBio(e.target.value)}/>
+                                            </Form.Group>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                        </Modal.Footer>
+                                    </Modal> */}
+                                </>
+                            )}
+                        </Card>
+                    ))}
+                {/* </CardDeck> */}
             </div>
         </div>
     )

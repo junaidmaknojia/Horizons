@@ -1,4 +1,48 @@
 .browseMentors {
     position: absolute;
-    top: 50px;
+    top: 100px;
+    max-width: 90%;
+    display: grid;
+    flex-direction: column;
+    margin-left: 5%;
+    text-align: center;
+}
+
+.addedTags, .listTags {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    margin: 10px;
+    border-bottom: rgba(119, 136, 153, 0.568) 1px solid;
+}
+
+.addedTags__tag {
+    background-color: rgb(144, 177, 221);
+    border: 0.5px solid rgb(104, 146, 201);
+}
+
+.listTags {
+    justify-content: center;
+}
+
+.listTags__tag {
+    background-color: rgb(255, 231, 95);
+    border: 0.5px solid rgb(179, 162, 66);
+}
+
+.addedTags__tag, .listTags__tag {
+    padding: 5px 10px;
+    margin: 10px 20px;
+    border-radius: 4px;
+}
+
+.listMentors {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.card {
+    width: 200px;
+    margin: 20px;
 }
