@@ -35,3 +35,14 @@
     margin: 10px 20px;
     border-radius: 4px;
 }
+
+.listMentors {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.card {
+    width: 200px;
+    margin: 20px;
+}

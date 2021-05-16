@@ -2,9 +2,8 @@ import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { getRequests, makeRequest } from "../../store/requests";
+import {Card, Modal, Button} from "react-bootstrap";
 import "./BrowseMentors.css";
-import {Card} from "react-bootstrap";
-import CardDeck from 'react-bootstrap/CardDeck';
 
 
 export default function BrowseMentors() {
@@ -33,7 +32,8 @@ export default function BrowseMentors() {
         temp.forEach(user => {
             tempObj[user.id] = user;
         });
-        setListMentors(Object.values(tempObj));
+        const setter = Object.values(tempObj);
+        setListMentors(setter);
     }, [addedTags]);
 
     function updateTags(action, tag){
@@ -72,9 +72,9 @@ export default function BrowseMentors() {
                 ))}
             </div>
             <div className="listMentors">
-                <CardDeck>
+                {/* <CardDeck> */}
                     {listMentors?.map(mentor => (
-                        <Card>
+                        <Card className="card">
                             <Card.Img variant="top" src={mentor.profilePhoto} />
                             <Card.Body>
                                 <Card.Title><Link to={`/${mentor.id}`}>{`${mentor.firstName} ${mentor.lastName}`}</Link></Card.Title>
@@ -82,13 +82,29 @@ export default function BrowseMentors() {
                                 <Card.Text>{mentor.industry}</Card.Text>
                             </Card.Body>
                             {(sessionUser?.role === "Mentee") && (
-                                <Card.Footer>
-                                    <button onClick={() => handleRequest(mentor)}>Request</button>
-                                </Card.Footer>
+                                <>
+                                    <Card.Footer>
+                                        <Button onClick={() => handleRequest(mentor)}>Request</Button>
+                                    </Card.Footer>
+                                    {/* <Modal show={showSignUp} onHide={() => { setShowSignUp(false) }}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>{`Pitch to ${mentor.firstName} ${mentor.lastName}`}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                                <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
+                                                    value={bio}
+                                                    onChange={(e) => setBio(e.target.value)}/>
+                                            </Form.Group>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                        </Modal.Footer>
+                                    </Modal> */}
+                                </>
                             )}
                         </Card>
                     ))}
-                </CardDeck>
+                {/* </CardDeck> */}
             </div>
         </div>
     )
