@@ -81,9 +81,11 @@ export default function BrowseMentors() {
                                 <Card.Text>{mentor.title}</Card.Text>
                                 <Card.Text>{mentor.industry}</Card.Text>
                             </Card.Body>
-                            <Card.Footer>
-                                <button onClick={() => handleRequest(mentor)}>Request</button>
-                            </Card.Footer>
+                            {(sessionUser?.role === "Mentee") && (
+                                <Card.Footer>
+                                    <button onClick={() => handleRequest(mentor)}>Request</button>
+                                </Card.Footer>
+                            )}
                         </Card>
                     ))}
                 </CardDeck>
