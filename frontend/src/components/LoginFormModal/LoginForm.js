@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./LoginForm.css";
+import {Form, Button} from "react-bootstrap";
 
 
 export default function LoginForm() {
@@ -28,29 +29,19 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label>
-                Email
-                <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Log In</button>
-        </form>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Control placeholder="Email" type="email" value={email}
+                    onChange={(e) => setEmail(e.target.value)} required />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Control placeholder="Password" type="password" value={password}
+                    onChange={(e) => setPassword(e.target.value)} required />
+            </Form.Group>
+            <Button variant="primary" type="submit">Log In</Button>
+        </Form>
     );
 }
