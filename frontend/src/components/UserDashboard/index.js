@@ -22,7 +22,12 @@ export default function UserDashboard() {
         // and changes the requests.mentors or requests.mentees
         // to requests[otherPerson] and otherPerson is a conditional
         // set above near the selectors
-    }, [myRequests, dispatch]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setAcceptedRequests(myRequests?.filter(request => request.accepted));
+        setPendingRequests(myRequests?.filter(request => !request.accepted));
+    }, []);
 
     if(!sessionUser){
         return <Redirect to="/"/>
