@@ -122,18 +122,16 @@ export default function SignupForm() {
                         </Row>
                         <Button variant="primary" type="submit">Sign Up!</Button>
                     </Form>
-                    <div>
+                    <div className="otherAuths">
                         <Row>
-                            <Col>
-                                <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
-                                    onClick={linkedInSignUp}
-                                    style={{width:150, height:"auto"}}/>
-                            </Col>
-                            <Col>
-                                <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
+                            <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
+                                onClick={linkedInSignUp}
+                                style={{width:150, height:"auto"}}/>
+                        </Row>
+                        <Row>
+                            <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
                                     onClick={googleSignUp}
                                     style={{width:150, height:"auto"}}/>
-                            </Col>
                         </Row>
                     </div>
                 </>
