@@ -14,21 +14,18 @@ export default function UserDashboard() {
     let warnings = [];
 
     useEffect(() => {
-        console.log("inside dashboard");
-        dispatch(getRequests());
-        setAcceptedRequests(myRequests?.filter(request => request.accepted));
-        setPendingRequests(myRequests?.filter(request => !request.accepted));
+        async function loadRequests(){
+            await dispatch(getRequests());
+            // setAcceptedRequests(myRequests?.filter(request => request.accepted));
+            // setPendingRequests(myRequests?.filter(request => !request.accepted));
+        }
+        loadRequests();
         // refactor to change the requests map in the JSX
         // so there's one section for both mentors and mentees
         // and changes the requests.mentors or requests.mentees
         // to requests[otherPerson] and otherPerson is a conditional
         // set above near the selectors
     }, [dispatch]);
-
-    useEffect(() => {
-        setAcceptedRequests(myRequests?.filter(request => request.accepted));
-        setPendingRequests(myRequests?.filter(request => !request.accepted));
-    }, []);
 
     if(!sessionUser){
         return <Redirect to="/"/>
@@ -82,7 +79,7 @@ export default function UserDashboard() {
                         <>
                             <div className="requests__pendingRequests">
                                 <h4>Pending Requests</h4>
-                                {pendingRequests?.map(request => (
+                                {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
@@ -93,7 +90,7 @@ export default function UserDashboard() {
                             </div>
                             <div className="requests__acceptedRequests">
                                 <h4>Accepted Requests</h4>
-                                {acceptedRequests?.map(request => (
+                                {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
@@ -106,7 +103,7 @@ export default function UserDashboard() {
                         <>
                             <div className="requests__acceptedRequests">
                                 <h4>Accepted Requests</h4>
-                                {acceptedRequests?.map(request => (
+                                {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
@@ -116,7 +113,7 @@ export default function UserDashboard() {
                             </div>
                             <div className="requests__pendingRequests">
                                 <h4>Pending Requests</h4>
-                                {pendingRequests?.map(request => (
+                                {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
