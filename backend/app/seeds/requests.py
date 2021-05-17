@@ -6,9 +6,11 @@ from app.models import db, Request
 # mentorId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
 
 def seed_requests():
-    # 14 mentees
-    #
-    db.session.add(Request(pitch="", accepted=False, menteeId=1, mentorId=1))
+    # 15 mentees
+    # 31 mentors
+    for x in range(15):
+        for y in range(31):
+            db.session.add(Request(pitch="", accepted=False, menteeId=x, mentorId=y))
     db.session.commit()
 
 

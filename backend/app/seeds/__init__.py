@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .tags import seed_tags, undo_tags, seed_tag_categories, undo_tag_categories
 from .attributes import seed_industries, seed_role_categories, seed_roles, undo_industries, undo_role_categories, undo_roles
+from .requests import seed_requests, undo_requests
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -16,9 +17,11 @@ def seed():
     seed_tags()
     seed_industries()
     seed_users()
+    seed_requests()
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_requests()
     undo_industries()
     undo_users()
     undo_tags()
