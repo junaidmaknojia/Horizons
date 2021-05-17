@@ -1,38 +1,18 @@
 from werkzeug.security import generate_password_hash
 from app.models import db, User
 
-# Adds a demo user, you can add other users here if you want
-
-# id = db.Column(db.Integer, primary_key=True)
-# first_name = db.Column(db.String(20), nullable=False)
-# last_name = db.Column(db.String(20), nullable=False)
-# email = db.Column(db.String(255), nullable=False, unique=True)
-# hashed_password = db.Column(db.String(255), nullable=False)
-# role = db.Column(db.String(10), nullable=False)
-# bio = db.Column(db.String(350), nullable=True)
-# city = db.Column(db.String(20), nullable=True)
-# state = db.Column(db.String(15), nullable=True)
-# profile_photo = db.Column(db.String(255), nullable=False, default="https://i.imgur.com/tdi3NGa.jpg")
-# title_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=True)
-# industry_id = db.Column(db.Integer, db.ForeignKey("industries.id"), nullable=True)
-# created_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
-# updated_at = db.Column(db.DateTime, default=lambda: datetime.now(), nullable=False)
-# tags = db.relationship("Tag", secondary="user_tags", back_populates="users")
-# title = db.relationship("Role", back_populates="users")
-# industry = db.relationship("Industry", back_populates="users")
-
 def seed_users():
 
     demo = User(first_name="Demo", last_name="User", email="demouser@horizon.com", password="password", role="Mentee")
     db.session.add(demo)
-    db.session.add(User(first_name="Duddette", last_name="Lebowski", email="lebowski@gmail.com", hashed_password=generate_password_hash("whiteRussian"), role="Mentor"))
-    db.session.add(User(first_name="Maria", last_name="Hill", email="hill@gmail.com", hashed_password=generate_password_hash("smulders"), role="Mentor"))
-    db.session.add(User(first_name="Monarch", last_name="Daisy", email="daisy@gmail.com", hashed_password=generate_password_hash("metamorphosis"), role="Mentor"))
-    db.session.add(User(first_name="Amy", last_name="George", email="george@gmail.com", hashed_password=generate_password_hash("whatsThe401"), role="Mentor"))
-    db.session.add(User(first_name="Matt", last_name="Foley", email="foley@gmail.com", hashed_password=generate_password_hash("vanDownByTheRiver"), role="Mentor"))
-    db.session.add(User(first_name="Arnold", last_name="Zola", email="zola@gmail.com", hashed_password=generate_password_hash("theAlgorithm"), role="Mentee"))
-    db.session.add(User(first_name="Adam", last_name="Mulchler", email="mulchler@gmail.com", hashed_password=generate_password_hash("freshPepper"), role="Mentee"))
-    db.session.add(User(first_name="Petler", last_name="Parkaler", email="parkaler@gmail.com", hashed_password=generate_password_hash("ohMyGod"), role="Mentee"))
+    # db.session.add(User(first_name="Duddette", last_name="Lebowski", email="lebowski@gmail.com", hashed_password=generate_password_hash("whiteRussian"), role="Mentor"))
+    # db.session.add(User(first_name="Maria", last_name="Hill", email="hill@gmail.com", hashed_password=generate_password_hash("smulders"), role="Mentor"))
+    # db.session.add(User(first_name="Monarch", last_name="Daisy", email="daisy@gmail.com", hashed_password=generate_password_hash("metamorphosis"), role="Mentor"))
+    # db.session.add(User(first_name="Amy", last_name="George", email="george@gmail.com", hashed_password=generate_password_hash("whatsThe401"), role="Mentor"))
+    # db.session.add(User(first_name="Matt", last_name="Foley", email="foley@gmail.com", hashed_password=generate_password_hash("vanDownByTheRiver"), role="Mentor"))
+    # db.session.add(User(first_name="Arnold", last_name="Zola", email="zola@gmail.com", hashed_password=generate_password_hash("theAlgorithm"), role="Mentee"))
+    # db.session.add(User(first_name="Adam", last_name="Mulchler", email="mulchler@gmail.com", hashed_password=generate_password_hash("freshPepper"), role="Mentee"))
+    # db.session.add(User(first_name="Petler", last_name="Parkaler", email="parkaler@gmail.com", hashed_password=generate_password_hash("ohMyGod"), role="Mentee"))
     db.session.add(User(first_name="Amber", last_name="Yourrig", email="Yourrig@gmail.com", hashed_password=generate_password_hash("Yourrig1868!"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/amber-mentee.jpg"))
     db.session.add(User(first_name="Angela", last_name="White", email="White@gmail.com", hashed_password=generate_password_hash("White1868!"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/angela-mentee.jpg"))
     db.session.add(User(first_name="Danielle", last_name="Lodia", email="Lodia@gmail.com", hashed_password=generate_password_hash("Lodia1868!"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/danielle-mentee.jpg"))
