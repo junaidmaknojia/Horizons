@@ -49,7 +49,7 @@ export default function BrowseMentors() {
     }
 
     async function handleRequest(mentor){
-        const pckg = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""}
+        const pckg = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""};
         dispatch(makeRequest(pckg));
         dispatch(getRequests());
     }

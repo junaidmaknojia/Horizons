@@ -10,6 +10,7 @@ const storeRequests = (requests) => {{
 }}
 
 export const getRequests = () => async (dispatch) => {
+    console.log("hit getRequests");
     const response = await fetch("/api/requests/");
     const data = await response.json();
     dispatch(storeRequests(data.requests));
@@ -21,6 +22,7 @@ export const makeRequest = (payload) => async (dispatch) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
+    const data = await response.json();
 }
 
 export const updateRequest = async (requestId) => {
