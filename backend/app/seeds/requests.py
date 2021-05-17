@@ -10,7 +10,7 @@ def seed_requests():
     # 31 mentors
     for x in range(15):
         for y in range(31):
-            db.session.add(Request(pitch="", accepted=False, menteeId=x, mentorId=y))
+            db.session.add(Request(pitch="", accepted=False, menteeId=x+1, mentorId=y+1))
     db.session.commit()
 
 
