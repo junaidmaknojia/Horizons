@@ -18,6 +18,8 @@ export default function UserDashboard() {
             await dispatch(getRequests());
             // setAcceptedRequests(myRequests?.filter(request => request.accepted));
             // setPendingRequests(myRequests?.filter(request => !request.accepted));
+
+            // need to edit render to not chain filter to map for splitting accepted/pending requests
         }
         loadRequests();
         // refactor to change the requests map in the JSX
