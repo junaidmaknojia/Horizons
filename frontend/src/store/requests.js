@@ -21,6 +21,7 @@ export const makeRequest = (payload) => async (dispatch) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
+    const data = await response.json();
 }
 
 export const updateRequest = async (requestId) => {

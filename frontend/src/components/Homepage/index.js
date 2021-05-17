@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Homepage.css";
 import {Jumbotron, Button, Modal} from "react-bootstrap";
 import SignupForm from "../SignupForm";
