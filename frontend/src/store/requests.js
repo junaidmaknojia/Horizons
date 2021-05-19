@@ -16,13 +16,16 @@ export const getRequests = () => async (dispatch) => {
     dispatch(storeRequests(data.requests));
 }
 
-export const makeRequest = (payload) => async (dispatch) => {
+export const makeRequest = async (payload) => {
     const response = await fetch("/api/requests/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
-    const data = await response.json();
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
 }
 
 export const updateRequest = async (requestId) => {

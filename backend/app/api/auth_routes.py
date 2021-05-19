@@ -149,12 +149,13 @@ def linkedIn_create_user():
 def linkedIn_sign_in():
     data = request.json
     token = data["token"]
+    redirect_uri = data["redirect_URI"]
     sendoff = {
         "grant_type": "authorization_code",
         "code": token,
         "client_id": environ.get("CLIENT_ID"),
         "client_secret": environ.get("CLIENT_SECRET"),
-        "redirect_uri": "http://localhost:3000/linkedin-log-in"
+        "redirect_uri": redirect_uri
     }
     launch = urlencode(sendoff).encode()
     request_send = Request("https://www.linkedin.com/oauth/v2/accessToken", data=launch)

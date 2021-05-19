@@ -18,7 +18,7 @@ export default function LinkedInLogIn(){
         const response = await fetch("/api/auth/linkedInSignIn/", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"token": parsedURL && parsedURL[0]})
+            body: JSON.stringify({"token": parsedURL && parsedURL[0], "redirect_URI": `${window.location.origin}/linkedin-log-in`})
         });
         if(response.ok){
             const data = await response.json();
