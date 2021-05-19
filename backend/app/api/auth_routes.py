@@ -127,17 +127,19 @@ def linkedIn_sign_up():
 @auth_routes.route("/linkedIncreate/", methods=["POST"])
 def linkedIn_create_user():
     data = request.json
-    package = {
-        "first_name": data["firstName"],
-        "last_name": data["lastName"],
-        "email": data["email"],
-        "password": data["password"],
-        "role": data["role"],
-        "profile_photo": data["profilePhoto"]
-    }
-    user = User(**package)
-    db.session.add(user)
-    db.session.commit()
+    user = User.query.filter(User.email == data["email"]).first()
+    if user == None:
+        package = {
+            "first_name": data["firstName"],
+            "last_name": data["lastName"],
+            "email": data["email"],
+            "password": data["password"],
+            "role": data["role"],
+            "profile_photo": data["profilePhoto"]
+        }
+        user = User(**package)
+        db.session.add(user)
+        db.session.commit()
     login_user(user)
     return user.to_dict()
 
