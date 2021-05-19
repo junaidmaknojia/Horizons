@@ -17,7 +17,7 @@ export default function LinkedInSignUp(){
         const response = await fetch("/api/auth/linkedInSignUp/", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"token": parsedURL && parsedURL[0]})
+            body: JSON.stringify({"token": parsedURL && parsedURL[0], "redirect_URI": `${window.location.origin}/linkedin-sign-up`})
         });
         if(response.ok){
             const data = await response.json();
