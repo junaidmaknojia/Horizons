@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { getRequests, makeRequest } from "../../store/requests";
+import { makeRequest } from "../../store/requests";
 import {Card, Modal, Button, Form} from "react-bootstrap";
 import "./BrowseMentors.css";
 
@@ -51,9 +51,14 @@ export default function BrowseMentors() {
         }
     }
 
-    function handleRequest(){
+    async function handleRequest(){
         const pckg = {mentorId: requestMentor.id, menteeId: sessionUser.id, accepted: false, pitch};
-        makeRequest(pckg);
+        const data = await makeRequest(pckg);
+        if(data){
+            setShowPitchModal(false);
+            setPitch("");
+        }
+
     }
 
     function pitchEnter(mentor){
@@ -107,7 +112,8 @@ export default function BrowseMentors() {
                                         <Form.Control as="textarea" rows={3} placeholder="I need some guidance on ..."
                                             value={pitch}
                                             onChange={(e) => setPitch(e.target.value)}
-                                            maxlength="80"/>
+                                            maxlength="80"
+                                        />
                                     </Form.Group>
                                 </Modal.Body>
                                 <Modal.Footer>

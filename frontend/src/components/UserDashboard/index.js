@@ -69,7 +69,7 @@ export default function UserDashboard() {
 
     function showPitch(request) {
         return (
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="1">
                 <Card>
                     <Card.Header>
                         <CustomToggle eventKey="0">Pitch</CustomToggle>
