@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
+import {Accordion, Card} from "react-bootstrap";
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import "./UserDashboard.css";
 
 export default function UserDashboard() {
@@ -14,7 +16,7 @@ export default function UserDashboard() {
     let warnings = [];
 
     useEffect(() => {
-        async function loadRequests(){
+        async function loadRequests() {
             await dispatch(getRequests());
             // setAcceptedRequests(myRequests?.filter(request => request.accepted));
             // setPendingRequests(myRequests?.filter(request => !request.accepted));
@@ -29,8 +31,8 @@ export default function UserDashboard() {
         // set above near the selectors
     }, [dispatch]);
 
-    if(!sessionUser){
-        return <Redirect to="/"/>
+    if (!sessionUser) {
+        return <Redirect to="/" />
     }
 
     if (sessionUser.role === "Mentor") {
@@ -39,23 +41,52 @@ export default function UserDashboard() {
         if (!sessionUser.industry) warnings.push("Industry");
     }
 
-    function handleDelete(person, request){
-        const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?`:
-                                            `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
-        if(window.confirm(message)){
+    function handleDelete(person, request) {
+        const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?` :
+            `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
+        if (window.confirm(message)) {
             deleteRequest(request.id);
         }
     }
 
-    function handleAccept(request){
+    function handleAccept(request) {
         updateRequest(request.id);
+    }
+
+    function CustomToggle({ children, eventKey }) {
+        const decoratedOnClick = useAccordionToggle(eventKey, () =>
+            console.log('totally custom!'),
+        );
+
+        return (
+            <button
+                type="button"
+                style={{ backgroundColor: 'pink' }}
+                onClick={decoratedOnClick}>{children}
+            </button>
+        );
+    }
+
+    function showPitch(request) {
+        return (
+            <Accordion defaultActiveKey="0">
+                <Card>
+                    <Card.Header>
+                        <CustomToggle eventKey="0">Pitch</CustomToggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="0">
+                        <Card.Body>{request.pitch}</Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
+        );
     }
 
 
     return (
         <div className="userDashboard">
             <div className="userDashboard__card">
-                <img src={sessionUser.profilePhoto} style={{width: 300, height: 300}}/>
+                <img src={sessionUser.profilePhoto} style={{ width: 300, height: 300 }} />
                 <Link to="/edit">Edit Profile</Link>
                 <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}</h4>
                 <h6>{sessionUser.role}</h6>
@@ -67,7 +98,7 @@ export default function UserDashboard() {
                 </div>
             </div>
             <div className="requestsContainer">
-                {warnings.length>0 && (
+                {warnings.length > 0 && (
                     <div className="requests__warnings">
                         <h3>Please go into your profile settings and add the following:</h3>
                         <ul>
@@ -83,10 +114,11 @@ export default function UserDashboard() {
                                 <h4>Pending Requests</h4>
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
-                                        <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
-                                        <div className="delete" onClick={() => {handleDelete("mentor", request)}}>Reject</div>
-                                        <div className="accept" onClick={() => {handleAccept(request)}}>Accept</div>
+                                        {showPitch(request)}
+                                        <div className="delete" onClick={() => { handleDelete("mentor", request) }}>Reject</div>
+                                        <div className="accept" onClick={() => { handleAccept(request) }}>Accept</div>
                                     </div>
                                 ))}
                             </div>
@@ -94,7 +126,7 @@ export default function UserDashboard() {
                                 <h4>Accepted Requests</h4>
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
-                                        <img src={request.mentee.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
                                     </div>
                                 ))}
@@ -107,7 +139,7 @@ export default function UserDashboard() {
                                 <h4>Accepted Requests</h4>
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
-                                        <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
                                         <p>{request.mentor.email}</p>
                                     </div>
@@ -117,9 +149,9 @@ export default function UserDashboard() {
                                 <h4>Pending Requests</h4>
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
-                                        <img src={request.mentor.profilePhoto} style={{width: 100, height: 100}}/>
+                                        <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
-                                        <div className="delete" onClick={() => {handleDelete("mentee", request)}}>Cancel</div>
+                                        <div className="delete" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
                                     </div>
                                 ))}
                             </div>
