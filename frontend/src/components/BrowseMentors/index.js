@@ -13,6 +13,8 @@ export default function BrowseMentors() {
     const [addedTags, setAddedTags] = useState([]);
     const [listMentors, setListMentors] = useState([]);
     const [tagOptions, setTagOptions] = useState([]);
+    const [requestMentor, setRequestMentor] = useState({});
+    const [showPitchModal, setShowPitchModal] = useState(false);
     const [pitch, setPitch] = useState("");
 
     useEffect(() => {
@@ -49,14 +51,14 @@ export default function BrowseMentors() {
         }
     }
 
-    async function handleRequest(){
-        const pckg = {mentorId: mentor.id, menteeId: sessionUser.id, accepted: false, pitch: ""};
-        dispatch(makeRequest(pckg));
-        dispatch(getRequests());
+    function handleRequest(){
+        const pckg = {mentorId: requestMentor.id, menteeId: sessionUser.id, accepted: false, pitch};
+        makeRequest(pckg);
     }
 
     function pitchEnter(mentor){
-
+        setRequestMentor(mentor);
+        setShowPitchModal(true);
     }
 
     if(!sessionUser){
@@ -93,9 +95,9 @@ export default function BrowseMentors() {
                                         </Card.Footer>
                                 )}
                             </Card>
-                            <Modal show={showSignUp} onHide={() => { setShowSignUp(false) }}>
+                            <Modal show={showPitchModal} onHide={() => { setShowPitchModal(false) }}>
                                 <Modal.Header closeButton>
-                                    <Modal.Title>Pitch</Modal.Title>
+                                    <Modal.Title>{`Pitch to ${requestMentor.firstName} ${requestMentor.lastName}`}</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
                                     <p>Enter your request pitch to the mentor. Mentors are more likely to accept a request
@@ -104,7 +106,8 @@ export default function BrowseMentors() {
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
                                         <Form.Control as="textarea" rows={3} placeholder="I need some guidance on ..."
                                             value={pitch}
-                                            onChange={(e) => setPitch(e.target.value)}/>
+                                            onChange={(e) => setPitch(e.target.value)}
+                                            maxlength="80"/>
                                     </Form.Group>
                                 </Modal.Body>
                                 <Modal.Footer>

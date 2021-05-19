@@ -36,6 +36,10 @@
     border-radius: 4px;
 }
 
+.addedTags_tag, .listTags__tag :hover{
+    cursor: pointer;
+}
+
 .listMentors {
     display: flex;
     flex-flow: row wrap;
