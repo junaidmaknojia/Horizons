@@ -39,7 +39,18 @@ export default function Members() {
                 ))}
             </div>
             <div className="mentees">
-
+                {mentees?.map(mentee => (
+                    <Card className="card">
+                        <Card.Img variant="top" src={mentee.profilePhoto} />
+                        <Card.Body>
+                            <Card.Title><Link to={`/${mentee.id}`}>{`${mentee.firstName} ${mentee.lastName}`}</Link></Card.Title>
+                            <Card.Text>{mentee.title}</Card.Text>
+                        </Card.Body>
+                        <Card.Footer>
+                            <Card.Text>{`${mentee.city}, ${mentee.state}`}</Card.Text>
+                        </Card.Footer>
+                    </Card>
+                ))}
             </div>
         </div>
     );
