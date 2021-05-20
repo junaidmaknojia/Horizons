@@ -10,6 +10,7 @@ import BrowseMentors from "./components/BrowseMentors";
 import UserPage from "./components/UserPage";
 import LinkedInSignUp from "./components/LinkedInSignUp";
 import LinkedInLogIn from "./components/LinkedInLogIn";
+import Members from "./components/Members";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -40,6 +41,9 @@ function App() {
 					</Route>
 					<Route path="/browse">
 						<BrowseMentors />
+					</Route>
+					<Route>
+						<Members />
 					</Route>
 					<Route exact path="/linkedin-sign-up">
 						<LinkedInSignUp />
