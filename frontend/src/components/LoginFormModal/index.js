@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sessionAdd } from "../../store/session";
 import {Row} from "react-bootstrap";
 
-export default function LoginFormModal() {
+export default function LoginFormModal({setShowLogin}) {
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -25,6 +25,7 @@ export default function LoginFormModal() {
     }, [linkedInSignIn]);
 
     if(sessionUser){
+        setShowLogin(false);
         return <Redirect to={`/${sessionUser.id}`}/>
     }
 
@@ -38,7 +39,7 @@ export default function LoginFormModal() {
 
     return (
         <>
-            <LoginForm/>
+            <LoginForm setShowLogin={setShowLogin}/>
             <div className="otherAuths">
                 <Row>
                 <div>

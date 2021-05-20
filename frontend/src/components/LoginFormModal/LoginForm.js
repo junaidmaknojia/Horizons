@@ -6,7 +6,7 @@ import "./LoginForm.css";
 import {Form, Button} from "react-bootstrap";
 
 
-export default function LoginForm() {
+export default function LoginForm({setShowLogin}) {
 
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
@@ -18,9 +18,9 @@ export default function LoginForm() {
     // }
 
     const handleSubmit = (e) => {
-        console.log("inside submit");
         e.preventDefault();
         setErrors([]);
+        setShowLogin(false);
         return dispatch(sessionActions.login({ email, password }))
             .catch(async (res) => {
                 const data = await res.json();
