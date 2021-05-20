@@ -44,7 +44,7 @@ export default function Homepage({isLoaded}) {
                         <Modal.Title>Log In</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <LoginFormModal />
+                        <LoginFormModal setShowLogin={setShowLogin}/>
                     </Modal.Body>
                     <Modal.Footer>
                     </Modal.Footer>
