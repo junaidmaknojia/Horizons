@@ -1,15 +1,25 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, {useEffect, useState} from "react";
 import "./Homepage.css";
 import {Jumbotron, Button, Modal} from "react-bootstrap";
 import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
+import * as sessionActions from "../../store/session";
 
 export default function Homepage({isLoaded}) {
 
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+
+    async function demoPerson(type){
+        const email = type === "Mentor"? "demoPerson@horizon.com" : "demouser@horizon.com";
+        dispatch(sessionActions.login({ email, "password":"password" }))
+            .catch(async (res) => {
+                const data = await res.json();
+            });
+    }
 
     return (
         <div className="homepage">
@@ -23,10 +33,12 @@ export default function Homepage({isLoaded}) {
                         LinkedIn and get started!
                     </p>
                     <p>
-                        <Button variant="primary" onClick={() => setShowSignUp(true)}>Get Started</Button>
+                        <Button variant="primary" className="button" onClick={() => setShowSignUp(true)}>Get Started</Button>
+                        <Button variant="primary" className="button" onClick={() => setShowLogin(true)}>Log In</Button>
                     </p>
                     <p>
-                        <Button variant="primary" onClick={() => setShowLogin(true)}>Log In</Button>
+                        <Button variant="secondary" className="button" onClick={() => demoPerson("mentor")}>Demo as Mentor</Button>
+                        <Button variant="secondary" className="button" onClick={() => demoPerson("mentee")}>Demo as Mentee</Button>
                     </p>
                 </div>
                 <Modal show={showSignUp} onHide={() => { setShowSignUp(false) }}>
