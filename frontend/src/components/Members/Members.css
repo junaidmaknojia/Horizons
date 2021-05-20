@@ -1,0 +1,10 @@
+.members {
+    position: absolute;
+    top: 100px;
+}
+
+.mentors, .mentees {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}

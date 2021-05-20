@@ -33,7 +33,10 @@ export default function Navigation({ isLoaded }) {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 {sessionUser && (
-                    <Nav.Link href="/browse">Browse</Nav.Link>
+                    <>
+                        <Nav.Link href="/browse">Browse</Nav.Link>
+                        <Nav.Link href="/members">All Members</Nav.Link>
+                    </>
                 )}
                 <Nav className="mr-auto">
                     {sessionUser === null && (
