@@ -36,3 +36,8 @@ Steps coming soon
    - New account email verification
    - Live chat with each mentor
    - Meeting event creation from requests
+
+### Media Credits
+   - Images: Unsplash
+   - Homepage video: Pexels
+   - Logo: Adobe Stock Images
