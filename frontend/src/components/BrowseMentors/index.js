@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { makeRequest } from "../../store/requests";
+import { getRequests, makeRequest } from "../../store/requests";
 import {Card, Modal, Button, Form} from "react-bootstrap";
 import "./BrowseMentors.css";
 
@@ -10,6 +10,7 @@ export default function BrowseMentors() {
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const myRequests = useSelector(state => state.requests.requests);
     const [addedTags, setAddedTags] = useState([]);
     const [listMentors, setListMentors] = useState([]);
     const [tagOptions, setTagOptions] = useState([]);
@@ -26,7 +27,11 @@ export default function BrowseMentors() {
             const tagOptions0 = await tags.json();
             setTagOptions(tagOptions0.tags);
         }
+        async function loadRequests(){
+            dispatch(getRequests());
+        }
         loadMentors();
+        loadRequests();
     }, [dispatch]);
 
     useEffect(() => {
@@ -66,6 +71,10 @@ export default function BrowseMentors() {
         setShowPitchModal(true);
     }
 
+    function existingRequest(mentor){
+        return myRequests?.some(req => req.mentor.id === mentor.id);
+    }
+
     if(!sessionUser){
         return <Redirect to="/"/>
     }
@@ -95,9 +104,9 @@ export default function BrowseMentors() {
                                     <Card.Text>{mentor.industry}</Card.Text>
                                 </Card.Body>
                                 {(sessionUser?.role === "Mentee") && (
-                                        <Card.Footer>
-                                            <Button onClick={() => pitchEnter(mentor)}>Request</Button>
-                                        </Card.Footer>
+                                    <Card.Footer>
+                                        <Button onClick={() => pitchEnter(mentor)} disabled={existingRequest(mentor)}>Request</Button>
+                                    </Card.Footer>
                                 )}
                             </Card>
                             <Modal show={showPitchModal} onHide={() => { setShowPitchModal(false) }}>
