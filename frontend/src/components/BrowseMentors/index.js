@@ -27,9 +27,6 @@ export default function BrowseMentors() {
             const tagOptions0 = await tags.json();
             setTagOptions(tagOptions0.tags);
         }
-        async function loadRequests(){
-            dispatch(getRequests());
-        }
         loadMentors();
         loadRequests();
     }, [dispatch]);
@@ -43,6 +40,10 @@ export default function BrowseMentors() {
         const setter = Object.values(tempObj);
         setListMentors(setter);
     }, [addedTags]);
+
+    async function loadRequests(){
+        dispatch(getRequests());
+    }
 
     function updateTags(action, tag){
         switch(action){
@@ -62,6 +63,7 @@ export default function BrowseMentors() {
         if(data){
             setShowPitchModal(false);
             setPitch("");
+            loadRequests();
         }
 
     }

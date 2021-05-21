@@ -23,8 +23,20 @@ export const makeRequest = async (payload) => {
     });
     if(response.ok){
         const data = await response.json();
+        const emailData = sendEmail(payload);
         return data;
     }
+}
+
+async function sendEmail(payload){
+    const response = await fetch("/api/sendgrid/", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
 }
 
 export const updateRequest = async (requestId) => {

@@ -1,30 +1,30 @@
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from flask import Blueprint, jsonify, request
+from app.models import User, Request, db
+from flask_login import current_user, login_required
 
+sendgrid_routes = Blueprint('sendgrid', __name__)
 
-# sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-# from_email = Email("test@example.com")
-# to_email = To("test@example.com")
-# subject = "Sending with SendGrid is Fun"
-# content = Content("text/plain", "and easy to do anywhere, even with Python")
-# mail = Mail(from_email, to_email, subject, content)
-# response = sg.client.mail.send.post(request_body=mail.get())
-# print(response.status_code)
-# print(response.body)
-# print(response.headers)
-
-message = Mail(
-    from_email='junaidmaknojia786@gmail.com',
-    to_emails='junaidmaknojia786@berkeley.edu',
-    subject='Sending with Twilio SendGrid is Fun',
-    html_content='<strong>and easy to do anywhere, even with Python, but not with Junaid</strong>')
-try:
-    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-    response = sg.send(message)
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-except Exception as e:
-    print("this is e: ", e)
-    print(e.message)
+@sendgrid_routes.route("/", methods=["POST"])
+def send_email():
+    data = request.json
+    mentor = User.query.get(data["mentorId"])
+    mentee = User.query.get(current_user.id)
+    if mentor:
+        message = Mail(
+            from_email='junaidmaknojia786@gmail.com',
+            to_emails=mentor.email,
+            subject='New Request from Horizons',
+            html_content = f'<strong>You have received a request from {mentee.first_name} {mentee.last_name} on Horizons.</strong>')
+        try:
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            return {"response-code": response.status_code}
+        except Exception as e:
+            # print(e.message)
+            return {"sendgrid_error": "Error sending notification email, try again"}
