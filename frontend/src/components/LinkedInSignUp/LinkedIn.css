@@ -1,5 +1,12 @@
+.loadingScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+}
+
 .loadingGif {
-    width: 100px;
-    height: 100px;
-    text-align: center;
+    width: 50%;
+    height: auto;
 }
