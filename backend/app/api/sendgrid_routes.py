@@ -24,7 +24,7 @@ def send_email():
             print(response.status_code)
             print(response.body)
             print(response.headers)
-            return {"response": jsonify(response)}
+            return {"response-code": response.status_code}
         except Exception as e:
-            print(e.message)
-            return {"sendgrid_error": jsonify(e)}
+            # print(e.message)
+            return {"sendgrid_error": "Error sending notification email, try again"}

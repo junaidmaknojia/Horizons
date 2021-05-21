@@ -35,6 +35,7 @@ async function sendEmail(payload){
         body: JSON.stringify(payload)
     });
     const data = await response.json();
+    console.log(data);
     return data;
 }
 
