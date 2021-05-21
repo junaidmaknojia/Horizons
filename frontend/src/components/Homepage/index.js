@@ -5,6 +5,7 @@ import {Jumbotron, Button, Modal} from "react-bootstrap";
 import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
+import {getRequests} from "../../store/requests";
 
 export default function Homepage({isLoaded}) {
 
@@ -19,6 +20,7 @@ export default function Homepage({isLoaded}) {
             .catch(async (res) => {
                 const data = await res.json();
             });
+        dispatch(getRequests());
     }
 
     return (
