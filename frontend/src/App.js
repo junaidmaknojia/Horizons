@@ -51,7 +51,7 @@ function App() {
 					<Route exact path="/linkedin-log-in">
 						<LinkedInLogIn />
 					</Route>
-					<Route path="/:id">
+					<Route path={`/:id(\\d+)`}>
 						<UserPage />
 					</Route>
 					<Route><h1>The page you're looking for doesn't exist</h1></Route>
