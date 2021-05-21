@@ -42,7 +42,7 @@ function App() {
 					<Route path="/browse">
 						<BrowseMentors />
 					</Route>
-					<Route>
+					<Route path="/members">
 						<Members />
 					</Route>
 					<Route exact path="/linkedin-sign-up">

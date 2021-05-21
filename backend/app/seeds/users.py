@@ -5,6 +5,8 @@ def seed_users():
 
     demo = User(first_name="Demo", last_name="User", email="demouser@horizon.com", password="password", role="Mentee")
     db.session.add(demo)
+    demo_mentor = User(first_name="Demo", last_name="Mentor", email="demomentor@horizon.com", password="password", role="Mentor")
+    db.session.add(demo_mentor)
     # db.session.add(User(first_name="Duddette", last_name="Lebowski", email="lebowski@gmail.com", hashed_password=generate_password_hash("whiteRussian"), role="Mentor"))
     # db.session.add(User(first_name="Maria", last_name="Hill", email="hill@gmail.com", hashed_password=generate_password_hash("smulders"), role="Mentor"))
     # db.session.add(User(first_name="Monarch", last_name="Daisy", email="daisy@gmail.com", hashed_password=generate_password_hash("metamorphosis"), role="Mentor"))

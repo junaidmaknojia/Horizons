@@ -13,9 +13,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(10), nullable=False)
-    bio = db.Column(db.String(350), nullable=True)
+    bio = db.Column(db.String, nullable=True)
     city = db.Column(db.String(20), nullable=True)
     state = db.Column(db.String(15), nullable=True)
+    linkedin_url = db.Column(db.String, nullable=True)
     profile_photo = db.Column(db.String(255), nullable=False, default="https://i.imgur.com/tdi3NGa.jpg")
     title_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=True)
     industry_id = db.Column(db.Integer, db.ForeignKey("industries.id"), nullable=True)
@@ -48,6 +49,7 @@ class User(db.Model, UserMixin):
             "state": self.state,
             "tags": list(map(lambda tag: tag.name, self.tags)),
             "profilePhoto": self.profile_photo,
+            "linkedIn": self.linkedin_url,
             "industry": self.industry.name if self.industry else "",
             "title": self.title.name if self.title else ""
         }

@@ -10,7 +10,6 @@ const storeRequests = (requests) => {{
 }}
 
 export const getRequests = () => async (dispatch) => {
-    console.log("hit getRequests");
     const response = await fetch("/api/requests/");
     const data = await response.json();
     dispatch(storeRequests(data.requests));
