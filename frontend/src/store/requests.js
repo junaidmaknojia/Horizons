@@ -24,9 +24,7 @@ export const makeRequest = async (payload) => {
     if(response.ok){
         const data = await response.json();
         const emailData = sendEmail(payload);
-        console.log(data);
-        console.log(emailData);
-        // return data;
+        return data;
     }
 }
 

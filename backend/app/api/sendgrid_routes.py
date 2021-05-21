@@ -1,7 +1,7 @@
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, request
 from app.models import User, Request, db
 from flask_login import current_user, login_required
 
@@ -24,7 +24,7 @@ def send_email():
             print(response.status_code)
             print(response.body)
             print(response.headers)
-            return {"response": response}
+            return {"response": jsonify(response)}
         except Exception as e:
             print(e.message)
-            return {"sendgrid_error": e}
+            return {"sendgrid_error": jsonify(e)}
