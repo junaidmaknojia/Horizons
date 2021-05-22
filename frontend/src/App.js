@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Homepage from "./components/Homepage";
@@ -11,7 +12,8 @@ import UserPage from "./components/UserPage";
 import LinkedInSignUp from "./components/LinkedInSignUp";
 import LinkedInLogIn from "./components/LinkedInLogIn";
 import Members from "./components/Members";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import GoogleSignUp from "./components/GoogleSignUp";
+import GoogleLogIn from "./components/GoogleLogIn";
 
 
 function App() {
@@ -51,9 +53,16 @@ function App() {
 					<Route exact path="/linkedin-log-in">
 						<LinkedInLogIn />
 					</Route>
-					<Route path="/:id">
+					<Route exact path="/google-sign-up">
+						<GoogleSignUp />
+					</Route>
+					<Route exact path="/google-log-in">
+						<GoogleLogIn />
+					</Route>
+					<Route path={`/:id(\\d+)`}>
 						<UserPage />
 					</Route>
+					<Route><h1>The page you're looking for doesn't exist</h1></Route>
 				</Switch>
 			)}
 		</>

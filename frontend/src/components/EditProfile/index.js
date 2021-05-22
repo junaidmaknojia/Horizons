@@ -11,6 +11,9 @@ export default function EditProfile(){
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
+    if(!sessionUser){
+        history.push("/");
+    }
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
 
