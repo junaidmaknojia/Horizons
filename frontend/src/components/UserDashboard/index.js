@@ -117,8 +117,8 @@ export default function UserDashboard() {
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
                                         {showPitch(request)}
-                                        <div className="delete" onClick={() => { handleDelete("mentor", request) }}>Reject</div>
-                                        <div className="accept" onClick={() => { handleAccept(request) }}>Accept</div>
+                                        <div className="delete button" onClick={() => { handleDelete("mentor", request) }}>Reject</div>
+                                        <div className="accept button" onClick={() => { handleAccept(request) }}>Accept</div>
                                     </div>
                                 ))}
                             </div>
@@ -151,7 +151,7 @@ export default function UserDashboard() {
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
-                                        <div className="delete" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
+                                        <div className="delete button" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
                                     </div>
                                 ))}
                             </div>

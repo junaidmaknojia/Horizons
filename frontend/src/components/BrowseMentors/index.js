@@ -84,10 +84,11 @@ export default function BrowseMentors() {
     return (
         <div className="browseMentors">
             <h1>Find Mentors</h1>
+            <p>Click the yellow tags to filter mentors. To remove a tag, click the blue tag</p>
             <div className="addedTags">
                 {addedTags?.map(tag => (
                     <div onClick={() => updateTags("remove", tag)} className="addedTags__tag">{tag.name}</div>
-                ))}
+                    ))}
             </div>
             <div className="listTags">
                 {tagOptions?.map(tag => (
@@ -95,7 +96,6 @@ export default function BrowseMentors() {
                 ))}
             </div>
             <div className="listMentors">
-                {/* <CardDeck> */}
                     {listMentors?.map(mentor => (
                         <>
                             <Card className="card">
@@ -133,7 +133,6 @@ export default function BrowseMentors() {
                             </Modal>
                         </>
                     ))}
-                {/* </CardDeck> */}
             </div>
         </div>
     )

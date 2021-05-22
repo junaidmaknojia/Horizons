@@ -159,6 +159,7 @@ export default function EditProfile(){
                                     <option value={tag.id}>{tag.name}</option>
                                 ))}
                             </Form.Control>
+                            <p>Choose multiple tags, up to 5</p>
                         </Form.Group>
                         {/* <select onChange={e => setTagCategory(e.target.value)} multiple>
                             {tagCategories?.map(tag => (

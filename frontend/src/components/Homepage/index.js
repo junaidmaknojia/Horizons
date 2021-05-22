@@ -15,7 +15,7 @@ export default function Homepage({isLoaded}) {
     const [showLogin, setShowLogin] = useState(false);
 
     async function demoPerson(type){
-        const email = type === "Mentor"? "demoPerson@horizon.com" : "demouser@horizon.com";
+        const email = (type === "Mentor") ? "demomentor@horizon.com" : "demouser@horizon.com";
         dispatch(sessionActions.login({ email, "password":"password" }))
             .catch(async (res) => {
                 const data = await res.json();
@@ -39,8 +39,8 @@ export default function Homepage({isLoaded}) {
                             <p>
                                 <Button variant="primary" className="button" onClick={() => setShowSignUp(true)}>Get Started</Button>
                                 <Button variant="primary" className="button" onClick={() => setShowLogin(true)}>Log In</Button>
-                                <Button variant="secondary" className="button" onClick={() => demoPerson("mentor")}>Demo as Mentor</Button>
-                                <Button variant="secondary" className="button" onClick={() => demoPerson("mentee")}>Demo as Mentee</Button>
+                                <Button variant="secondary" className="button" onClick={() => demoPerson("Mentor")}>Demo as Mentor</Button>
+                                <Button variant="secondary" className="button" onClick={() => demoPerson("Mentee")}>Demo as Mentee</Button>
                             </p>
                             <p>
                             </p>

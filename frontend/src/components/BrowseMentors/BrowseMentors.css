@@ -36,8 +36,14 @@
     border-radius: 4px;
 }
 
-.addedTags_tag, .listTags__tag :hover{
+.listTags__tag:hover{
     cursor: pointer;
+    box-shadow: 1px 1px 3px rgb(163, 106, 0);
+}
+
+.addedTags__tag:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgb(123, 93, 255);
 }
 
 .listMentors {

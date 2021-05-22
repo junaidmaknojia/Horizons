@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";

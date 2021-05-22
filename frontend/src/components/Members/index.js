@@ -32,9 +32,11 @@ export default function Members() {
                             <Card.Text>{mentor.title}</Card.Text>
                             <Card.Text>{mentor.industry}</Card.Text>
                         </Card.Body>
-                        <Card.Footer>
-                            <Card.Text>{`${mentor.city}, ${mentor.state}`}</Card.Text>
-                        </Card.Footer>
+                        {(mentor.city || mentor.state) && (
+                            <Card.Footer>
+                                <Card.Text><i class="fas fa-globe-americas"></i>{`${mentor.city}, ${mentor.state}`}</Card.Text>
+                            </Card.Footer>
+                        )}
                     </Card>
                 ))}
             </div>
@@ -46,9 +48,11 @@ export default function Members() {
                             <Card.Title><Link to={`/${mentee.id}`}>{`${mentee.firstName} ${mentee.lastName}`}</Link></Card.Title>
                             <Card.Text>{mentee.title}</Card.Text>
                         </Card.Body>
-                        <Card.Footer>
-                            <Card.Text>{`${mentee.city}, ${mentee.state}`}</Card.Text>
-                        </Card.Footer>
+                        {(mentee.city && mentee.state) && (
+                            <Card.Footer>
+                                <Card.Text><i class="fas fa-globe-americas"></i>{`${mentee.city}, ${mentee.state}`}</Card.Text>
+                            </Card.Footer>
+                        )}
                     </Card>
                 ))}
             </div>
