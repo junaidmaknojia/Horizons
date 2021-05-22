@@ -39,10 +39,10 @@ export default function Homepage({isLoaded}) {
                             <p>
                                 <Button variant="primary" className="button" onClick={() => setShowSignUp(true)}>Get Started</Button>
                                 <Button variant="primary" className="button" onClick={() => setShowLogin(true)}>Log In</Button>
-                            </p>
-                            <p>
                                 <Button variant="secondary" className="button" onClick={() => demoPerson("mentor")}>Demo as Mentor</Button>
                                 <Button variant="secondary" className="button" onClick={() => demoPerson("mentee")}>Demo as Mentee</Button>
+                            </p>
+                            <p>
                             </p>
                         </>
                     )}
