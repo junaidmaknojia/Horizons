@@ -45,11 +45,11 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "role": self.role,
             "bio": self.bio,
-            "city": self.city,
-            "state": self.state,
+            "city": self.city if self.city else "",
+            "state": self.state if self.state else "",
             "tags": list(map(lambda tag: tag.name, self.tags)),
             "profilePhoto": self.profile_photo,
-            "linkedIn": self.linkedin_url,
+            "linkedIn": self.linkedin_url if self.linkedin_url else "",
             "industry": self.industry.name if self.industry else "",
             "title": self.title.name if self.title else ""
         }

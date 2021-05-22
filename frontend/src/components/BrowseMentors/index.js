@@ -85,11 +85,13 @@ export default function BrowseMentors() {
         <div className="browseMentors">
             <h1>Find Mentors</h1>
             <div className="addedTags">
+                <h4>Click a tag to remove it</h4>
                 {addedTags?.map(tag => (
                     <div onClick={() => updateTags("remove", tag)} className="addedTags__tag">{tag.name}</div>
-                ))}
+                    ))}
             </div>
             <div className="listTags">
+                <h4>Click a tag to add</h4>
                 {tagOptions?.map(tag => (
                     <div onClick={() => updateTags("add", tag)} className="listTags__tag">{tag.name}</div>
                 ))}
