@@ -101,3 +101,7 @@
     padding: 0 10px;
     border-radius: 6px;
 }
+
+.button:hover {
+    cursor: pointer;
+}
