@@ -2,3 +2,16 @@
     margin-top: 20px;
     justify-content: center;
 }
+
+.toast {
+    position: relative;
+    left: 10%;
+    background-color: rgb(255, 106, 106);
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px 0px;
+}

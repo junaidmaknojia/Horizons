@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import * as sessionActions from "../../store/session";
-import { Form, Row, Col, Button, InputGroup, Toast } from "react-bootstrap";
+import { Form, Row, Col, Button, InputGroup, Toast, Alert } from "react-bootstrap";
 import './SignupForm.css';
 
 export default function SignupForm() {
@@ -81,22 +81,18 @@ export default function SignupForm() {
 
     return (
         <>
-            <InputGroup>
+            <InputGroup className="checkboxes">
                 <p>I'm signing up as a:</p>
-                <InputGroup.Prepend>
-                    <InputGroup.Radio id="mentor" name="role" onClick={() => setRole("Mentor")} value="Mentor" />Mentor
-                    <InputGroup.Radio id="mentee" name="role" onClick={() => setRole("Mentee")} value="Mentee" />Mentee
-                </InputGroup.Prepend>
+                {/* <div>Mentor</div> */}
+                <InputGroup.Radio id="mentor" name="role" onClick={() => setRole("Mentor")} value="Mentor" /> Mentor
+                {/* <div>Mentee</div> */}
+                <InputGroup.Radio id="mentee" name="role" onClick={() => setRole("Mentee")} value="Mentee" /> Mentee
             </InputGroup>
             {role && (
                 <>
-                    {validationErrors && (
-                        <div>
-                            {validationErrors.map(err => (
-                                <li style={{color: "red"}}>{err}</li>
-                            ))}
-                        </div>
-                    )}
+                    {validationErrors?.map(err => (
+                        <Alert variant="danger">{err}</Alert>
+                    ))}
                     <Form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
@@ -145,7 +141,7 @@ export default function SignupForm() {
                                 style={{ width: 150, height: "auto" }} />
                         </Row>
                     </div>
-                    <Toast onClose={() => setErrorToast(false)} show={errorToast} delay={3000} autohide>
+                    <Toast className="toast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
                         <Toast.Header>
                             <strong className="mr-auto">Uh oh!</strong>
                         </Toast.Header>
