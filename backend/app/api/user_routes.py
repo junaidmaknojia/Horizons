@@ -23,6 +23,7 @@ def user(id):
 @user_routes.route("/update/", methods=["PUT"])
 @login_required
 def update_user():
+    print("inside update user")
     data = request.json
     user = User.query.filter(User.id == current_user.id).one()
     user.first_name = data["firstName"]
@@ -34,7 +35,9 @@ def update_user():
         user.title = Role.query.get(data["title"])
     if data["industry"]:
         user.industry = Industry.query.get(data["industry"])
-    if data["formatTags"]:
+    print("---------", data["formatTags"])
+    if any(data["formatTags"]):
+        print("inside tag if")
         user.tags = []
         for tagId in data["formatTags"]:
             tag = Tag.query.get(tagId)

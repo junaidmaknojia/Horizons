@@ -87,7 +87,7 @@ export default function EditProfile(){
             }
             setImageLoading(false);
         }
-        if(!backendErrors) history.push("/dashboard");
+        if(backendErrors.length === 0) history.push(`/${sessionUser.id}`);
     };
 
     return (
