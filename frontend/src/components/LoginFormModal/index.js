@@ -19,12 +19,14 @@ export default function LoginFormModal({setShowLogin}) {
         window.onmessage = function afterSignup(message){
             windowRef.current.close();
             setShowModal(false);
+            setShowLogin(false);
             dispatch(sessionAdd(message.data));
         }
         return () => {window.onmessage = null};
-    }, [linkedInSignIn]);
+    }, [linkedInSignIn, googleSignIn]);
 
     if(sessionUser){
+        setShowModal(false);
         setShowLogin(false);
         return <Redirect to={`/${sessionUser.id}`}/>
     }

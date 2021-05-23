@@ -23,8 +23,15 @@ export function login(user) {
             body: JSON.stringify({ email, password })
         });
         const data = await response.json();
-        dispatch(sessionAdd(data));
-        return response;
+        if(data.errors){
+            const err = new Error();
+            err.errors = data.errors;
+            throw err;
+        }
+        else {
+            dispatch(sessionAdd(data));
+            return response;
+        }
     }
 }
 

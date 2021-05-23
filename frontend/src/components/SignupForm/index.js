@@ -2,8 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import * as sessionActions from "../../store/session";
-import {signUpRole} from "../../store/user";
-import {Form, Row, Col, Button, InputGroup} from "react-bootstrap";
+import { Form, Row, Col, Button, InputGroup, Toast, Alert } from "react-bootstrap";
 import './SignupForm.css';
 
 export default function SignupForm() {
@@ -17,88 +16,95 @@ export default function SignupForm() {
     const [role, setRole] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [errors, setErrors] = useState([]);
-    // const [validationErrors, setValidationErrors] = useState([]);
+    const [backendErrors, setBackendErrors] = useState([]);
+    const [validationErrors, setValidationErrors] = useState([]);
+    const [errorToast, setErrorToast] = useState(false);
 
-    // useEffect(() => {
-    //     const errors = [];
-    //     if(!name) errors.push("Name must be present")
-    //     if(!email.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) errors.push("Email should be properly formatted")
-    //     if(!phoneNumber.value.match(/^\d{10}$/)) errors.push("Phone number should be properly formatted in ##########")
-    //     if(bio.length > 280) errors.push("Bio should have a character limit of 280 characters")
-    //     // if(!student.selected && !instructor.selected) errors.push("Make sure to select if you're an instructor or student")
-    //     setValidationErrors(errors);
-    // }, [name, email, phoneNumber, bio]);
+    useEffect(() => {
+        const errors = [];
+        if(!firstName) errors.push("First name required")
+        if(!lastName) errors.push("Last name required")
+        if(!email) {
+            errors.push("Email is required")
+        }
+        else {
+            if(!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) errors.push("Valid email required")
+        }
+        setValidationErrors(errors);
+    }, [firstName, lastName, email]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
-            setErrors([]);
+            setValidationErrors([]);
             return dispatch(sessionActions.signupUser({ firstName, lastName, role, email, password }))
                 .catch(async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
+                    console.log(res);
+                    // const data = await res.json();
+                    if (res && res.errors){
+                        setBackendErrors(res.errors);
+                        setErrorToast(true);
+                    }
                 });
         }
-        return setErrors(['Password and confirmed password must match']);
+        return setValidationErrors(['Password and confirmed password must match']);
     };
 
     useEffect(() => {
-        window.onmessage = function afterSignup(message){
+        window.onmessage = function afterSignup(message) {
             const { firstName, lastName, email, profilePhoto } = message.data;
             const password = require("crypto").randomBytes(32).toString("hex");
-            dispatch(sessionActions.linkedInSignUp({firstName, lastName, email, profilePhoto, password, role}))
+            dispatch(sessionActions.linkedInSignUp({ firstName, lastName, email, profilePhoto, password, role }))
                 .then(() => {
                     windowRef.current.close()
                 })
                 .catch((err) => {
-                    console.error(err.errors);
+                    setBackendErrors(err.errors);
+                    setErrorToast(true);
                 });
         };
-        return () => {window.onmessage = null}
-    }, [role, linkedInSignUp]);
+        return () => { window.onmessage = null }
+    }, [role, linkedInSignUp, googleSignUp]);
 
-    if(sessionUser){
-        return <Redirect to={`/${sessionUser.id}`}/>
+    if (sessionUser) {
+        return <Redirect to={`/${sessionUser.id}`} />
     }
 
-    async function linkedInSignUp(){
-        console.log(window.location);
+    async function linkedInSignUp() {
         windowRef.current = window.open(`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=${window.location.origin}/linkedin-sign-up&state=foobar&scope=r_liteprofile%20r_emailaddress`, "", "width=600, height=600");
     }
 
-    async function googleSignUp(){
+    async function googleSignUp() {
         // change client id and redirect uri
-        // window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+        windowRef.current = window.open(`https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=https://localhost:3000&client_id=551411017083-b2r9v74onf79r57kc28ephnvgq0anhrk.apps.googleusercontent.com`, "", "width=600, height=600");
     }
 
     return (
         <>
-            {/* <div>
-                <input type="radio" />Mentor<br/>
-                <input type="radio" />Mentee<br/>
-            </div> */}
-            <InputGroup>
+            <InputGroup className="checkboxes">
                 <p>I'm signing up as a:</p>
-                <InputGroup.Prepend>
-                    <InputGroup.Radio id="mentor" name="role" onClick={()=> setRole("Mentor")} value="Mentor"/>Mentor
-                    <InputGroup.Radio id="mentee" name="role" onClick={()=> setRole("Mentee")} value="Mentee"/>Mentee
-                </InputGroup.Prepend>
+                {/* <div>Mentor</div> */}
+                <InputGroup.Radio id="mentor" name="role" onClick={() => setRole("Mentor")} value="Mentor" /> Mentor
+                {/* <div>Mentee</div> */}
+                <InputGroup.Radio id="mentee" name="role" onClick={() => setRole("Mentee")} value="Mentee" /> Mentee
             </InputGroup>
             {role && (
                 <>
+                    {validationErrors?.map(err => (
+                        <Alert variant="danger">{err}</Alert>
+                    ))}
                     <Form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                     <Form.Control type="text" placeholder="First Name" value={firstName}
-                                        onChange={e => setFirstName(e.target.value)} required/>
+                                        onChange={e => setFirstName(e.target.value)} required />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                     <Form.Control type="text" placeholder="Last Name" value={lastName}
-                                        onChange={e => setLastName(e.target.value)} required/>
+                                        onChange={e => setLastName(e.target.value)} required />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -116,8 +122,8 @@ export default function SignupForm() {
                             <Col>
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                     <Form.Control placeholder="Confirm Password" type="password" value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required/>
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        required />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -127,14 +133,20 @@ export default function SignupForm() {
                         <Row>
                             <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"
                                 onClick={linkedInSignUp}
-                                style={{width:150, height:"auto"}}/>
+                                style={{ width: 150, height: "auto" }} />
                         </Row>
                         <Row>
                             <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
-                                    onClick={googleSignUp}
-                                    style={{width:150, height:"auto"}}/>
+                                onClick={googleSignUp}
+                                style={{ width: 150, height: "auto" }} />
                         </Row>
                     </div>
+                    <Toast className="toast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Uh oh!</strong>
+                        </Toast.Header>
+                        <Toast.Body>{backendErrors}</Toast.Body>
+                    </Toast>
                 </>
             )}
         </>

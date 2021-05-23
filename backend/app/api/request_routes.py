@@ -7,6 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 request_routes = Blueprint('requests', __name__)
 
 @request_routes.route("/")
+@login_required
 def get_requests():
     currUser = current_user.to_dict()
     hermes = []
@@ -27,6 +28,7 @@ def get_requests():
     # return {"requests": [rq.to_dict() for rq in found_requests]}
 
 @request_routes.route("/", methods=["POST"])
+@login_required
 def make_request():
     data = request.json
     package = {"menteeId": current_user.id, "mentorId": data["mentorId"], "pitch": data["pitch"], "accepted": data["accepted"]}
@@ -36,6 +38,7 @@ def make_request():
     return newRequest.to_dict()
 
 @request_routes.route("/update/", methods=["PATCH"])
+@login_required
 def update_request():
     data = request.json
     found_request = Request.query.get(data["requestId"])
@@ -44,9 +47,9 @@ def update_request():
     return found_request.to_dict()
 
 @request_routes.route("/delete", methods=["DELETE"])
+@login_required
 def delete_request():
     data = request.json
-    print(data)
     found_request = Request.query.get(data["requestId"])
     db.session.delete(found_request)
     db.session.commit()
