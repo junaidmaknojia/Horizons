@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
 import "./EditProfile.css";
-import {Form, Button, Row, Col} from "react-bootstrap";
+import {Form, Button, Row, Col, Spinner, Toast} from "react-bootstrap";
 
 export default function EditProfile(){
 
@@ -32,6 +32,8 @@ export default function EditProfile(){
     const [image, setImage] = useState("");
     const [imageLoading, setImageLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState([]);
+    const [backendErrors, setBackendErrors] = useState([]);
+    const [errorToast, setErrorToast] = useState(false);
 
     useEffect(() => {
         let errors = [];
@@ -62,6 +64,14 @@ export default function EditProfile(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const tagsArr = Array.from(tags);
+        const formatTags = tagsArr?.map(t => Number(t.value));
+        const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
+        dispatch(updateUser(update)).catch(err => {
+            setBackendErrors(err.errors);
+        });
+
         if(image){
             const formData = new FormData();
             formData.append("image", image);
@@ -71,23 +81,13 @@ export default function EditProfile(){
                 method: "PATCH",
                 body: formData,
             });
-            if (res.ok) {
+            if (!res.ok) {
                 const data = await res.json();
-                console.log(data);
-                setImageLoading(false);
+                setBackendErrors(data.errors);
             }
-            else {
-                setImageLoading(false);
-            }
+            setImageLoading(false);
         }
-        // if(!validationErrors){
-            const tagsArr = Array.from(tags);
-            const formatTags = tagsArr?.map(t => Number(t.value));
-            const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
-            dispatch(updateUser(update));
-            // return <Redirect to="/dashboard"/>
-        // }
-        history.push(`/${sessionUser.id}`);
+        if(!backendErrors) history.push("/dashboard");
     };
 
     return (
@@ -182,8 +182,19 @@ export default function EditProfile(){
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button variant="primary" type="submit">Update</Button>
-                {imageLoading && <p>Updating...</p>}
+                <Button variant="primary" type="submit">
+                    {imageLoading && (
+                        <Spinner animation="border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
+                    )}Update
+                </Button>
+                <Toast className="toast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
+                    <Toast.Header>
+                        <strong className="mr-auto">Uh oh!</strong>
+                    </Toast.Header>
+                    <Toast.Body>{backendErrors}</Toast.Body>
+                </Toast>
             </Form>
         </div>
     )

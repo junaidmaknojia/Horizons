@@ -37,7 +37,9 @@ export default function LoginForm({setShowLogin}) {
                 <Toast.Header>
                     <strong className="mr-auto">Uh oh!</strong>
                 </Toast.Header>
-                <Toast.Body>{errors}</Toast.Body>
+                <Toast.Body>
+                    {errors.map(err => <p>{err}</p>)}
+                </Toast.Body>
             </Toast>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="exampleForm.ControlInput1">
