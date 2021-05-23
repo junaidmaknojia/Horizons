@@ -5,3 +5,29 @@
     flex-flow: column;
     margin-left: 30%;
 }
+
+/* .fileInput + .label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.fileInput:focus + .label,
+.fileInput + .label:hover {
+    background-color: red;
+}
+
+.fileInput + .label {
+	cursor: pointer;
+}
+
+.fileInput {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+} */

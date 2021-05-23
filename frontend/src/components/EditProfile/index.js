@@ -18,8 +18,8 @@ export default function EditProfile(){
     const [roleCategory, setRoleCategory] = useState([]);
 
     const [industryOptions, setIndustryOptions] = useState([]);
-    const [tagCategories, setTagCategories] = useState([]);
-    const [roleCategories, setRoleCategories] = useState([]);
+    // const [tagCategories, setTagCategories] = useState([]);
+    // const [roleCategories, setRoleCategories] = useState([]);
 
     const [firstName, setFirstName] = useState(sessionUser.firstName);
     const [lastName, setLastName] = useState(sessionUser.lastName);
@@ -111,9 +111,9 @@ export default function EditProfile(){
                     </Col>
                 </Row>
                 <Form.Group>
-                    <Form.Label>Choose Profile Photo</Form.Label>
-                    <Form.File id="exampleFormControlFile1" type="file" accept="image/*"
+                    <Form.File id="exampleFormControlFile1" className="fileInput" type="file" accept="image/*"
                         onChange={e => setImage(e.target.files[0])}/>
+                    <Form.Label className="label">Choose Profile Photo</Form.Label>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
