@@ -12,7 +12,7 @@ export default function EditProfile(){
     const sessionUser = useSelector(state => state.session.user);
 
     if(!sessionUser){
-        history.push("/");
+        return history.push("/");
     }
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
@@ -64,33 +64,41 @@ export default function EditProfile(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if(!validationErrors){
+        setImageLoading(true);
+        if(validationErrors.length === 0){
             const tagsArr = Array.from(tags);
             const formatTags = tagsArr?.map(t => Number(t.value));
             const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
-            dispatch(updateUser(update)).catch(err => {
-                setBackendErrors(err.errors);
-            });
-
-            if(image){
-                setImageLoading(true);
-                const formData = new FormData();
-                formData.append("image", image);
-
-                const res = await fetch('/api/users/image/', {
-                    method: "PATCH",
-                    body: formData,
+            dispatch(updateUser(update))
+                .then(async (res) => {
+                    if(image){
+                        uploadImage();
+                    }
+                    if((backendErrors.length === 0)){
+                        setImageLoading(false);
+                        history.push(`/${sessionUser.id}`);
+                    }
+                })
+                .catch(err => {
+                    setBackendErrors(err.errors);
                 });
-                if (!res.ok) {
-                    const data = await res.json();
-                    setBackendErrors(data.errors);
-                }
-                setImageLoading(false);
-            }
         }
-        if(backendErrors.length === 0) history.push(`/${sessionUser.id}`);
+
     };
+
+    async function uploadImage(){
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const res = await fetch('/api/users/image/', {
+            method: "PATCH",
+            body: formData,
+        });
+        if (!res.ok) {
+            const data = await res.json();
+            setBackendErrors(data.errors);
+        }
+    }
 
     return (
         <div className="editProfile">
