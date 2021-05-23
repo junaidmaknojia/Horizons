@@ -40,7 +40,7 @@ export default function EditProfile(){
         if(!firstName) errors.push("You must provide a first name");
         if(!lastName) errors.push("You must provide a last name");
         if(!title) errors.push("Please provide a relevant title");
-        if(tags.length > 5) errors.push("Please limit your tags to 5 options");
+        if(Array.from(tags).length > 5) errors.push("Please limit your tags to 5 options");
         setValidationErrors(errors);
     }, [firstName, lastName, title, tags]);
 
@@ -65,27 +65,29 @@ export default function EditProfile(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const tagsArr = Array.from(tags);
-        const formatTags = tagsArr?.map(t => Number(t.value));
-        const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
-        dispatch(updateUser(update)).catch(err => {
-            setBackendErrors(err.errors);
-        });
-
-        if(image){
-            const formData = new FormData();
-            formData.append("image", image);
-            setImageLoading(true);
-
-            const res = await fetch('/api/users/image/', {
-                method: "PATCH",
-                body: formData,
+        if(!validationErrors){
+            const tagsArr = Array.from(tags);
+            const formatTags = tagsArr?.map(t => Number(t.value));
+            const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
+            dispatch(updateUser(update)).catch(err => {
+                setBackendErrors(err.errors);
             });
-            if (!res.ok) {
-                const data = await res.json();
-                setBackendErrors(data.errors);
+
+            if(image){
+                setImageLoading(true);
+                const formData = new FormData();
+                formData.append("image", image);
+
+                const res = await fetch('/api/users/image/', {
+                    method: "PATCH",
+                    body: formData,
+                });
+                if (!res.ok) {
+                    const data = await res.json();
+                    setBackendErrors(data.errors);
+                }
+                setImageLoading(false);
             }
-            setImageLoading(false);
         }
         if(backendErrors.length === 0) history.push(`/${sessionUser.id}`);
     };
@@ -111,9 +113,10 @@ export default function EditProfile(){
                     </Col>
                 </Row>
                 <Form.Group>
+                    <Form.Label className="label">Choose Profile Photo</Form.Label>
                     <Form.File id="exampleFormControlFile1" className="fileInput" type="file" accept="image/*"
                         onChange={e => setImage(e.target.files[0])}/>
-                    <Form.Label className="label">Choose Profile Photo</Form.Label>
+                        <p className="disclaimer">Only image files allowed, upload only 1</p>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
@@ -137,7 +140,7 @@ export default function EditProfile(){
                             ))}
                         </select> */}
                         <Form.Group controlId="exampleForm.ControlSelect2">
-                            <Form.Label>{`Current Title: ${sessionUser.title}`}</Form.Label>
+                            <Form.Label className="label">{`Current Title: ${sessionUser.title}`}</Form.Label>
                             <Form.Control as="select" onChange={e => setTitle(e.target.value)}>
                                 {roleCategory?.map(tO => (
                                     <option value={tO.id}>{tO.name}</option>
@@ -145,7 +148,7 @@ export default function EditProfile(){
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect2">
-                            <Form.Label>{`Current Industry: ${sessionUser.industry}`}</Form.Label>
+                            <Form.Label className="label">{`Current Industry: ${sessionUser.industry}`}</Form.Label>
                             <Form.Control as="select" onChange={e => setIndustry(e.target.value)}>
                                 {industryOptions?.map(indus => (
                                     <option value={indus.id}>{indus.name}</option>
@@ -153,13 +156,13 @@ export default function EditProfile(){
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect2">
-                            <Form.Label>{`Current Tags: ${sessionUser.tags?.join(", ")}`}</Form.Label>
+                            <Form.Label className="label">{`Current Tags: ${sessionUser.tags?.join(", ")}`}</Form.Label>
                             <Form.Control as="select" onChange={e => setTags(e.target.selectedOptions)} multiple>
                                 {tagCategory?.map(tag => (
                                     <option value={tag.id}>{tag.name}</option>
                                 ))}
                             </Form.Control>
-                            <p>Choose multiple tags, up to 5</p>
+                            <p className="disclaimer">Choose multiple tags (ctrl + click), up to 5</p>
                         </Form.Group>
                         {/* <select onChange={e => setTagCategory(e.target.value)} multiple>
                             {tagCategories?.map(tag => (
@@ -193,7 +196,9 @@ export default function EditProfile(){
                     <Toast.Header>
                         <strong className="mr-auto">Uh oh!</strong>
                     </Toast.Header>
-                    <Toast.Body>{backendErrors}</Toast.Body>
+                    <Toast.Body>
+                        {backendErrors?.map(err => <p>{err}</p>)}
+                    </Toast.Body>
                 </Toast>
             </Form>
         </div>

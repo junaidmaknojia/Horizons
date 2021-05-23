@@ -4,6 +4,20 @@
     display: flex;
     flex-flow: column;
     margin-left: 30%;
+    margin-bottom: 50px;
+}
+
+.label {
+    color: gray;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.disclaimer {
+    margin-top: 8px;
+    color: red;
+    font-style: italic;
+    font-size: 0.75em;
 }
 
 /* .fileInput + .label {
