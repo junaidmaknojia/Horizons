@@ -21,6 +21,7 @@ def user(id):
     return user.to_dict()
 
 @user_routes.route("/update/", methods=["PUT"])
+@login_required
 def update_user():
     data = request.json
     user = User.query.filter(User.id == current_user.id).one()
@@ -42,6 +43,7 @@ def update_user():
     return user.to_dict()
 
 @user_routes.route("/image/", methods=["PATCH"])
+@login_required
 def update_profile_photo():
     if "image" not in request.files:
         return {"errors": "image required"}, 400
