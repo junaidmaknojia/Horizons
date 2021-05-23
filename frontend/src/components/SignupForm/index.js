@@ -56,20 +56,19 @@ export default function SignupForm() {
                 });
         };
         return () => {window.onmessage = null}
-    }, [role, linkedInSignUp]);
+    }, [role, linkedInSignUp, googleSignUp]);
 
     if(sessionUser){
         return <Redirect to={`/${sessionUser.id}`}/>
     }
 
     async function linkedInSignUp(){
-        console.log(window.location);
         windowRef.current = window.open(`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=${window.location.origin}/linkedin-sign-up&state=foobar&scope=r_liteprofile%20r_emailaddress`, "", "width=600, height=600");
     }
 
     async function googleSignUp(){
         // change client id and redirect uri
-        // window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78r408eh9x5ip8&redirect_uri=http://localhost:3000/linkedInAuth&state=foobar&scope=r_liteprofile%20r_emailaddress", "", "width=600, height=600");
+        windowRef.current = window.open(`https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=https://localhost:3000&client_id=551411017083-b2r9v74onf79r57kc28ephnvgq0anhrk.apps.googleusercontent.com`, "", "width=600, height=600");
     }
 
     return (
