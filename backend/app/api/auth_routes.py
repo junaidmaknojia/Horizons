@@ -174,4 +174,4 @@ def linkedIn_sign_in():
         login_user(user)
         return user.to_dict()
     else:
-        return {"error": "Cannot find a registered user from the provided LinkedIn account"}
+        return {"errors": ["Cannot find a registered user from the provided LinkedIn credentials"]}, 400
