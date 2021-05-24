@@ -58,9 +58,9 @@
 }
 
 .toast {
-    position: relative;
-    top: 0px;
-    right: 0px;
+    position: fixed;
+    top: 50px;
+    right: 50px;
     z-index: 5;
     background-color: rgb(154, 255, 154);
 }
