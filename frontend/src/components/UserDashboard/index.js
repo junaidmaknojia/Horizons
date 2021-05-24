@@ -88,9 +88,8 @@ export default function UserDashboard() {
         <div className="userDashboard">
             <div className="userDashboard__card">
                 <img src={sessionUser.profilePhoto} style={{ width: 300, height: 300 }} />
-                <Link to="/edit">Edit Profile</Link>
                 <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}
-                    {sessionUser.linkedIn && (<i class="fab fa-linkedin" style={{margin: 5}}></i>)}
+                    {sessionUser.linkedIn && (<a href={sessionUser.linkedIn} target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" style={{margin: 5}}></i></a>)}
                 </h4>
                 <h6>{sessionUser.role}</h6>
                 <h6>{sessionUser.title}</h6>

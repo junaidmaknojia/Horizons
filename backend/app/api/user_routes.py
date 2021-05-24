@@ -31,13 +31,12 @@ def update_user():
     user.bio = data["bio"]
     user.city = data["city"]
     user.state = data["state"]
+    user.linkedin_url = data["linkedIn"]
     if data["title"]:
         user.title = Role.query.get(data["title"])
     if data["industry"]:
         user.industry = Industry.query.get(data["industry"])
-    print("---------", data["formatTags"])
     if any(data["formatTags"]):
-        print("inside tag if")
         user.tags = []
         for tagId in data["formatTags"]:
             tag = Tag.query.get(tagId)

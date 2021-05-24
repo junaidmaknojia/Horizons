@@ -25,6 +25,7 @@ export default function EditProfile(){
     const [lastName, setLastName] = useState(sessionUser.lastName);
     const [title, setTitle] = useState(sessionUser.title);
     const [bio, setBio] = useState(sessionUser.bio);
+    const [linkedIn, setLinkedIn] = useState(sessionUser.linkedIn);
     const [industry, setIndustry] = useState(sessionUser.industry);
     const [tags, setTags] = useState(sessionUser.tags);
     const [city, setCity] = useState(sessionUser.city);
@@ -68,7 +69,7 @@ export default function EditProfile(){
         if(validationErrors.length === 0){
             const tagsArr = Array.from(tags);
             const formatTags = tagsArr?.map(t => Number(t.value));
-            const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
+            const update = {firstName, lastName, "title": Number(title), linkedIn, bio, "industry": Number(industry), formatTags, city, state};
             updateUser(update)
 
             if(image){
@@ -123,7 +124,13 @@ export default function EditProfile(){
                     <Form.Label className="label">Choose Profile Photo</Form.Label>
                     <Form.File id="exampleFormControlFile1" className="fileInput" type="file" accept="image/*"
                         onChange={e => setImage(e.target.files[0])}/>
-                        <p className="disclaimer">Only image files allowed, upload only 1</p>
+                    <p className="disclaimer">Only image files allowed, upload only 1</p>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Control type="url" placeholder="LinkedIn URL" pattern="https://.*"
+                        value={linkedIn}
+                        onChange={(e) => setLinkedIn(e.target.value)}/>
+                    <p className="disclaimer">Must be in the form https://</p>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Control as="textarea" rows={3} placeholder="Write your bio here"
