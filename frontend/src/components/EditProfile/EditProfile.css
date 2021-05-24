@@ -3,7 +3,9 @@
     top: 100px;
     display: flex;
     flex-flow: column;
-    margin-left: 30%;
+    max-width: 60%;
+    margin-left: 10%;
+    margin-right: 10%;
     margin-bottom: 50px;
 }
 

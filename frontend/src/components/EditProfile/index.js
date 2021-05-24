@@ -69,22 +69,20 @@ export default function EditProfile(){
             const tagsArr = Array.from(tags);
             const formatTags = tagsArr?.map(t => Number(t.value));
             const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
-            const updateGood = updateUser(update)
-                .then((res) => {
-                    if(image){
-                        uploadImage();
-                    }
-                    if((backendErrors.length === 0)){
-                        setTimeout(()=> {window.alert("Your profile is updated! Give it a minute the changes to take place")}, 2000);
-                        setImageLoading(false);
-                        history.push(`/${sessionUser.id}`);
-                    }
-                })
-                .catch(err => {
-                    setBackendErrors(err.errors);
-                });
-        }
+            updateUser(update)
 
+            if(image){
+                uploadImage();
+            }
+            if((backendErrors.length === 0)){
+                setTimeout(()=> {window.alert("Your profile is updated! Give it a minute for the changes to take place")}, 2000);
+                setImageLoading(false);
+                history.push(`/${sessionUser.id}`);
+            }
+            // .catch(err => {
+            //     setBackendErrors(err.errors);
+            // });
+        }
     };
 
     async function uploadImage(){
