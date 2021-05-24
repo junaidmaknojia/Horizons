@@ -24,9 +24,9 @@
     position: relative;
     display: inline-block;
     width: auto;
-    height: 20px;
+    height: 25px;
     margin: 20px;
-    padding: 5px 5px 5px 15px;
+    padding: 5px 5px 10px 15px;
     background: #ffe7a6;
     color: #888DA3;
     line-height: 20px;
@@ -64,6 +64,7 @@
     flex-flow: column;
     align-items: center;
     margin-left: 100px;
+    margin-right: 5%;
 }
 
 .requests {

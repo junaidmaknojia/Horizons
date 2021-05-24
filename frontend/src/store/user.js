@@ -14,7 +14,8 @@ export const allUsers = async () => {
     const data = await response.json();
 }
 
-export const updateUser = (user) => async (dispatch) => {
+export const updateUser = async (user) => {
+    console.log("inside update thunk");
     const response = await fetch("/api/users/update/", {
         method: "PUT",
         headers: {'Content-Type': 'application/json'},

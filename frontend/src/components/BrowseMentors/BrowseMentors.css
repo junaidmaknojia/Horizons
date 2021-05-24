@@ -56,3 +56,11 @@
     width: 200px;
     margin: 20px;
 }
+
+.toast {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    z-index: 5;
+    background-color: rgb(154, 255, 154);
+}

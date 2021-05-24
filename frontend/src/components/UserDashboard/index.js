@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
-import {Accordion, Card} from "react-bootstrap";
+import {Accordion, Card, Alert} from "react-bootstrap";
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import "./UserDashboard.css";
 
@@ -39,6 +39,7 @@ export default function UserDashboard() {
         const numTags = sessionUser.tags ? sessionUser.tags.length : 0;
         if (!sessionUser.tags || numTags < 5) warnings.push(`${5 - numTags} more tag${5 - numTags === 1 ? "" : "s"}`);
         if (!sessionUser.industry) warnings.push("Industry");
+        if(!sessionUser.title) warnings.push("Title");
     }
 
     function handleDelete(person, request) {
@@ -61,7 +62,7 @@ export default function UserDashboard() {
         return (
             <button
                 type="button"
-                style={{ backgroundColor: 'pink' }}
+                style={{ backgroundColor: 'orange' }}
                 onClick={decoratedOnClick}>{children}
             </button>
         );
@@ -87,10 +88,16 @@ export default function UserDashboard() {
         <div className="userDashboard">
             <div className="userDashboard__card">
                 <img src={sessionUser.profilePhoto} style={{ width: 300, height: 300 }} />
-                <Link to="/edit">Edit Profile</Link>
-                <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}</h4>
+                <h4>{`${sessionUser.firstName} ${sessionUser.lastName}`}
+                    {sessionUser.linkedIn && (<a href={sessionUser.linkedIn} target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" style={{margin: 5}}></i></a>)}
+                </h4>
                 <h6>{sessionUser.role}</h6>
                 <h6>{sessionUser.title}</h6>
+                <h6>{sessionUser.industry}</h6>
+                {(sessionUser.city && sessionUser.state) && (
+                    <p><i class="fas fa-globe-americas" style={{margin: 5}}></i>{`${sessionUser.city}, ${sessionUser.state}`}</p>
+                )}
+                <p>{sessionUser.bio}</p>
                 <div className="tagContainer">
                     {sessionUser.tags.map(tag => (
                         <div className="tag">{tag}</div>
@@ -99,12 +106,12 @@ export default function UserDashboard() {
             </div>
             <div className="requestsContainer">
                 {warnings.length > 0 && (
-                    <div className="requests__warnings">
+                    <Alert variant="warning">
                         <h3>Please go into your profile settings and add the following:</h3>
                         <ul>
                             {warnings.map(warning => (<li>{warning}</li>))}
                         </ul>
-                    </div>
+                    </Alert>
                 )}
                 <h2>Your Requests</h2>
                 <div className="requests">
