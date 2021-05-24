@@ -93,6 +93,7 @@ export default function UserDashboard() {
                 </h4>
                 <h6>{sessionUser.role}</h6>
                 <h6>{sessionUser.title}</h6>
+                <h6>{sessionUser.industry}</h6>
                 {(sessionUser.city && sessionUser.state) && (
                     <p><i class="fas fa-globe-americas" style={{margin: 5}}></i>{`${sessionUser.city}, ${sessionUser.state}`}</p>
                 )}

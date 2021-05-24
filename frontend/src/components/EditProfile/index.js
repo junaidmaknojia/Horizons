@@ -70,7 +70,7 @@ export default function EditProfile(){
             const tagsArr = Array.from(tags);
             const formatTags = tagsArr?.map(t => Number(t.value));
             const update = {firstName, lastName, "title": Number(title), linkedIn, bio, "industry": Number(industry), formatTags, city, state};
-            updateUser(update)
+            const returninfo = updateUser(update);
 
             if(image){
                 uploadImage();
