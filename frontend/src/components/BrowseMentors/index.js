@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { getRequests, makeRequest } from "../../store/requests";
-import {Card, Modal, Button, Form} from "react-bootstrap";
+import {Card, Modal, Button, Form, Toast} from "react-bootstrap";
 import "./BrowseMentors.css";
 
 
@@ -16,6 +16,7 @@ export default function BrowseMentors() {
     const [tagOptions, setTagOptions] = useState([]);
     const [requestMentor, setRequestMentor] = useState({});
     const [showPitchModal, setShowPitchModal] = useState(false);
+    const [showToast, setShowToast] = useState(false);
     const [pitch, setPitch] = useState("");
 
     useEffect(() => {
@@ -63,6 +64,7 @@ export default function BrowseMentors() {
         if(data){
             setShowPitchModal(false);
             setPitch("");
+            setShowToast(true);
             loadRequests();
         }
 
@@ -83,6 +85,14 @@ export default function BrowseMentors() {
 
     return (
         <div className="browseMentors">
+            <Toast onClose={() => setShowToast(false)} show={showToast} delay={5000} autohide className="toast">
+                <Toast.Header>
+                    <strong className="mr-auto">Request Sent!</strong>
+                </Toast.Header>
+                <Toast.Body>Your request is sent! Your mentor will get an email notifying them of your request. You can cancel
+                    your request from your dashboard. Keep connecting!
+                </Toast.Body>
+            </Toast>
             <h1>Find Mentors</h1>
             <p>Click the yellow tags to filter mentors. To remove a tag, click the blue tag</p>
             <div className="addedTags">
