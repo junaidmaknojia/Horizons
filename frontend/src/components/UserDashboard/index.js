@@ -55,10 +55,7 @@ export default function UserDashboard() {
     }
 
     function CustomToggle({ children, eventKey }) {
-        const decoratedOnClick = useAccordionToggle(eventKey, () =>
-            console.log('totally custom!'),
-        );
-
+        const decoratedOnClick = useAccordionToggle(eventKey, () => {});
         return (
             <button
                 type="button"
@@ -72,9 +69,7 @@ export default function UserDashboard() {
         return (
             <Accordion defaultActiveKey="1">
                 <Card>
-                    <Card.Header>
-                        <CustomToggle eventKey="0">Pitch</CustomToggle>
-                    </Card.Header>
+                    <CustomToggle eventKey="0">Pitch</CustomToggle>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>{request.pitch}</Card.Body>
                     </Accordion.Collapse>
@@ -135,6 +130,7 @@ export default function UserDashboard() {
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        {showPitch(request)}
                                     </div>
                                 ))}
                             </div>
@@ -149,6 +145,7 @@ export default function UserDashboard() {
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
                                         <p>{request.mentor.email}</p>
+                                        {showPitch(request)}
                                     </div>
                                 ))}
                             </div>
@@ -158,6 +155,7 @@ export default function UserDashboard() {
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
                                         <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        {showPitch(request)}
                                         <div className="delete button" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
                                     </div>
                                 ))}
