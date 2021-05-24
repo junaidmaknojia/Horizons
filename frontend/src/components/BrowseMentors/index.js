@@ -123,7 +123,7 @@ export default function BrowseMentors() {
                                         <Form.Control as="textarea" rows={3} placeholder="I need some guidance on ..."
                                             value={pitch}
                                             onChange={(e) => setPitch(e.target.value)}
-                                            maxlength="80"
+                                            maxLength="80"
                                         />
                                     </Form.Group>
                                 </Modal.Body>
