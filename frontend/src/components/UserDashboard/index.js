@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { getRequests, updateRequest, deleteRequest } from "../../store/requests";
-import {Accordion, Card} from "react-bootstrap";
+import {Accordion, Card, Alert} from "react-bootstrap";
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import "./UserDashboard.css";
 
@@ -39,6 +39,7 @@ export default function UserDashboard() {
         const numTags = sessionUser.tags ? sessionUser.tags.length : 0;
         if (!sessionUser.tags || numTags < 5) warnings.push(`${5 - numTags} more tag${5 - numTags === 1 ? "" : "s"}`);
         if (!sessionUser.industry) warnings.push("Industry");
+        if(!sessionUser.title) warnings.push("Title");
     }
 
     function handleDelete(person, request) {
@@ -61,7 +62,7 @@ export default function UserDashboard() {
         return (
             <button
                 type="button"
-                style={{ backgroundColor: 'pink' }}
+                style={{ backgroundColor: 'orange' }}
                 onClick={decoratedOnClick}>{children}
             </button>
         );
@@ -99,12 +100,12 @@ export default function UserDashboard() {
             </div>
             <div className="requestsContainer">
                 {warnings.length > 0 && (
-                    <div className="requests__warnings">
+                    <Alert variant="warning">
                         <h3>Please go into your profile settings and add the following:</h3>
                         <ul>
                             {warnings.map(warning => (<li>{warning}</li>))}
                         </ul>
-                    </div>
+                    </Alert>
                 )}
                 <h2>Your Requests</h2>
                 <div className="requests">

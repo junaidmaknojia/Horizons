@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
 import "./EditProfile.css";
 import {Form, Button, Row, Col, Spinner, Toast} from "react-bootstrap";
 
 export default function EditProfile(){
 
-    let confirmToast;
+
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
 
     if(!sessionUser){
-        history.push("/");
+        <Redirect to="/"/>
     }
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
