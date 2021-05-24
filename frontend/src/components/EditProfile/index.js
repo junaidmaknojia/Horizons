@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import {useSelector} from "react-redux";
+import { useHistory } from "react-router-dom";
 import { updateUser } from "../../store/user";
 import "./EditProfile.css";
 import {Form, Button, Row, Col, Spinner, Toast} from "react-bootstrap";
 
 export default function EditProfile(){
 
+    let confirmToast;
     const history = useHistory();
-    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
     if(!sessionUser){
-        return history.push("/");
+        history.push("/");
     }
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
@@ -69,12 +69,13 @@ export default function EditProfile(){
             const tagsArr = Array.from(tags);
             const formatTags = tagsArr?.map(t => Number(t.value));
             const update = {firstName, lastName, "title": Number(title), bio, "industry": Number(industry), formatTags, city, state};
-            dispatch(updateUser(update))
-                .then(async (res) => {
+            const updateGood = updateUser(update)
+                .then((res) => {
                     if(image){
                         uploadImage();
                     }
                     if((backendErrors.length === 0)){
+                        setTimeout(()=> {window.alert("Your profile is updated! Give it a minute the changes to take place")}, 2000);
                         setImageLoading(false);
                         history.push(`/${sessionUser.id}`);
                     }
