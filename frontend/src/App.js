@@ -15,6 +15,7 @@ import LinkedInLogIn from "./components/LinkedInLogIn";
 import Members from "./components/Members";
 import GoogleSignUp from "./components/GoogleSignUp";
 import GoogleLogIn from "./components/GoogleLogIn";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
 					<Route><h1>The page you're looking for doesn't exist</h1></Route>
 				</Switch>
 			)}
+			<Footer/>
 		</>
 	);
 }
