@@ -69,13 +69,11 @@ export default function Homepage() {
                 <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg" className="tablePhoto"/>
                 <img src={howitworks} className="diagram"/>
             </div>
-            <div className="getApp">
-                <div className="appContent">
-                    <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
-                    <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
-                        settings and we'll notify you when there are major updates to your experience including mobile
-                        app improvements.
-                    </div>
+            <div className="appContent">
+                <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
+                <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
+                    settings and we'll notify you when there are major updates to your experience including mobile
+                    app improvements.
                 </div>
             </div>
         </div>
