@@ -50,7 +50,7 @@ export default function Members() {
                         </Card.Body>
                         {(mentee.city && mentee.state) && (
                             <Card.Footer>
-                                <Card.Text><i class="fas fa-globe-americas"></i>{`${mentee.city}, ${mentee.state}`}</Card.Text>
+                                <Card.Text><i class="fas fa-globe-americas" style={{margin: 5}}></i>{`${mentee.city}, ${mentee.state}`}</Card.Text>
                             </Card.Footer>
                         )}
                     </Card>
