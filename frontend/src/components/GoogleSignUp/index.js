@@ -9,6 +9,9 @@ export default function GoogleSignUp(){
     const location = useLocation();
 
     const parsedURL = location.search.match(/(?<=\?code=).*(?=&)/);
+    console.log(location);
+    console.log(location.search);
+    console.log(parsedURL);
 
     useEffect(() => {googleSignUp()}, []);
 

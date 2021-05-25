@@ -179,7 +179,8 @@ def linkedIn_sign_in():
 @auth_routes.route("/googleSignUp/", methods=["POST"])
 def google_sign_up():
     print("---------------inside googleSignUp")
-    # data = request.json
+    data = request.json
+    print(data)
     # token = data["token"]
     # redirect_uri = data["redirect_URI"]
     # sendoff = {
