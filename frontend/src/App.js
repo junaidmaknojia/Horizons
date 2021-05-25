@@ -35,7 +35,7 @@ function App() {
 			{isLoaded && (
 				<Switch>
 					<Route exact path="/">
-						<Homepage isLoaded={isLoaded} />
+						<Homepage />
 					</Route>
 					<Route path="/dashboard">
 						<UserDashboard />
