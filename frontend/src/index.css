@@ -1,5 +1,5 @@
 /* TODO Add site wide styles */
 div#root {
+    height: 100%;
     background-image: linear-gradient(rgb(68, 62, 143, 0.5), rgb(255, 248, 146, 0.5));
-    height: 100vh;
 }
