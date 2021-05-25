@@ -79,6 +79,14 @@ export default function SignupForm() {
         windowRef.current = window.open(`https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=https://localhost:3000&client_id=551411017083-b2r9v74onf79r57kc28ephnvgq0anhrk.apps.googleusercontent.com`, "", "width=600, height=600");
     }
 
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
+
     return (
         <>
             <InputGroup className="checkboxes">
@@ -138,6 +146,7 @@ export default function SignupForm() {
                         <Row>
                             <img src="https://www.oncrashreboot.com/images/create-apple-google-signin-buttons-quick-dirty-way-google.png"
                                 onClick={googleSignUp}
+                                data-onsuccess={onSignIn}
                                 style={{ width: 150, height: "auto" }} />
                         </Row>
                     </div>
