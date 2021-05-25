@@ -6,6 +6,7 @@ import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
 import {getRequests} from "../../store/requests";
+import howitworks from "./howitworks.svg";
 
 export default function Homepage() {
 
@@ -35,16 +36,12 @@ export default function Homepage() {
                         LinkedIn and get started!
                     </p>
                     {!sessionUser && (
-                        <>
-                            <p>
-                                <Button variant="primary" className="button" onClick={() => setShowSignUp(true)}>Get Started</Button>
-                                <Button variant="primary" className="button" onClick={() => setShowLogin(true)}>Log In</Button>
-                                <Button variant="secondary" className="button" onClick={() => demoPerson("Mentor")}>Demo as Mentor</Button>
-                                <Button variant="secondary" className="button" onClick={() => demoPerson("Mentee")}>Demo as Mentee</Button>
-                            </p>
-                            <p>
-                            </p>
-                        </>
+                        <p>
+                            <Button variant="primary" className="button" onClick={() => setShowSignUp(true)}>Get Started</Button>
+                            <Button variant="primary" className="button" onClick={() => setShowLogin(true)}>Log In</Button>
+                            <Button variant="secondary" className="button" onClick={() => demoPerson("Mentor")}>Demo as Mentor</Button>
+                            <Button variant="secondary" className="button" onClick={() => demoPerson("Mentee")}>Demo as Mentee</Button>
+                        </p>
                     )}
                 </div>
                 <Modal show={showSignUp} onHide={() => { setShowSignUp(false) }}>
@@ -68,14 +65,15 @@ export default function Homepage() {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <div className="getApp">
+            <div className="howitworks">
                 <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg" className="tablePhoto"/>
-                <div className="appContent">
-                    <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
-                    <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
-                        settings and we'll notify you when there are major updates to your experience including mobile
-                        app improvements.
-                    </div>
+                <img src={howitworks} className="diagram"/>
+            </div>
+            <div className="appContent">
+                <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
+                <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
+                    settings and we'll notify you when there are major updates to your experience including mobile
+                    app improvements.
                 </div>
             </div>
         </div>
