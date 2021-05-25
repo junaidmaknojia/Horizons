@@ -7,7 +7,7 @@ import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
 import {getRequests} from "../../store/requests";
 
-export default function Homepage({isLoaded}) {
+export default function Homepage() {
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);

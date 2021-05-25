@@ -35,7 +35,7 @@ function App() {
 			{isLoaded && (
 				<Switch>
 					<Route exact path="/">
-						<Homepage isLoaded={isLoaded} />
+						<Homepage />
 					</Route>
 					<Route path="/dashboard">
 						<UserDashboard />
@@ -67,7 +67,7 @@ function App() {
 					<Route><h1>The page you're looking for doesn't exist</h1></Route>
 				</Switch>
 			)}
-			<Footer/>
+			{/* <Footer/> */}
 		</>
 	);
 }

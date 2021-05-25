@@ -175,3 +175,32 @@ def linkedIn_sign_in():
         return user.to_dict()
     else:
         return {"errors": ["Cannot find a registered user from the provided LinkedIn credentials"]}, 400
+
+@auth_routes.route("/googleSignUp/", methods=["POST"])
+def google_sign_up():
+    print("---------------inside googleSignUp")
+    # data = request.json
+    # token = data["token"]
+    # redirect_uri = data["redirect_URI"]
+    # sendoff = {
+    #     "grant_type": "authorization_code",
+    #     "code": token,
+    #     "client_id": environ.get("GOOGLE_CLIENT_ID"),
+    #     "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
+    #     "redirect_uri": redirect_uri
+    # }
+    return {"message": "hit the googeSignUp"}
+
+@auth_routes.route("/googleSignIn/", methods=["POST"])
+def google_sign_in():
+    # data = request.json
+    # token = data["token"]
+    # redirect_uri = data["redirect_URI"]
+    # sendoff = {
+    #     "grant_type": "authorization_code",
+    #     "code": token,
+    #     "client_id": environ.get("GOOGLE_CLIENT_ID"),
+    #     "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
+    #     "redirect_uri": redirect_uri
+    # }
+    return {"message": "hit the googleSignIn"}
