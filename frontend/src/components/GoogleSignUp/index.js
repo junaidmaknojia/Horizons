@@ -8,10 +8,10 @@ export default function GoogleSignUp(){
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const parsedURL = location.search.match(/(?<=\?code=).*(?=&)/);
-    console.log(location);
-    console.log(location.search);
+    const parsedURL = location.hash.match(/(?<=\&access_token=).*(?=&token_type)/);
+    console.log(location.hash);
     console.log(parsedURL);
+    // #state=state_parameter_passthrough_value&access_token=ya29.a0AfH6SMAqQ7seeYA1WInQX_HqieGOo3hU8YQGIFjJe6XXlEpQJjgcErxU6c2S6e73F1N9l8WmzMcmy9pLMzbbs9kuPOiq0HgutrHHxE-ZVaepk_o9laZ-CnpKIqoqH11scptqqxfNVZbuXD9Qx987Q0RLX9Y2&token_type=Bearer&expires_in=3599&scope=email%20https://www.googleapis.com/auth/userinfo.email%20openid&authuser=0&prompt=consent
 
     useEffect(() => {googleSignUp()}, []);
 
