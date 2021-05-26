@@ -79,6 +79,14 @@ def seed_users():
         mentor.title = role
     db.session.commit()
 
+    # 25 industries
+    for x in range(30):
+        mentor = User.query.get(x+16)
+        industryId = 1 + random.randrange(25)
+        industry = Role.query.get(industryId)
+        mentor.industry = industry
+    db.session.commit()
+
 # Uses a raw SQL query to TRUNCATE the users table.
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and resets
