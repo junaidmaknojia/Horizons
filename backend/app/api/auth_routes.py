@@ -180,19 +180,6 @@ def linkedIn_sign_in():
 def google_sign_up():
     print("---------------inside googleSignUp")
     data = request.json
-    # print(data)
-    # token = data["id_token"]
-    # try:
-    #     # Specify the CLIENT_ID of the app that accesses the backend:
-    #     idinfo = id_token.verify_oauth2_token(token, requests.Request(), environ.get("GOOGLE_CLIENT_ID"))
-
-    #     # ID token is valid. Get the user's Google Account ID from the decoded token.
-    #     userid = idinfo['sub']
-    #     print("-----------", userid)
-    # except ValueError:
-    #     # Invalid token
-    #     pass
-
     token = data["token"]
     redirect_uri = data["redirect_URI"]
     sendoff = {
@@ -204,16 +191,20 @@ def google_sign_up():
     }
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
-    response = urlopen(request_send) # error here
-    print("------------- response", response)
-    response2 = response.read().decode("utf-8")
-    print("--------------- response2", response2)
-    parsed_response = loads(response2)
-    print("-------------parsed_response", parsed_response)
-    access_token = parsed_response["access_token"]
+    response = urlopen(request_send) # error heree
+    # print("------------- response", response)
+    # response2 = response.read().decode("utf-8")
+    # print("--------------- response2", response2)
+    # parsed_response = loads(response2)
+    # print("-------------parsed_response", parsed_response)
+    # access_token = parsed_response["access_token"]
 
-    print("---------- access token: ", access_token)
-    return {"message": "hit the googleSignUp"}
+    # # https://www.googleapis.com/auth/userinfo.email
+    # # https://www.googleapis.com/auth/userinfo.profile
+
+    # request_user_info = Request("https://www.googleapis.com/auth/userinfo.email", headers={"Authorization": f"Bearer {token}"})
+    # print("---------- access token: ", access_token)
+    return {"message": "working"}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
 def google_sign_in():
