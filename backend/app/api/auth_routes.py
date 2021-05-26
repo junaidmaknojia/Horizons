@@ -5,8 +5,6 @@ from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
-from google.oauth2 import id_token
-from google.auth.transport import requests
 from json import loads
 from os import environ
 
