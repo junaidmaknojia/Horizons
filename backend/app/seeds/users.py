@@ -1,13 +1,13 @@
 import os
 from werkzeug.security import generate_password_hash
-from app.models import db, User
+from app.models import db, User, Tag, Role, Industry
+import random
 
 def seed_users():
     password_add = os.environ.get("PASSWORD_APPEND")
     demo = User(first_name="Demo", last_name="User", email="demouser@horizon.com", password="password", role="Mentee")
     db.session.add(demo)
     demo_mentor = User(first_name="Demo", last_name="Mentor", email="demomentor@horizon.com", password="password", role="Mentor")
-    db.session.add(demo_mentor)
     # db.session.add(User(first_name="Duddette", last_name="Lebowski", email="lebowski@gmail.com", hashed_password=generate_password_hash("whiteRussian"), role="Mentor"))
     # db.session.add(User(first_name="Maria", last_name="Hill", email="hill@gmail.com", hashed_password=generate_password_hash("smulders"), role="Mentor"))
     # db.session.add(User(first_name="Monarch", last_name="Daisy", email="daisy@gmail.com", hashed_password=generate_password_hash("metamorphosis"), role="Mentor"))
@@ -30,6 +30,7 @@ def seed_users():
     db.session.add(User(first_name="Shiyann", last_name="Reeseman", email="Reeseman@horizon.com", hashed_password=generate_password_hash(f"Reeseman{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/shiyann-mentee.jpg"))
     db.session.add(User(first_name="Sophia", last_name="Quiyov", email="Quiyov@horizon.com", hashed_password=generate_password_hash(f"Quiyov{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/sophia-mentee.jpg"))
     db.session.add(User(first_name="Tonsar", last_name="Dale", email="Dale@horizon.com", hashed_password=generate_password_hash(f"Dale{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/tonsar-mentee.jpg"))
+    db.session.add(demo_mentor)
     db.session.add(User(first_name="Amanda", last_name="Darnelly", email="Darnelly@horizon.com", hashed_password=generate_password_hash(f"Darnelly{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/ananda-mentor.jpg"))
     db.session.add(User(first_name="Anita", last_name="Bonita", email="Bonita@horizon.com", hashed_password=generate_password_hash(f"Bonita{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/anita-mentor.jpg"))
     db.session.add(User(first_name="Dale", last_name="Lieberman", email="Lieberman@horizon.com", hashed_password=generate_password_hash(f"Lieberman{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/dale-mentor.jpg"))
@@ -61,6 +62,21 @@ def seed_users():
     db.session.add(User(first_name="Ronda", last_name="Moskowitz", email="Moskowitz@horizon.com", hashed_password=generate_password_hash(f"Moskowitz{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/ronda-mentor.jpg"))
     db.session.add(User(first_name="Syed", last_name="Hamrani", email="Hamrani@horizon.com", hashed_password=generate_password_hash(f"Hamrani{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/syed-mentor.jpg"))
     db.session.add(User(first_name="Valerie", last_name="Wong", email="Wong@horizon.com", hashed_password=generate_password_hash(f"Wong{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/valerie-mentor.jpg"))
+    db.session.commit()
+
+    for x in range(30):
+        mentor = User.query.get(x+16)
+        for y in range(5):
+            tag = Tag.query.get(x+1+y)
+            mentor.tags.append(tag)
+    db.session.commit()
+
+    # 39 roles
+    for x in range(30):
+        mentor = User.query.get(x+16)
+        roleId = 1 + random.randrange(39)
+        role = Role.query.get(roleId)
+        mentor.title = role
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE the users table.
