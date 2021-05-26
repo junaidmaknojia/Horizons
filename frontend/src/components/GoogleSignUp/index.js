@@ -16,6 +16,13 @@ export default function GoogleSignUp(){
     useEffect(() => {googleSignUp()}, []);
 
     async function googleSignUp(){
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('POST', "/api/auth/googleSignUp/");
+        // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        // xhr.onload = function() {
+        // console.log('Signed in as: ' + xhr.responseText);
+        // };
+        // xhr.send('idtoken=' + parsedURL[0]);
         const response = await fetch("/api/auth/googleSignUp/", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -23,7 +30,8 @@ export default function GoogleSignUp(){
         });
         if(response.ok){
             const data = await response.json();
-            window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
+            console.log(data.message);
+            // window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
             // window.close();
             // dispatch(sessionAdd(data));
             // <Redirect to={`/${sessionUser.id}`}/>

@@ -5,6 +5,8 @@ from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
+from google.oauth2 import id_token
+from google.auth.transport import requests
 from json import loads
 from os import environ
 
@@ -180,17 +182,40 @@ def linkedIn_sign_in():
 def google_sign_up():
     print("---------------inside googleSignUp")
     data = request.json
-    print(data)
-    # token = data["token"]
-    # redirect_uri = data["redirect_URI"]
-    # sendoff = {
-    #     "grant_type": "authorization_code",
-    #     "code": token,
-    #     "client_id": environ.get("GOOGLE_CLIENT_ID"),
-    #     "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
-    #     "redirect_uri": redirect_uri
-    # }
-    return {"message": "hit the googeSignUp"}
+    # print(data)
+    # token = data["id_token"]
+    # try:
+    #     # Specify the CLIENT_ID of the app that accesses the backend:
+    #     idinfo = id_token.verify_oauth2_token(token, requests.Request(), environ.get("GOOGLE_CLIENT_ID"))
+
+    #     # ID token is valid. Get the user's Google Account ID from the decoded token.
+    #     userid = idinfo['sub']
+    #     print("-----------", userid)
+    # except ValueError:
+    #     # Invalid token
+    #     pass
+
+    token = data["token"]
+    redirect_uri = data["redirect_URI"]
+    sendoff = {
+        "grant_type": "authorization_code",
+        "code": token,
+        "client_id": environ.get("GOOGLE_CLIENT_ID"),
+        "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
+        "redirect_uri": redirect_uri
+    }
+    launch = urlencode(sendoff).encode()
+    request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
+    response = urlopen(request_send) # error here
+    print("------------- response", response)
+    response2 = response.read().decode("utf-8")
+    print("--------------- response2", response2)
+    parsed_response = loads(response2)
+    print("-------------parsed_response", parsed_response)
+    access_token = parsed_response["access_token"]
+
+    print("---------- access token: ", access_token)
+    return {"message": "hit the googleSignUp"}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
 def google_sign_in():
