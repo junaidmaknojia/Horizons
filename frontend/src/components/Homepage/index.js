@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, {useEffect, useState} from "react";
 import "./Homepage.css";
-import {Jumbotron, Button, Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
 import {getRequests} from "../../store/requests";
 import howitworks from "./howitworks.svg";
+import Footer from "../Footer";
 
 export default function Homepage() {
 
@@ -65,16 +66,19 @@ export default function Homepage() {
                     </Modal.Footer>
                 </Modal>
             </div>
+            <img src={howitworks} className="diagram"/>
             <div className="howitworks">
-                <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg" className="tablePhoto"/>
-                <img src={howitworks} className="diagram"/>
             </div>
-            <div className="appContent">
-                <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
-                <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
-                    settings and we'll notify you when there are major updates to your experience including mobile
-                    app improvements.
+            <div className="getApp">
+                <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80" className="tablePhoto"/>
+                <div className="appContent">
+                    <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
+                    <div className="appText">Stay tuned for the mobile app in development! Sign up for notifications through your profile
+                        settings and we'll notify you when there are major updates to your experience including mobile
+                        app improvements.
+                    </div>
                 </div>
+                <Footer/>
             </div>
         </div>
     );

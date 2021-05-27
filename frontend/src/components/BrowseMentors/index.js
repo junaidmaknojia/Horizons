@@ -85,7 +85,7 @@ export default function BrowseMentors() {
 
     return (
         <div className="browseMentors">
-            <Toast onClose={() => setShowToast(false)} show={showToast} delay={8000} autohide className="toast">
+            <Toast onClose={() => setShowToast(false)} show={showToast} delay={8000} autohide className="confirmtoast">
                 <Toast.Header>
                     <strong className="mr-auto">Request Sent!</strong>
                 </Toast.Header>

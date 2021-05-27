@@ -3,7 +3,7 @@
     justify-content: center;
 }
 
-.toast {
+.errortoast {
     position: relative;
     left: 10%;
     background-color: rgb(255, 136, 136);
