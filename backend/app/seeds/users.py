@@ -28,7 +28,7 @@ def seed_users():
     db.session.add(User(first_name="Mimi", last_name="Oetting", email="Oetting@horizon.com", hashed_password=generate_password_hash(f"Oetting{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/mimi-mentee.jpg"))
     db.session.add(User(first_name="Rehman", last_name="Paroush", email="Paroush@horizon.com", hashed_password=generate_password_hash(f"Paroush{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/rehman-mentee.jpg"))
     db.session.add(User(first_name="Shiyann", last_name="Reeseman", email="Reeseman@horizon.com", hashed_password=generate_password_hash(f"Reeseman{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/shiyann-mentee.jpg"))
-    db.session.add(User(first_name="Sophia", last_name="Quiyov", email="Quiyov@horizon.com", hashed_password=generate_password_hash(f"Quiyov{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/sophia-mentee.jpg"))
+    db.session.add(User(first_name="Tia", last_name="Malkova", email="Malkova@horizon.com", hashed_password=generate_password_hash(f"Malkova{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/sophia-mentee.jpg"))
     db.session.add(User(first_name="Tonsar", last_name="Dale", email="Dale@horizon.com", hashed_password=generate_password_hash(f"Dale{password_add}"), role="Mentee", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/tonsar-mentee.jpg"))
     db.session.add(demo_mentor)
     db.session.add(User(first_name="Amanda", last_name="Darnelly", email="Darnelly@horizon.com", hashed_password=generate_password_hash(f"Darnelly{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/ananda-mentor.jpg"))
@@ -46,13 +46,13 @@ def seed_users():
     db.session.add(User(first_name="Hillary", last_name="Stuff", email="Stuff@horizon.com", hashed_password=generate_password_hash(f"Stuff{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/hillary-mentor.jpg"))
     db.session.add(User(first_name="Hussain", last_name="Dinka", email="Dinka@horizon.com", hashed_password=generate_password_hash(f"Dinka{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/hussain-mentor.jpg"))
     db.session.add(User(first_name="Janet", last_name="Armstrong", email="Armstrong@horizon.com", hashed_password=generate_password_hash(f"Armstrong{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/janet-mentor.jpg"))
-    db.session.add(User(first_name="Jeremy", last_name="Weiner", email="Weiner@horizon.com", hashed_password=generate_password_hash(f"Weiner{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/jeremy-mentor.jpg"))
+    db.session.add(User(first_name="Tom", last_name="Katt", email="Katt@horizon.com", hashed_password=generate_password_hash(f"Katt{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headsTom   -mentor.jpg"))
     db.session.add(User(first_name="Jerome", last_name="Jackson", email="Jackson@horizon.com", hashed_password=generate_password_hash(f"Jackson{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/jerome-mentor.jpg"))
     db.session.add(User(first_name="Jess", last_name="Tatiana", email="Tatiana@horizon.com", hashed_password=generate_password_hash(f"Tatiana{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/jess-mentor.jpg"))
     db.session.add(User(first_name="Jesse", last_name="Morales", email="Morales@horizon.com", hashed_password=generate_password_hash(f"Morales{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/jesse-mentor.jpg"))
     db.session.add(User(first_name="Jessica", last_name="Hera", email="Hera@horizon.com", hashed_password=generate_password_hash(f"Hera{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/jessica-mentor.jpg"))
     db.session.add(User(first_name="Joshua", last_name="Barter", email="Barter@horizon.com", hashed_password=generate_password_hash(f"Barter{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/joshua-mentor.jpg"))
-    db.session.add(User(first_name="Mike", last_name="Rolachek", email="Rolachek@horizon.com", hashed_password=generate_password_hash(f"Rolachek{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/mike-mentor.jpg"))
+    db.session.add(User(first_name="Mike", last_name="Randsome", email="Randsome@horizon.com", hashed_password=generate_password_hash(f"Randsome{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/mike-mentor.jpg"))
     db.session.add(User(first_name="Nadu", last_name="Mayori", email="Mayori@horizon.com", hashed_password=generate_password_hash(f"Mayori{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/nadu-mentor.jpg"))
     db.session.add(User(first_name="Nancy", last_name="Belmont", email="Belmont@horizon.com", hashed_password=generate_password_hash(f"Belmont{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/nancy-mentor.jpg"))
     db.session.add(User(first_name="Olivia", last_name="Stratschu", email="Stratschu@horizon.com", hashed_password=generate_password_hash(f"Stratschu{password_add}"), role="Mentor", profile_photo="https://horizons-aa.s3.us-east-2.amazonaws.com/headshots/olivia-mentor.jpg"))
@@ -83,7 +83,7 @@ def seed_users():
     for x in range(30):
         mentor = User.query.get(x+16)
         industryId = 1 + random.randrange(25)
-        industry = Role.query.get(industryId)
+        industry = Industry.query.get(industryId)
         mentor.industry = industry
     db.session.commit()
 
