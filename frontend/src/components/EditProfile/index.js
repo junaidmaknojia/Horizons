@@ -7,13 +7,9 @@ import {Form, Button, Row, Col, Spinner, Toast} from "react-bootstrap";
 
 export default function EditProfile(){
 
-
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
 
-    if(!sessionUser){
-        <Redirect to="/"/>
-    }
     const [tagCategory, setTagCategory] = useState([]);
     const [roleCategory, setRoleCategory] = useState([]);
 
@@ -98,6 +94,10 @@ export default function EditProfile(){
             const data = await res.json();
             setBackendErrors(data.errors);
         }
+    }
+
+    if(!sessionUser){
+        return <Redirect to="/"/>
     }
 
     return (
@@ -206,7 +206,7 @@ export default function EditProfile(){
                         </Spinner>
                     )}Update
                 </Button>
-                <Toast className="toast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
+                <Toast className="errortoast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
                     <Toast.Header>
                         <strong className="mr-auto">Uh oh!</strong>
                     </Toast.Header>

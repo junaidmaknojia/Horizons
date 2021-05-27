@@ -142,7 +142,7 @@ export default function SignupForm() {
                                 style={{ width: 150, height: "auto" }} />
                         </Row>
                     </div>
-                    <Toast className="toast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
+                    <Toast className="errortoast" onClose={() => setErrorToast(false)} show={errorToast} delay={4000} autohide>
                         <Toast.Header>
                             <strong className="mr-auto">Uh oh!</strong>
                         </Toast.Header>

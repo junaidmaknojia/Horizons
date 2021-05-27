@@ -1,6 +1,6 @@
 .homepage {
     width: 100%;
-    position: absolute;
+    position: relative;
     top: 50px;
 }
 
@@ -21,42 +21,45 @@
     color: rgb(0, 0, 0);
 }
 
-.howitworks {
-    margin-top: 20px;
-    max-height: 600px;
-}
-
 .diagram {
-    position: relative;
-    bottom: 650px;
+    max-height: 600px;
     width: 70%;
     margin: 0% 15%;
 }
 
+.getApp {
+    margin: 2.5%;
+    max-width: 95%;
+    height: 600px;
+}
+
 .tablePhoto {
-    width: 95%;
-    margin-left: 2.55%;
+    width: 100%;
     filter: blur(10px);
     opacity: 0.9;
     object-fit: cover;
 }
 
-
 .appContent {
-    margin-top: 100px;
+    position: relative;
+    bottom: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-flow: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .appLogos {
     width: 20%;
     height: 10%;
+    margin: 0px 6%;
 }
 
 .appText {
-    max-width: 800px;
-    font-size: 2vw;;
+    max-width: 88%;
+    margin: 0px 6%;
+    font-size: 3vw;
     color: rgb(0, 0, 0);
 }
 

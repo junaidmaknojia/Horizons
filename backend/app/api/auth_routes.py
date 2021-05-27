@@ -192,20 +192,19 @@ def google_sign_up():
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
     response = urlopen(request_send) # error here
-    print("---------", response)
-    # print("------------- response", response)
-    # response2 = response.read().decode("utf-8")
-    # print("--------------- response2", response2)
-    # parsed_response = loads(response2)
-    # print("-------------parsed_response", parsed_response)
-    # access_token = parsed_response["access_token"]
-
-    # # https://www.googleapis.com/auth/userinfo.email
-    # # https://www.googleapis.com/auth/userinfo.profile
 
     # request_user_info = Request("https://www.googleapis.com/auth/userinfo.email", headers={"Authorization": f"Bearer {token}"})
-    # print("---------- access token: ", access_token)
-    return {"message": "working"}
+    print("------------- response", response)
+    response2 = response.read().decode("utf-8")
+    print("--------------- response2", response2)
+    parsed_response = loads(response2)
+    print("-------------parsed_response", parsed_response)
+    access_token = parsed_response["access_token"]
+
+    print("---------- access token: ", access_token)
+    # https://www.googleapis.com/auth/userinfo.email
+    # https://www.googleapis.com/auth/userinfo.profile
+    return {"message": "hit the googleSignUp"}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
 def google_sign_in():
