@@ -213,6 +213,8 @@ def google_sign_up():
     access_token = parsed_response["access_token"]
 
     print("---------- access token: ", access_token)
+    # https://www.googleapis.com/auth/userinfo.email
+    # https://www.googleapis.com/auth/userinfo.profile
     return {"message": "hit the googleSignUp"}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
