@@ -36,9 +36,23 @@
 }
 
 
+/* .appContent {
+    background: url(https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg);
+    background-size: 95% 600px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    height: 600px;
+    filter: blur(10px);
+    opacity: 0.9;
+} */
+
+.getApp {
+}
+
 .appContent {
-    background-image: url(https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg);
-    margin-top: 100px;
+    position: relative;
+    bottom: 300px;
     display: flex;
     flex-flow: row;
     justify-content: space-evenly;
