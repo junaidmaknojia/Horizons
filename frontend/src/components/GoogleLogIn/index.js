@@ -6,27 +6,24 @@ import "../LinkedInSignUp/LinkedIn.css";
 
 export default function GoogleLogIn(){
 
-    // const dispatch = useDispatch();
-    // const location = useLocation();
-    // const sessionUser = useSelector(state => state.session.user);
+    const location = useLocation();
 
-    // const parsedURL = location.search.match(/(?<=\?code=).*(?=&)/);
+    const parsedURL = location.search.match(/(?<=\?code=).*(?=&scope)/);
 
-    // useEffect(() => {linkedInLogIn()}, []);
+    useEffect(() => {googleLogIn()}, []);
 
-    // async function linkedInLogIn(){
-    //     const response = await fetch("/api/auth/linkedInSignIn/", {
-    //         method: "POST",
-    //         headers: {"Content-Type": "application/json"},
-    //         body: JSON.stringify({"token": parsedURL && parsedURL[0], "redirect_URI": `${window.location.origin}/linkedin-log-in`})
-    //     });
-    //     if(response.ok){
-    //         const data = await response.json();
-    //         console.log(data);
-    //         window.opener.postMessage(data, "*");
-    //         // <Redirect to={`/${sessionUser.id}`}/>
-    //     }
-    // }
+    async function googleLogIn(){
+        const response = await fetch("/api/auth/googleSignIn/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({"code": parsedURL && parsedURL[0], "redirect_URI": `${window.location.origin}/google-log-in`})
+        });
+        if(response.ok){
+            const data = await response.json();
+            console.log(data.message);
+            window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
+        }
+    }
 
     return (
         <div className="loadingScreen">

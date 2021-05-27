@@ -5,14 +5,10 @@ import "../LinkedInSignUp/LinkedIn.css";
 
 export default function GoogleSignUp(){
 
-    const dispatch = useDispatch();
     const location = useLocation();
 
     // const parsedURL = location.hash.match(/(?<=\&access_token=).*(?=&token_type)/);
     const parsedURL = location.search.match(/(?<=\?code=).*(?=&scope)/);
-    console.log(window.location.origin);
-    console.log(location);
-    console.log(parsedURL);
 
     useEffect(() => {googleSignUp()}, []);
 
@@ -25,7 +21,7 @@ export default function GoogleSignUp(){
         if(response.ok){
             const data = await response.json();
             console.log(data.message);
-            // window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
+            window.opener.postMessage(data, "*"); // * = what page is this currently at, we don't care what it is
             // window.close();
             // dispatch(sessionAdd(data));
             // <Redirect to={`/${sessionUser.id}`}/>
