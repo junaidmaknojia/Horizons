@@ -17,20 +17,32 @@ export default function EditProfile(){
     // const [tagCategories, setTagCategories] = useState([]);
     // const [roleCategories, setRoleCategories] = useState([]);
 
-    const [firstName, setFirstName] = useState(sessionUser.firstName);
-    const [lastName, setLastName] = useState(sessionUser.lastName);
-    const [title, setTitle] = useState(sessionUser.title);
-    const [bio, setBio] = useState(sessionUser.bio);
-    const [linkedIn, setLinkedIn] = useState(sessionUser.linkedIn);
-    const [industry, setIndustry] = useState(sessionUser.industry);
-    const [tags, setTags] = useState(sessionUser.tags);
-    const [city, setCity] = useState(sessionUser.city);
-    const [state, setState] = useState(sessionUser.state);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [title, setTitle] = useState("");
+    const [bio, setBio] = useState("");
+    const [linkedIn, setLinkedIn] = useState("");
+    const [industry, setIndustry] = useState("");
+    const [tags, setTags] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
     const [image, setImage] = useState("");
     const [imageLoading, setImageLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState([]);
     const [backendErrors, setBackendErrors] = useState([]);
     const [errorToast, setErrorToast] = useState(false);
+
+    useEffect(() => {
+        setFirstName(sessionUser?.firstName);
+        setLastName(sessionUser?.lastName);
+        setTitle(sessionUser?.title);
+        setBio(sessionUser?.bio);
+        setLinkedIn(sessionUser?.linkedIn);
+        setIndustry(sessionUser?.industry);
+        setTags(sessionUser?.tags);
+        setCity(sessionUser?.city);
+        setState(sessionUser?.state);
+    }, [sessionUser]);
 
     useEffect(() => {
         let errors = [];

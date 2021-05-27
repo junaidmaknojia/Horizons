@@ -1,3 +1,4 @@
+from urllib import parse
 from flask import Blueprint, jsonify, session, request
 from app.models import User, db
 from app.forms import LoginForm
@@ -194,41 +195,70 @@ def google_sign_up():
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
     response = urlopen(request_send) # error here
-    # print("------------- response", response)
     response2 = response.read().decode("utf-8")
-    # print("--------------- response2", response2)
     parsed_response = loads(response2)
-    print("-------------parsed_response", parsed_response)
     access_token = parsed_response["access_token"]
     id_token = parsed_response["id_token"]
-    print("------------------", id_token)
 
-    # request_user_info = Request("https://www.googleapis.com/auth/userinfo.profile", headers={"Authorization": f"Bearer {access_token}"})
-    # response4 = urlopen(request_user_info).read().decode("utf-8")
-    # print("------- response 4 ", response4)
-    # parsed_response3 = loads(response4)
-    # print("---------- request_user_info", parsed_response3)
 
     request_with_id_token = Request(f"https://oauth2.googleapis.com/tokeninfo?id_token={id_token}")
     response3 = urlopen(request_with_id_token).read().decode("utf-8")
     parsed_response2 = loads(response3)
     print("-----id token get", parsed_response2)
-    # https://www.googleapis.com/auth/userinfo.email
-    # https://www.googleapis.com/auth/userinfo.profile
+    email = parsed_response2["email"]
+    first_name = parsed_response2["given_name"]
+    last_name = parsed_response2["family_name"]
+    profile_photo = parsed_response2["picture"]
 
+    #  {'iss': 'https://accounts.google.com',
+    # 'azp': '551411017083-g03vd1t5b4328v4posf89r03datsj7jc.apps.googleusercontent.com',
+    # 'aud': '551411017083-g03vd1t5b4328v4posf89r03datsj7jc.apps.googleusercontent.com',
+    # 'sub': '102684045263083252361',
+    # 'email': 'junaidmaknojia786@gmail.com',
+    # 'email_verified': 'true',
+    # 'at_hash': 'xnWGV0gR3tH6NIhxfgau7g',
+    # 'name': 'Junaid Maknojia',
+    # 'picture': 'https://lh3.googleusercontent.com/a/AATXAJzzMgeFyf8uYa1iYaHW4Kmw_Ei1DJSir13iVOOf=s96-c',
+    # 'given_name': 'Junaid',
+    # 'family_name': 'Maknojia',
+    # 'locale': 'en',
+    # 'iat': '1622149033',
+    # 'exp': '1622152633',
+    # 'alg': 'RS256',
+    # 'kid': 'cd49b2ab16e1e9a496c8239dac0dadd09d443012',
+    # 'typ': 'JWT'}
 
-    return {"message": "hit the googleSignUp"}
+    return {"firstName": first_name, "lastName": last_name, "profilePhoto": profile_photo, "email": email}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
 def google_sign_in():
-    # data = request.json
-    # token = data["token"]
-    # redirect_uri = data["redirect_URI"]
-    # sendoff = {
-    #     "grant_type": "authorization_code",
-    #     "code": token,
-    #     "client_id": environ.get("GOOGLE_CLIENT_ID"),
-    #     "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
-    #     "redirect_uri": redirect_uri
-    # }
-    return {"message": "hit the googleSignIn"}
+
+    data = request.json
+    token = data["code"]
+    redirect_uri = data["redirect_URI"]
+    sendoff = {
+        "grant_type": "authorization_code",
+        "code": unquote(token),
+        "client_id": environ.get("GOOGLE_CLIENT_ID"),
+        "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
+        "redirect_uri": redirect_uri
+    }
+    launch = urlencode(sendoff).encode()
+    request_send = Request("https://oauth2.googleapis.com/token", data=launch)
+    response = urlopen(request_send) # error used to be here
+    response2 = response.read().decode("utf-8")
+    parsed_response = loads(response2)
+    id_token = parsed_response["id_token"]
+
+
+    request_with_id_token = Request(f"https://oauth2.googleapis.com/tokeninfo?id_token={id_token}")
+    response3 = urlopen(request_with_id_token).read().decode("utf-8")
+    parsed_response2 = loads(response3)
+    email = parsed_response2["email"]
+
+    user = User.query.filter(User.email == email).first()
+    if user:
+        login_user(user)
+        return user.to_dict()
+    else:
+        return {"errors": ["Cannot find a registered user from the provided LinkedIn credentials"]}, 400
