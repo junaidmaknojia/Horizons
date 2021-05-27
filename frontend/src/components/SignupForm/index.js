@@ -76,15 +76,7 @@ export default function SignupForm() {
 
     async function googleSignUp() {
         // change client id and redirect uri
-        windowRef.current = window.open(`https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${window.location.origin}/google-sign-up&client_id=551411017083-g03vd1t5b4328v4posf89r03datsj7jc.apps.googleusercontent.com`, "", "width=600, height=600");
-    }
-
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        windowRef.current = window.open(`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&redirect_uri=${window.location.origin}/google-sign-up&client_id=551411017083-g03vd1t5b4328v4posf89r03datsj7jc.apps.googleusercontent.com`, "", "width=600, height=600");
     }
 
     return (

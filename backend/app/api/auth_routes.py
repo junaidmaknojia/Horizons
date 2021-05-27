@@ -180,20 +180,7 @@ def linkedIn_sign_in():
 def google_sign_up():
     print("---------------inside googleSignUp")
     data = request.json
-    # print(data)
-    # token = data["id_token"]
-    # try:
-    #     # Specify the CLIENT_ID of the app that accesses the backend:
-    #     idinfo = id_token.verify_oauth2_token(token, requests.Request(), environ.get("GOOGLE_CLIENT_ID"))
-
-    #     # ID token is valid. Get the user's Google Account ID from the decoded token.
-    #     userid = idinfo['sub']
-    #     print("-----------", userid)
-    # except ValueError:
-    #     # Invalid token
-    #     pass
-
-    token = data["token"]
+    token = data["code"]
     redirect_uri = data["redirect_URI"]
     sendoff = {
         "grant_type": "authorization_code",
@@ -205,6 +192,8 @@ def google_sign_up():
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
     response = urlopen(request_send) # error here
+
+    # request_user_info = Request("https://www.googleapis.com/auth/userinfo.email", headers={"Authorization": f"Bearer {token}"})
     print("------------- response", response)
     response2 = response.read().decode("utf-8")
     print("--------------- response2", response2)
