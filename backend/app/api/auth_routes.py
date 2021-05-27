@@ -4,9 +4,12 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.request import Request, urlopen
-from urllib.parse import urlencode
+from urllib.parse import urlencode, unquote
 from json import loads
 from os import environ
+import http
+
+http.client.HTTPConnection.debuglevel = 1
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -178,13 +181,12 @@ def linkedIn_sign_in():
 
 @auth_routes.route("/googleSignUp/", methods=["POST"])
 def google_sign_up():
-    print("---------------inside googleSignUp")
     data = request.json
     token = data["code"]
     redirect_uri = data["redirect_URI"]
     sendoff = {
         "grant_type": "authorization_code",
-        "code": token,
+        "code": unquote(token),
         "client_id": environ.get("GOOGLE_CLIENT_ID"),
         "client_secret": environ.get("GOOGLE_CLIENT_SECRET"),
         "redirect_uri": redirect_uri
@@ -192,18 +194,29 @@ def google_sign_up():
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
     response = urlopen(request_send) # error here
-
-    # request_user_info = Request("https://www.googleapis.com/auth/userinfo.email", headers={"Authorization": f"Bearer {token}"})
-    print("------------- response", response)
+    # print("------------- response", response)
     response2 = response.read().decode("utf-8")
-    print("--------------- response2", response2)
+    # print("--------------- response2", response2)
     parsed_response = loads(response2)
     print("-------------parsed_response", parsed_response)
     access_token = parsed_response["access_token"]
+    id_token = parsed_response["id_token"]
+    print("------------------", id_token)
 
-    print("---------- access token: ", access_token)
+    # request_user_info = Request("https://www.googleapis.com/auth/userinfo.profile", headers={"Authorization": f"Bearer {access_token}"})
+    # response4 = urlopen(request_user_info).read().decode("utf-8")
+    # print("------- response 4 ", response4)
+    # parsed_response3 = loads(response4)
+    # print("---------- request_user_info", parsed_response3)
+
+    request_with_id_token = Request(f"https://oauth2.googleapis.com/tokeninfo?id_token={id_token}")
+    response3 = urlopen(request_with_id_token).read().decode("utf-8")
+    parsed_response2 = loads(response3)
+    print("-----id token get", parsed_response2)
     # https://www.googleapis.com/auth/userinfo.email
     # https://www.googleapis.com/auth/userinfo.profile
+
+
     return {"message": "hit the googleSignUp"}
 
 @auth_routes.route("/googleSignIn/", methods=["POST"])
