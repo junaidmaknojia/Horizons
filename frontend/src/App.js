@@ -35,7 +35,6 @@ function App() {
 				<Switch>
 					<Route exact path="/">
 						<Homepage />
-						<Footer/>
 					</Route>
 					<Route path="/dashboard">
 						<UserDashboard />

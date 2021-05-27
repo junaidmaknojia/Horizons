@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, {useEffect, useState} from "react";
 import "./Homepage.css";
-import {Jumbotron, Button, Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import SignupForm from "../SignupForm";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
 import {getRequests} from "../../store/requests";
 import howitworks from "./howitworks.svg";
+import Footer from "../Footer";
 
 export default function Homepage() {
 
@@ -65,9 +66,9 @@ export default function Homepage() {
                     </Modal.Footer>
                 </Modal>
             </div>
+            <img src={howitworks} className="diagram"/>
             <div className="howitworks">
-                <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg" className="tablePhoto"/>
-                <img src={howitworks} className="diagram"/>
+                {/* <img src="https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg" className="tablePhoto"/> */}
             </div>
             <div className="appContent">
                 <img src="https://ifamcare.com/wp-content/uploads/2015/12/app-logos.png" className="appLogos"/>
@@ -76,6 +77,7 @@ export default function Homepage() {
                     app improvements.
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
