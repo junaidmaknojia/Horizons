@@ -27,45 +27,39 @@
     margin: 0% 15%;
 }
 
+.getApp {
+    margin: 2.5%;
+    max-width: 95%;
+    height: 600px;
+}
+
 .tablePhoto {
-    width: 95%;
-    margin-left: 2.55%;
+    width: 100%;
     filter: blur(10px);
     opacity: 0.9;
     object-fit: cover;
 }
 
-
-/* .appContent {
-    background: url(https://horizons-aa.s3.us-east-2.amazonaws.com/stock/stock2.jpg);
-    background-size: 95% 600px;
-    display: flex;
-    flex-flow: row;
-    justify-content: space-evenly;
-    height: 600px;
-    filter: blur(10px);
-    opacity: 0.9;
-} */
-
-.getApp {
-}
-
 .appContent {
     position: relative;
-    bottom: 300px;
+    bottom: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-flow: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .appLogos {
     width: 20%;
     height: 10%;
+    margin: 0px 6%;
 }
 
 .appText {
-    max-width: 800px;
-    font-size: 2vw;;
+    max-width: 88%;
+    margin: 0px 6%;
+    font-size: 3vw;
     color: rgb(0, 0, 0);
 }
 

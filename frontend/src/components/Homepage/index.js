@@ -78,8 +78,8 @@ export default function Homepage() {
                         app improvements.
                     </div>
                 </div>
+                <Footer/>
             </div>
-            <Footer/>
         </div>
     );
 }
