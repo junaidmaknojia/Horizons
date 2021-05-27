@@ -180,7 +180,7 @@ def linkedIn_sign_in():
 def google_sign_up():
     print("---------------inside googleSignUp")
     data = request.json
-    token = data["token"]
+    token = data["code"]
     redirect_uri = data["redirect_URI"]
     sendoff = {
         "grant_type": "authorization_code",
@@ -191,7 +191,8 @@ def google_sign_up():
     }
     launch = urlencode(sendoff).encode()
     request_send = Request("https://oauth2.googleapis.com/token", data=launch) # <urllib.request.Request object at 0x7f851dbaf670>
-    response = urlopen(request_send) # error heree
+    response = urlopen(request_send) # error here
+    print("---------", response)
     # print("------------- response", response)
     # response2 = response.read().decode("utf-8")
     # print("--------------- response2", response2)
