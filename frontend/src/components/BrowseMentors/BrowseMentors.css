@@ -59,7 +59,7 @@
     margin: 20px;
 }
 
-.toast {
+.confirmtoast {
     position: fixed;
     top: 50px;
     left: 35%;
