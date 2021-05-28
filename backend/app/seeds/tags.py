@@ -30,7 +30,7 @@ def seed_tags():
     db.session.add(Tag(name="Getting first job", categoryId=3))
     db.session.add(Tag(name="Career advancement", categoryId=3))
     db.session.add(Tag(name="Setting professional goals", categoryId=3))
-    db.session.add(Tag(name="Resume/job applications", categoryId=3))
+    db.session.add(Tag(name="Resume / job applications", categoryId=3))
     db.session.add(Tag(name="Getting a promotion", categoryId=3))
     db.session.add(Tag(name="Salary Negotiation", categoryId=3))
     db.session.add(Tag(name="Recruiting help", categoryId=3))
@@ -46,7 +46,7 @@ def seed_tags():
     db.session.add(Tag(name="Communication skills", categoryId=4))
     db.session.add(Tag(name="Managing teams", categoryId=4))
     db.session.add(Tag(name="Building a personal brand", categoryId=4))
-    db.session.add(Tag(name="Work/Life Balance", categoryId=5))
+    db.session.add(Tag(name="Work / Life Balance", categoryId=5))
     db.session.commit()
 
 
