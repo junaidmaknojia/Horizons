@@ -44,7 +44,7 @@ class User(db.Model, UserMixin):
             "lastName": self.last_name,
             "email": self.email,
             "role": self.role,
-            "bio": self.bio,
+            "bio": self.bio if self.bio else "",
             "city": self.city if self.city else "",
             "state": self.state if self.state else "",
             "tags": list(map(lambda tag: tag.name, self.tags)),
