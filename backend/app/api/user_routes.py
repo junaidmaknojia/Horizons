@@ -32,6 +32,7 @@ def update_user():
     user.city = data["city"]
     user.state = data["state"]
     user.linkedin_url = data["linkedIn"]
+    # add title update for mentee (not in role)
     if data["title"]:
         user.title = Role.query.get(data["title"])
     if data["industry"]:
