@@ -7,6 +7,7 @@ from flask_login import current_user, login_required
 
 sendgrid_routes = Blueprint('sendgrid', __name__)
 
+@login_required
 @sendgrid_routes.route("/", methods=["POST"])
 def send_email():
     data = request.json
@@ -24,7 +25,7 @@ def send_email():
             print(response.status_code)
             print(response.body)
             print(response.headers)
-            return {"response-code": response.status_code}
+            return {"response-code": response.status_code}, 200
         except Exception as e:
             # print(e.message)
-            return {"sendgrid_error": "Error sending notification email, try again"}
+            return {"sendgrid_error": "Error sending notification email, try again"}, 400

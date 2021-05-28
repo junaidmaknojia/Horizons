@@ -29,6 +29,7 @@ export const makeRequest = async (payload) => {
 }
 
 async function sendEmail(payload){
+    console.log("inside sendEmail thunk");
     const response = await fetch("/api/sendgrid/", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
