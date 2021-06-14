@@ -18,7 +18,7 @@ export default function Homepage() {
 
     async function demoPerson(type){
         const email = (type === "Mentor") ? "demomentor@horizon.com" : "demouser@horizon.com";
-        dispatch(sessionActions.login({ email, "password":"password" }))
+        dispatch(sessionActions.login({ email, password: "password" }))
             .catch(async (res) => {
                 const data = await res.json();
             });
