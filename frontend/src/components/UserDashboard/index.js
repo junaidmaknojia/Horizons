@@ -46,12 +46,12 @@ export default function UserDashboard() {
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?` :
             `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if (window.confirm(message)) {
-            deleteRequest(request.id);
+            await dispatch(deleteRequest(request.id));
         }
     }
 
     async function handleAccept(request) {
-        updateRequest(request.id);
+        await dispatch(updateRequest(request.id));
     }
 
     function CustomToggle({ children, eventKey }) {
