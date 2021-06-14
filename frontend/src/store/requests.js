@@ -44,7 +44,7 @@ export const updateRequest = async (requestId) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
-    getRequests();
+    await dispatch(getRequests());
 }
 
 export const deleteRequest = async (requestId) => {
@@ -54,8 +54,7 @@ export const deleteRequest = async (requestId) => {
         body: JSON.stringify({requestId})
     });
     const data = await response.json();
-    console.log(data);
-    getRequests();
+    await dispatch(getRequests());
 }
 
 export default function requestReducer(state=initialState, action){
