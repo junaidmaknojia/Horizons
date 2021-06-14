@@ -117,7 +117,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentee.id}`}>{`${request.mentee.firstName} ${request.mentee.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                         <div className="delete button" onClick={() => { handleDelete("mentor", request) }}>Reject</div>
                                         <div className="accept button" onClick={() => { handleAccept(request) }}>Accept</div>
@@ -129,7 +129,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentee.id}`}>{`${request.mentee.firstName} ${request.mentee.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                     </div>
                                 ))}
@@ -143,7 +143,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentor.id}`}>{`${request.mentor.firstName} ${request.mentor.lastName}`}</Link></h5>
                                         <p>{request.mentor.email}</p>
                                         {showPitch(request)}
                                     </div>
@@ -154,7 +154,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentor.id}`}>{`${request.mentor.firstName} ${request.mentor.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                         <div className="delete button" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
                                     </div>
