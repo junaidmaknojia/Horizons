@@ -42,7 +42,7 @@ export default function UserDashboard() {
         if(!sessionUser.title) warnings.push("Title");
     }
 
-    function handleDelete(person, request) {
+    async function handleDelete(person, request) {
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?` :
             `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if (window.confirm(message)) {
@@ -50,7 +50,7 @@ export default function UserDashboard() {
         }
     }
 
-    function handleAccept(request) {
+    async function handleAccept(request) {
         updateRequest(request.id);
     }
 
@@ -92,7 +92,7 @@ export default function UserDashboard() {
                 {(sessionUser.city && sessionUser.state) && (
                     <p><i class="fas fa-globe-americas" style={{margin: 5}}></i>{`${sessionUser.city}, ${sessionUser.state}`}</p>
                 )}
-                <p>{sessionUser.bio}</p>
+                <p style={{width: "20vw"}}>{sessionUser.bio}</p>
                 <div className="tagContainer">
                     {sessionUser.tags.map(tag => (
                         <div className="tag">{tag}</div>
