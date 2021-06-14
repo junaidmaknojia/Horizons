@@ -38,24 +38,23 @@ async function sendEmail(payload){
     return data;
 }
 
-export const updateRequest = async (requestId) => {
+export const updateRequest = (requestId) => async (dispatch)=> {
     const response = await fetch("/api/requests/update/", {
         method: "PATCH",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
-    getRequests();
+    dispatch(getRequests());
 }
 
-export const deleteRequest = async (requestId) => {
+export const deleteRequest = (requestId) => async (dispatch) => {
     const response = await fetch("/api/requests/delete", {
         method: "DELETE",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({requestId})
     });
     const data = await response.json();
-    console.log(data);
-    getRequests();
+    dispatch(getRequests());
 }
 
 export default function requestReducer(state=initialState, action){

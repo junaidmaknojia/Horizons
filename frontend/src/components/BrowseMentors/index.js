@@ -12,6 +12,7 @@ export default function BrowseMentors() {
     const sessionUser = useSelector(state => state.session.user);
     const myRequests = useSelector(state => state.requests.requests);
     const [addedTags, setAddedTags] = useState([]);
+    const [allMentors, setAllMentors] = useState([]);
     const [listMentors, setListMentors] = useState([]);
     const [tagOptions, setTagOptions] = useState([]);
     const [requestMentor, setRequestMentor] = useState({});
@@ -23,6 +24,7 @@ export default function BrowseMentors() {
         async function loadMentors(){
             const response = await fetch("/api/users/mentors/");
             const data = await response.json();
+            setAllMentors(data.mentors);
             setListMentors(data.mentors);
             const tags = await fetch("/api/searches/tags/");
             const tagOptions0 = await tags.json();
@@ -38,7 +40,8 @@ export default function BrowseMentors() {
         temp.forEach(user => {
             tempObj[user.id] = user;
         });
-        const setter = Object.values(tempObj);
+        let setter = Object.values(tempObj);
+        setter = setter.length > 0 ? setter : allMentors;
         setListMentors(setter);
     }, [addedTags]);
 

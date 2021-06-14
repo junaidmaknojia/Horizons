@@ -42,16 +42,16 @@ export default function UserDashboard() {
         if(!sessionUser.title) warnings.push("Title");
     }
 
-    function handleDelete(person, request) {
+    async function handleDelete(person, request) {
         const message = person === "mentee" ? `Confirm cancel your request to ${request.mentor.firstName} ${request.mentor.lastName}?` :
             `Confirm rejecting the request from ${request.mentee.firstName} ${request.mentee.lastName}?`
         if (window.confirm(message)) {
-            deleteRequest(request.id);
+            await dispatch(deleteRequest(request.id));
         }
     }
 
-    function handleAccept(request) {
-        updateRequest(request.id);
+    async function handleAccept(request) {
+        await dispatch(updateRequest(request.id));
     }
 
     function CustomToggle({ children, eventKey }) {
@@ -92,7 +92,7 @@ export default function UserDashboard() {
                 {(sessionUser.city && sessionUser.state) && (
                     <p><i class="fas fa-globe-americas" style={{margin: 5}}></i>{`${sessionUser.city}, ${sessionUser.state}`}</p>
                 )}
-                <p>{sessionUser.bio}</p>
+                <p style={{width: "20vw"}}>{sessionUser.bio}</p>
                 <div className="tagContainer">
                     {sessionUser.tags.map(tag => (
                         <div className="tag">{tag}</div>
@@ -117,7 +117,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentee.id}`}>{`${request.mentee.firstName} ${request.mentee.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                         <div className="delete button" onClick={() => { handleDelete("mentor", request) }}>Reject</div>
                                         <div className="accept button" onClick={() => { handleAccept(request) }}>Accept</div>
@@ -129,7 +129,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentee.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentee.firstName} ${request.mentee.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentee.id}`}>{`${request.mentee.firstName} ${request.mentee.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                     </div>
                                 ))}
@@ -143,7 +143,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentor.id}`}>{`${request.mentor.firstName} ${request.mentor.lastName}`}</Link></h5>
                                         <p>{request.mentor.email}</p>
                                         {showPitch(request)}
                                     </div>
@@ -154,7 +154,7 @@ export default function UserDashboard() {
                                 {myRequests?.filter(request => !request.accepted).map(request => (
                                     <div className="request">
                                         <img src={request.mentor.profilePhoto} style={{ width: 100, height: 100 }} />
-                                        <h5>{`${request.mentor.firstName} ${request.mentor.lastName}`}</h5>
+                                        <h5><Link to={`/${request.mentor.id}`}>{`${request.mentor.firstName} ${request.mentor.lastName}`}</Link></h5>
                                         {showPitch(request)}
                                         <div className="delete button" onClick={() => { handleDelete("mentee", request) }}>Cancel</div>
                                     </div>
