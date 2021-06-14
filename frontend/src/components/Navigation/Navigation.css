@@ -1,8 +1,16 @@
 .navBar {
     position: fixed;
-    background-color: rgba(196, 113, 18, 1);
+    background-color: rgba(175, 169, 255, 0.955);
     width: 100%;
     z-index: 99;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    font-weight: 500;
 }
 
 .siteLogo {
@@ -12,39 +20,4 @@
     text-align: center;
     align-self: center;
     order: -3;
-}
-
-#browse {
-    order: -2;
-    border-right: 1px black solid;
-}
-
-.search {
-    text-align: center;
-    align-self: center;
-    width: 550px;
-    order: -1;
-}
-
-#home {
-    order: 0;
-}
-
-#login {
-    order: 1;
-}
-
-#signup {
-    order: 2;
-}
-
-.navButton {
-    font-weight: bold;
-    align-self: center;
-    text-align: center;
-    width: 100px;
-    border-radius: 2px;
-    padding: 3px;
-    margin: 2px;
-    border-left: 1px solid black;
 }
