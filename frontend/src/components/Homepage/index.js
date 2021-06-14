@@ -30,9 +30,9 @@ export default function Homepage() {
             <div className="intro">
                 <video loop autoPlay className="video" src="https://horizons-aa.s3.us-east-2.amazonaws.com/video.mp4"/>
                 <div className="intro__text">
-                    <h1>Find your horizon!</h1>
+                    <h1>Find your Horizon!</h1>
                     <p>
-                        Join Horizons, where young professionals can be connected to mentors in various industries and found
+                        Join Horizons&copy;, where young professionals can be connected to mentors in various industries and found
                         through the specific type of mentorship needed. Create your profile with a custom login or through
                         LinkedIn and get started!
                     </p>
