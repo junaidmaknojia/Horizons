@@ -28,15 +28,6 @@ http://horizon-aa.herokuapp.com/
 ## Further Documentation
 https://github.com/junaidmaknojia/Horizons/wiki
 
-## Installation / Updating App
-Steps coming soon
-
-## To-Do
-   - Deleting account
-   - New account email verification
-   - Live chat with each mentor
-   - Meeting event creation from requests
-
 ### Media Credits
    - Images: Unsplash
    - Homepage video: Pexels
