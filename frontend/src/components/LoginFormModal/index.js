@@ -16,10 +16,12 @@ export default function LoginFormModal({setShowLogin}) {
 
     useEffect(() => {
         window.onmessage = function afterSignup(message){
-            windowRef.current.close();
-            setShowModal(false);
-            setShowLogin(false);
-            dispatch(sessionAdd(message.data));
+            if(windowRef.current){
+                windowRef.current.close();
+                setShowModal(false);
+                setShowLogin(false);
+                dispatch(sessionAdd(message.data));
+            }
         }
         return () => {window.onmessage = null};
     }, [linkedInSignIn, googleSignIn]);
