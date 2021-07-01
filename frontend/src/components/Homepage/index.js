@@ -20,9 +20,10 @@ export default function Homepage() {
         const email = (type === "Mentor") ? "demomentor@horizon.com" : "demouser@horizon.com";
         dispatch(sessionActions.login({ email, password: "password" }))
             .catch(async (res) => {
+                console.log(res);
                 const data = await res.json();
             });
-        dispatch(getRequests());
+        // dispatch(getRequests());
     }
 
     return (
